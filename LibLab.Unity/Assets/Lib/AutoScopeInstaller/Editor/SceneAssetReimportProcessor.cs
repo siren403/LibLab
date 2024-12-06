@@ -18,6 +18,11 @@ namespace AutoScopeInstaller.Editor
             if (hasImportedScene || hasDeletedScene || hasMovedScene || hasMovedFromAssetPathScene)
             {
                 var taggedScenes = TaggedScenes.Instance;
+                if (taggedScenes == null)
+                {
+                    return;
+                }
+
                 var hasFailedReference = false;
                 foreach (var reference in taggedScenes.Scenes)
                 {

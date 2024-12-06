@@ -1,39 +1,30 @@
-﻿using System;
-using System.Globalization;
-using System.Text;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+﻿using Microsoft.CodeAnalysis;
 
-namespace ConstantsGenerator
+namespace ConstantsGenerator;
+
+[Generator]
+public class ConstantsSourceGenerator : ISourceGenerator
 {
-    [Generator]
-    public class ConstantsSourceGenerator : ISourceGenerator
+    public void Initialize(GeneratorInitializationContext context)
     {
-        public void Initialize(GeneratorInitializationContext context)
+        context.RegisterForPostInitialization(_ =>
         {
-            // No initialization required for this one
-        }
+            _.AddSource("CustomAttribute.g.cs", @"
+using System;
+    
+[AttributeUsage(AttributeTargets.Class)]
+public class CustomAttribute : Attribute
+{
+    public CustomAttribute()
+    {
+        
+    }
+}
+            ");
+        });
+    }
 
-        public void Execute(GeneratorExecutionContext context)
-        {
-            Console.WriteLine(DateTime.Now.ToString(CultureInfo.InvariantCulture));
-
-            var source = $$"""
-                           using System;
-                           namespace ExampleSourceGenerated
-                           {
-                               public static class ExampleSourceGenerated
-                               {
-                                   public static string Print()
-                                   {
-                                       Console.WriteLine("Hello from source generator");
-                                       return "{{DateTime.Now.ToString(CultureInfo.InvariantCulture)}}";
-                                   }
-                               }
-                           }
-                           """;
-
-            context.AddSource("exampleSourceGenerator", SourceText.From(source, Encoding.UTF8));
-        }
+    public void Execute(GeneratorExecutionContext context)
+    {
     }
 }

@@ -1,0 +1,7 @@
+﻿{
+    "name": "Constants.Example",
+    "rootNamespace": "Constants.Example",
+    "references": [
+        "Constants"
+    ]
+}

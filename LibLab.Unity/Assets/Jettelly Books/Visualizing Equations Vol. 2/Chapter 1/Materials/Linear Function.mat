@@ -136,6 +136,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _U: 0.5
+    - _Visualize_Origin: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

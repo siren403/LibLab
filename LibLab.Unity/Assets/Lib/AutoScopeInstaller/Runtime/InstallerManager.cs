@@ -10,18 +10,18 @@ namespace AutoScopeInstaller
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void OnSubsystemRegistration()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
-        private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
             if (TaggedScenes.Instance == null)
             {
                 Debug.Log("Not created TaggedScenes. Please 'Assets/Create/Auto Scope Installer/Tagged Scenes'.");
                 return;
             }
 
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
             var taggedScenes = TaggedScenes.Instance.Scenes;
 
             var findPath = taggedScenes.FirstOrDefault(reference => reference.Tag == "Dummy")?.Path ?? string.Empty;

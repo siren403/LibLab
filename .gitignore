@@ -494,3 +494,10 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # End of https://www.toptal.com/developers/gitignore/api/rider,dotnetcore,csharp
+
+# Unity
+!LibLab.Unity/[Pp]ackages/**/*
+
+# MacOS
+.DS_Store
+

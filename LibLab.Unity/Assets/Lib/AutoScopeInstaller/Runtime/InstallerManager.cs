@@ -16,8 +16,8 @@ namespace AutoScopeInstaller
                 return;
             }
 
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            // SceneManager.sceneLoaded -= OnSceneLoaded;
+            // SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)

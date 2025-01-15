@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SceneLauncher
 {
-    public static class StartupLauncher
+    public static partial class StartupLauncher
     {
         private static readonly InitializableLazy<UniTaskCompletionSource<LaunchedContext>> LaunchedSource =
             new(() => new UniTaskCompletionSource<LaunchedContext>());
@@ -23,7 +23,10 @@ namespace SceneLauncher
 
         public static void Launch(LaunchOptions options, Action configuration)
         {
-            if (_isExecutedLaunch) throw new InvalidOperationException("Already launched.");
+            if (_isExecutedLaunch)
+            {
+                throw new InvalidOperationException("Already launched.");
+            }
 
             _isExecutedLaunch = true;
             var cancellationToken = Application.exitCancellationToken;

@@ -62,11 +62,11 @@ Material:
     - _DstBlend: 10
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Radius: 0.083
+    - _Radius: 0.1
     - _Size: 1
     - _SrcBlend: 5
     - _Surface: 1
-    - _X0: 0.157
+    - _X0: 0.15
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0

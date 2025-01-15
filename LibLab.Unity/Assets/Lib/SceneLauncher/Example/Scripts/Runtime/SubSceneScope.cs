@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using SceneLauncher;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

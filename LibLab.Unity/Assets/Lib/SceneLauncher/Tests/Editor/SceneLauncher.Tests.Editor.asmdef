@@ -1,18 +1,25 @@
 {
-    "name": "SceneLauncher.Example",
-    "rootNamespace": "SceneLauncher.Example",
+    "name": "SceneLauncher.Tests.Editor",
+    "rootNamespace": "",
     "references": [
+        "UnityEditor.TestRunner",
+        "UnityEngine.TestRunner",
         "SceneLauncher",
-        "UniTask",
         "VContainer"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
     "versionDefines": [
         {
             "name": "jp.hadashikick.vcontainer",

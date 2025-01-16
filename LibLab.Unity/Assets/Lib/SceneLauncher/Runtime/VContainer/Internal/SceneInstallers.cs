@@ -14,7 +14,7 @@ namespace SceneLauncher.VContainer.Internal
 
         private readonly Dictionary<string, ISceneInstaller> _installers = new();
 
-        private string mainScenePath;
+        public string MainScenePath { get; private set; }
 
         public void Add(ISceneInstaller installer, ScenePathParser parser, AddMode mode)
         {
@@ -23,7 +23,7 @@ namespace SceneLauncher.VContainer.Internal
                 case ParseSuccess(var value):
                     if (mode == AddMode.Main)
                     {
-                        mainScenePath = value;
+                        MainScenePath = value;
                     }
 
                     _installers.Add(value, installer);
@@ -31,7 +31,7 @@ namespace SceneLauncher.VContainer.Internal
                 case ParseFailure(ParseError.NotStartedAlias):
                     if (mode == AddMode.Main)
                     {
-                        mainScenePath = installer.ScenePath;
+                        MainScenePath = installer.ScenePath;
                     }
 
                     _installers.Add(installer.ScenePath, installer);
@@ -43,13 +43,14 @@ namespace SceneLauncher.VContainer.Internal
 
         public bool TryGetValue(string key, out ISceneInstaller value, out AddMode mode)
         {
-            mode = key == mainScenePath ? AddMode.Main : AddMode.Sub;
+            mode = key == MainScenePath ? AddMode.Main : AddMode.Sub;
             return _installers.TryGetValue(key, out value);
         }
 
         public void Clear()
         {
             _installers.Clear();
+            MainScenePath = null;
         }
     }
 }

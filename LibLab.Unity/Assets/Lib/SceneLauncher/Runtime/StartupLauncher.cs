@@ -29,13 +29,9 @@ namespace SceneLauncher
             }
 
             _isExecutedLaunch = true;
-            var cancellationToken = Application.exitCancellationToken;
-            UniTask.Yield(PlayerLoopTiming.PreUpdate, cancellationToken).ContinueWith(() =>
-            {
-                configuration();
-                var context = LaunchedContext.FromOptions(options);
-                LaunchedSource.Value.TrySetResult(context);
-            });
+            configuration();
+            var context = LaunchedContext.FromOptions(options);
+            LaunchedSource.Value.TrySetResult(context);
         }
     }
 }

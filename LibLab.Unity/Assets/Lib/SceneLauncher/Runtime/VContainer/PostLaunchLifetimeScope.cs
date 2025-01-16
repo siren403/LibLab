@@ -1,19 +1,27 @@
 ﻿#if VCONTAINER
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using VContainer.Unity;
 
 namespace SceneLauncher.VContainer
 {
-    public class PostLaunchLifetimeScope : LifetimeScope
+    public class PostLaunchLifetimeScope : LaunchedLifetimeScope
     {
-        internal IInstaller ExtraInstaller;
-
         protected override void Awake()
         {
             autoRun = false;
             parentReference = new ParentReference();
             base.Awake();
-            StartupLauncher.LaunchedTask.ContinueWith(Startup);
+
+            async UniTaskVoid Launch(CancellationToken cancellationToken)
+            {
+                // await UniTask.Yield(cancellationToken);
+                var context = await StartupLauncher.LaunchedTask;
+                Startup(context);
+                // Debug.Log(gameObject.scene.name + " | " + nameof(Launch));
+            }
+
+            Launch(destroyCancellationToken).Forget();
         }
 
         private void Startup(LaunchedContext context)

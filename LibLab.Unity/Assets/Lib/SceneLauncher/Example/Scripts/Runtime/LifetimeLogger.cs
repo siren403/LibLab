@@ -6,13 +6,16 @@ namespace SceneLauncher.Example
     public class LifetimeLogger : MonoBehaviour
     {
         [SerializeField] private int updateCount = 1;
-
+        [SerializeField] private bool launched;
         private int _ticks;
 
         private void Awake()
         {
             Debug.Log($"{name} | {nameof(Awake)}");
-            StartupLauncher.LaunchedTask.ContinueWith(_ => { Debug.Log($"{name} | Launched"); });
+            if (launched)
+            {
+                StartupLauncher.LaunchedTask.ContinueWith(context => { Debug.Log($"{name} | LaunchedTask"); });
+            }
         }
 
         private void Start()

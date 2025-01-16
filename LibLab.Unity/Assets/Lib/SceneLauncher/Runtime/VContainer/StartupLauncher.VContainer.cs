@@ -1,6 +1,7 @@
 ﻿#if VCONTAINER
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using SceneLauncher.VContainer;
 using SceneLauncher.VContainer.Internal;
 using UnityEngine;
@@ -26,6 +27,14 @@ namespace SceneLauncher
 
         public static void Initialize(StartupConfig config)
         {
+#if UNITY_INCLUDE_TESTS
+            return;
+            if (SceneLauncher.TestMode)
+            {
+                Debug.LogWarning("Test mode is enabled.");
+                return;
+            }
+#endif
             foreach (var alias in config.Aliases)
             {
                 ScenePathParser.Aliases[alias.Key] = alias.Value;
@@ -50,34 +59,46 @@ namespace SceneLauncher
                 switch (addMode)
                 {
                     case SceneInstallers.AddMode.Main:
-                        using (LifetimeScope.Enqueue(installer))
-                        {
-                            CreateScope<StartupLifetimeScope>(nameof(StartupLifetimeScope))
-                                .ExtraInstaller = installer;
-                        }
-
+                        CreateScope<StartupLifetimeScope>(nameof(StartupLifetimeScope), installer);
                         break;
                     default:
-                        using (LifetimeScope.Enqueue(installer))
-                        {
-                            CreateScope<PostLaunchLifetimeScope>(nameof(PostLaunchLifetimeScope))
-                                .ExtraInstaller = installer;
-                        }
-
+                        CreateScope<PostLaunchLifetimeScope>(nameof(PostLaunchLifetimeScope), installer);
                         break;
                 }
             }
 
-            T CreateScope<T>(string name) where T : LifetimeScope
+            if (!IsLoadedMainScene(out var path))
             {
-                using (LifetimeScope.Enqueue(installer))
+#if UNITY_EDITOR
+                Debug.LogWarning($"Main scene is not loaded.: {path}");
+#endif
+                SceneLoader.Default.AttachMainSceneAsync(Installers).Forget();
+            }
+
+            void CreateScope<T>(string name, IInstaller extraInstaller) where T : LaunchedLifetimeScope
+            {
+                var gameObject = new GameObject(name ?? "LifetimeScope");
+                gameObject.SetActive(false);
+                var newScope = gameObject.AddComponent<T>();
+                newScope.ExtraInstaller = extraInstaller;
+                SceneManager.MoveGameObjectToScene(gameObject, scene);
+                gameObject.SetActive(true);
+            }
+
+            bool IsLoadedMainScene(out string result)
+            {
+                result = null;
+                var mainScenePath = Installers.MainScenePath;
+                for (var i = 0; i < SceneManager.loadedSceneCount; i++)
                 {
-                    var gameObject = new GameObject(name ?? "LifetimeScope");
-                    gameObject.SetActive(false);
-                    var newScope = gameObject.AddComponent<T>();
-                    gameObject.SetActive(true);
-                    return newScope;
+                    if (mainScenePath == SceneManager.GetSceneAt(i).path)
+                    {
+                        return true;
+                    }
                 }
+
+                result = mainScenePath;
+                return false;
             }
         }
     }

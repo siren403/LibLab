@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 1279491423}
   - component: {fileID: 1279491424}
   m_Layer: 0
-  m_Name: A
+  m_Name: Scene A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateCount: 1
+  launched: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

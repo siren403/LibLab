@@ -3,10 +3,8 @@ using VContainer.Unity;
 
 namespace SceneLauncher.VContainer
 {
-    public class StartupLifetimeScope : LifetimeScope
+    public class StartupLifetimeScope : LaunchedLifetimeScope
     {
-        internal IInstaller ExtraInstaller;
-
         protected override void Awake()
         {
             autoRun = false;

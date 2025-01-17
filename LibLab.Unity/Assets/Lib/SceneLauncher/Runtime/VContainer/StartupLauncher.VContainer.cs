@@ -6,7 +6,6 @@ using SceneLauncher.VContainer;
 using SceneLauncher.VContainer.Internal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VContainer.Unity;
 
 namespace SceneLauncher
 {
@@ -28,8 +27,8 @@ namespace SceneLauncher
         public static void Initialize(StartupConfig config)
         {
 #if UNITY_INCLUDE_TESTS
-            return;
-            if (SceneLauncher.TestMode)
+            var activeScene = SceneManager.GetActiveScene();
+            if (activeScene.path.Contains("TestScene"))
             {
                 Debug.LogWarning("Test mode is enabled.");
                 return;
@@ -59,10 +58,17 @@ namespace SceneLauncher
                 switch (addMode)
                 {
                     case SceneInstallers.AddMode.Main:
-                        CreateScope<StartupLifetimeScope>(nameof(StartupLifetimeScope), installer);
+                        ScopeInjector.CreateScope<StartupLifetimeScope>(
+                            scene,
+                            nameof(StartupLifetimeScope),
+                            installer
+                        );
                         break;
                     default:
-                        CreateScope<PostLaunchLifetimeScope>(nameof(PostLaunchLifetimeScope), installer);
+                        ScopeInjector.CreateScope<PostLaunchLifetimeScope>(
+                            scene,
+                            nameof(PostLaunchLifetimeScope),
+                            installer);
                         break;
                 }
             }
@@ -73,16 +79,6 @@ namespace SceneLauncher
                 Debug.LogWarning($"Main scene is not loaded.: {path}");
 #endif
                 SceneLoader.Default.AttachMainSceneAsync(Installers).Forget();
-            }
-
-            void CreateScope<T>(string name, IInstaller extraInstaller) where T : LaunchedLifetimeScope
-            {
-                var gameObject = new GameObject(name ?? "LifetimeScope");
-                gameObject.SetActive(false);
-                var newScope = gameObject.AddComponent<T>();
-                newScope.ExtraInstaller = extraInstaller;
-                SceneManager.MoveGameObjectToScene(gameObject, scene);
-                gameObject.SetActive(true);
             }
 
             bool IsLoadedMainScene(out string result)

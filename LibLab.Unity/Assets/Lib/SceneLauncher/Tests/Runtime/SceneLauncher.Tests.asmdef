@@ -3,7 +3,9 @@
     "rootNamespace": "",
     "references": [
         "SceneLauncher",
-        "UnityEngine.TestRunner"
+        "UnityEngine.TestRunner",
+        "UniTask",
+        "VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

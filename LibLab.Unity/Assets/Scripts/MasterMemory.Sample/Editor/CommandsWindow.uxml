@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:mmse="MasterMemory.Sample.Editor"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:Style src="/Assets/Styles/generated.uss"/>
+    <engine:Label text="Commands" class="text-xl"/>
+    <engine:IntegerField label="A">
+        <Bindings>
+            <engine:DataBinding property="value" data-source-path="a"/>
+        </Bindings>
+    </engine:IntegerField>
+
+    <engine:IntegerField label="B">
+        <Bindings>
+            <engine:DataBinding property="value" data-source-path="b"/>
+        </Bindings>
+    </engine:IntegerField>
+
+    <engine:Label>
+        <Bindings>
+            <engine:DataBinding property="text" data-source-path="Result" binding-mode="ToTarget"/>
+        </Bindings>
+    </engine:Label>
+
+    <mmse:CommandButton command="add" text="Add"/>
+</engine:UXML>

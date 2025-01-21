@@ -10,8 +10,6 @@ using VitalRouter.MRuby;
 
 namespace MasterMemory.Sample.Editor
 {
-
-
     public class SampleWindow : EditorWindow
     {
 
@@ -21,7 +19,6 @@ namespace MasterMemory.Sample.Editor
 
         private void OnEnable()
         {
-
             if (_dataSource.data == null)
             {
                 DatabaseBuilder builder = new();

@@ -1,5 +1,6 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using SceneLauncher.Internal;
 using UnityEngine;
 
 namespace SceneLauncher

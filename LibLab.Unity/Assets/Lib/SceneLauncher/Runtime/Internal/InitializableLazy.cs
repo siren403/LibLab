@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.Assertions;
 
-namespace SceneLauncher
+namespace SceneLauncher.Internal
 {
     internal sealed class InitializableLazy<T>
     {
@@ -19,7 +19,10 @@ namespace SceneLauncher
         {
             get
             {
-                if (_value == null) _value = _valueFactory();
+                if (_value == null)
+                {
+                    _value = _valueFactory();
+                }
 
                 return _value;
             }

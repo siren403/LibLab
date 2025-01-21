@@ -1,0 +1,21 @@
+{
+    "name": "MasterMemory.Sample.Editor",
+    "rootNamespace": "MasterMemory.Sample.Editor",
+    "references": [
+        "MasterMemory.Sample"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "MasterMemory.dll",
+        "MessagePack.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

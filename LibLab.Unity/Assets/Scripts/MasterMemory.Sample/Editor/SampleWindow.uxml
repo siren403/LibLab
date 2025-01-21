@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
+    <engine:Style src="/Assets/Styles/generated.uss"/>
+    <engine:Template src="QuerySection.uxml" name="Section"/>
+
+    <engine:ScrollView vertical-scroller-visibility="AlwaysVisible">
+
+        <engine:Instance template="Section" data-source-path="findById" name="findById">
+            <engine:AttributeOverrides element-name="title-label" text="Id"/>
+            <engine:IntegerField label="Find by id" class="flex-grow">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="id"/>
+                </Bindings>
+            </engine:IntegerField>
+        </engine:Instance>
+
+        <engine:Instance template="Section" data-source-path="findGenderAndAge" name="findGenderAndAge">
+            <engine:AttributeOverrides element-name="title-label" text="GenderAndAge"/>
+            <engine:EnumField
+                label="Gender"
+                type="MasterMemory.Sample.Gender, MasterMemory.Sample, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="gender"/>
+                </Bindings>
+            </engine:EnumField>
+            <engine:IntegerField label="Age">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="age"/>
+                </Bindings>
+            </engine:IntegerField>
+        </engine:Instance>
+
+        <engine:Instance template="Section" data-source-path="findClosestByAge" name="findClosestByAge">
+            <engine:AttributeOverrides element-name="title-label" text="ClosestByAge"/>
+            <engine:IntegerField label="Age">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="age"/>
+                </Bindings>
+            </engine:IntegerField>
+            <engine:Toggle label="Select Lower">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="selectLower"/>
+                </Bindings>
+            </engine:Toggle>
+        </engine:Instance>
+
+        <engine:Instance template="Section" data-source-path="findRangeByAge" name="findRangeByAge">
+            <engine:AttributeOverrides element-name="title-label" text="RangeByAge"/>
+            <engine:VisualElement class="flex-row">
+                <engine:Label class="w-4 text-center" text="Min">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="Min" binding-mode="ToTarget"/>
+                    </Bindings>
+                </engine:Label>
+                <engine:Label class="text-center" text="~"/>
+                <engine:Label class="w-4 text-center" text="Max">
+                    <Bindings>
+                        <engine:DataBinding property="text" data-source-path="Max" binding-mode="ToTarget"/>
+                    </Bindings>
+                </engine:Label>
+                <engine:MinMaxSlider
+                    class="flex-grow ml-2 mr-2"
+                    low-limit="0"
+                    high-limit="25"
+                >
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="Value"/>
+                    </Bindings>
+                </engine:MinMaxSlider>
+            </engine:VisualElement>
+        </engine:Instance>
+
+    </engine:ScrollView>
+</engine:UXML>

@@ -15,11 +15,20 @@
       "hash": "c7a7bbf74e102495c2afeb03e4b25ffb802611b7"
     },
     "com.github.messagepack-csharp": {
-      "version": "https://github.com/MessagePack-CSharp/MessagePack-CSharp.git?path=src/MessagePack.UnityClient/Assets/Scripts/MessagePack#v3.0.3",
+      "version": "https://github.com/MessagePack-CSharp/MessagePack-CSharp.git?path=src/MessagePack.UnityClient/Assets/Scripts/MessagePack#v3.1.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ff3af77f546138d9da71707baddf2c30f55dfc15"
+      "hash": "8373710fb0ae4bb453737f773b930401d8500c31"
+    },
+    "com.oyacamp.zoboui": {
+      "version": "https://github.com/oyacamp/zoboui.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "7ef631720913776ee3b9490b3304e275b7408a98"
     },
     "com.siren403.constants": {
       "version": "file:Constants",
@@ -117,6 +126,13 @@
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.4",
       "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

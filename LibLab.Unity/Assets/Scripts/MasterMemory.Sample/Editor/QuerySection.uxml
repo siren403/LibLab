@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:VisualElement
+        class="border-t-2 border-t-slate-500 m-2"
+    >
+        <engine:Label name="title-label" text="Title" class="text-xl mb-1 mt-1"/>
+        <engine:VisualElement>
+            <!-- content container -->
+            <engine:VisualElement class="mb-1" content-container="slot">
+
+            </engine:VisualElement>
+
+            <engine:Button text="Execute" class="min-w-40 min-h-8 self-end"/>
+
+            <engine:Foldout
+                class="m-1"
+                text="Output"
+                value="false"
+            >
+                <engine:TextField
+                    class="max-h-40 pb-1"
+                    multiline="true"
+                    vertical-scroller-visibility="Auto"
+                >
+                    <Bindings>
+                        <engine:DataBinding
+                            property="value"
+                            data-source-path="Output"
+                            binding-mode="ToTarget"
+                        />
+                    </Bindings>
+                </engine:TextField>
+
+                <Bindings>
+                    <engine:DataBinding
+                        property="value"
+                        data-source-path="UpdatedOutput"
+                    />
+                    <engine:DataBinding
+                        property="style.backgroundColor"
+                        data-source-path="StatusColor"
+                        binding-mode="ToTarget"/>
+                </Bindings>
+            </engine:Foldout>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

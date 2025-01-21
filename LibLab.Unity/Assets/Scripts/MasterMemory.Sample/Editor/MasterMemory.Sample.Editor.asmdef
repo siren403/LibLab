@@ -2,7 +2,10 @@
     "name": "MasterMemory.Sample.Editor",
     "rootNamespace": "MasterMemory.Sample.Editor",
     "references": [
-        "MasterMemory.Sample"
+        "MasterMemory.Sample",
+        "VitalRouter",
+        "VitalRouter.MRuby",
+        "UniTask"
     ],
     "includePlatforms": [
         "Editor"

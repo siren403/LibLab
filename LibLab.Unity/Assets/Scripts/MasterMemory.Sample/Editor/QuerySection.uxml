@@ -14,7 +14,7 @@
 
             </engine:VisualElement>
 
-            <engine:Button text="Execute" class="min-w-40 min-h-8 self-end"/>
+            <engine:Button name="execute" text="Execute" class="min-w-40 min-h-8 self-end"/>
 
             <engine:Foldout
                 class="m-1"

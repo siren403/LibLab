@@ -5,17 +5,23 @@ using Unity.Properties;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using VitalRouter;
+using VitalRouter.MRuby;
 
 namespace MasterMemory.Sample.Editor
 {
+
+
     public class SampleWindow : EditorWindow
     {
+
+        private readonly DataSource _dataSource = new();
+        private MRubyContext _context;
         private MemoryDatabase _database;
-        private DataSource _dataSource;
 
         private void OnEnable()
         {
-            _dataSource ??= new DataSource();
+
             if (_dataSource.data == null)
             {
                 DatabaseBuilder builder = new();
@@ -45,6 +51,17 @@ namespace MasterMemory.Sample.Editor
 
             _database = new MemoryDatabase(_dataSource.data);
 
+            _context = MRubyContext.Create();
+            _context.Router = Router.Default;
+            _context.CommandPreset = new Preset();
+
+            _dataSource.MapTo(Router.Default);
+            _dataSource.Database = _database;
+        }
+
+        private void OnDisable()
+        {
+            _context?.Dispose();
         }
 
         private void CreateGUI()
@@ -59,9 +76,26 @@ namespace MasterMemory.Sample.Editor
             {
                 VisualElement container = root.Q<VisualElement>("findById");
                 IntegerField field = container.Q<IntegerField>();
-                RegisterEnterCallback(field, (_dataSource.findById, _database));
+                // RegisterEnterCallback(field, (_dataSource.findById, _database));
                 Button button = container.Q<Button>();
-                RegisterClickCallback(button, (_dataSource.findById, _database));
+                // RegisterClickCallback(button, (_dataSource.findById, _database));
+
+                container.RegisterCallback((ClickEvent e) =>
+                {
+                    if (e.target is not Button btn || string.IsNullOrWhiteSpace(btn.name))
+                    {
+                        return;
+                    }
+
+                    if (e.currentTarget is not VisualElement ve)
+                    {
+                        return;
+                    }
+
+                    Debug.Log($"Clicked {ve.name}.{btn.name}");
+                    using MRubyScript script = _context.CompileScript(@"cmd :query, type: ""findById""");
+                    script.RunAsync();
+                });
             }
 
             {
@@ -72,6 +106,7 @@ namespace MasterMemory.Sample.Editor
 
                 Button button = container.Q<Button>();
                 RegisterClickCallback(button, (_dataSource.findGenderAndAge, _database));
+
             }
 
             {
@@ -122,6 +157,7 @@ namespace MasterMemory.Sample.Editor
             }
         }
 
+
         [InitializeOnLoadMethod]
         private static void Initialize()
         {
@@ -136,6 +172,16 @@ namespace MasterMemory.Sample.Editor
         }
     }
 
+    [MRubyObject]
+    internal partial struct QueryCommand : ICommand
+    {
+        public string Type;
+    }
+
+    [MRubyCommand("query", typeof(QueryCommand))]
+    internal partial class Preset : MRubyCommandPreset
+    {
+    }
 
     internal enum QueryStatus
     {
@@ -145,7 +191,8 @@ namespace MasterMemory.Sample.Editor
     }
 
     [Serializable]
-    internal class DataSource
+    [Routes]
+    internal partial class DataSource
     {
         public int id;
         public byte[] data;
@@ -153,10 +200,35 @@ namespace MasterMemory.Sample.Editor
         public Query.FindGenderAndAge findGenderAndAge = new();
         public Query.FindClosestByAge findClosestByAge = new();
         public Query.FindRangeByAge findRangeByAge = new();
+
+        public MemoryDatabase Database;
+
+        [Route]
+        private void On(QueryCommand cmd)
+        {
+            if (Database == null) return;
+            switch (cmd.Type)
+            {
+                case nameof(findById):
+                    findById.Execute(Database);
+                    break;
+                case nameof(findGenderAndAge):
+                    findGenderAndAge.Execute(Database);
+                    break;
+                case nameof(findClosestByAge):
+                    findClosestByAge.Execute(Database);
+                    break;
+                case nameof(findRangeByAge):
+                    findRangeByAge.Execute(Database);
+                    break;
+            }
+        }
     }
 
+    [Serializable]
     internal abstract class Query
     {
+
         private readonly List<string> _output = new();
         private QueryStatus _status;
 
@@ -216,7 +288,7 @@ namespace MasterMemory.Sample.Editor
         public abstract void Execute(MemoryDatabase database);
 
         [Serializable]
-        internal class FindById : Query
+        internal partial class FindById : Query
         {
             public int id;
 
@@ -228,7 +300,10 @@ namespace MasterMemory.Sample.Editor
                     : Failure($"PersonId {id} not found.");
             }
 
-            public override void Execute(MemoryDatabase database) => TryExecute(database, out Person p);
+            public override void Execute(MemoryDatabase database)
+            {
+                TryExecute(database, out Person p);
+            }
         }
 
         [Serializable]
@@ -246,7 +321,10 @@ namespace MasterMemory.Sample.Editor
                     : Failure($"Not found. {gender}, {age}");
             }
 
-            public override void Execute(MemoryDatabase database) => TryExecute(database, out RangeView<Person> p);
+            public override void Execute(MemoryDatabase database)
+            {
+                TryExecute(database, out RangeView<Person> p);
+            }
         }
 
         [Serializable]
@@ -262,7 +340,10 @@ namespace MasterMemory.Sample.Editor
                 return results.Any() ? Success(results) : Failure($"Not found. {age}");
             }
 
-            public override void Execute(MemoryDatabase database) => TryExecute(database, out RangeView<Person> p);
+            public override void Execute(MemoryDatabase database)
+            {
+                TryExecute(database, out RangeView<Person> p);
+            }
         }
 
         [Serializable]
@@ -294,7 +375,10 @@ namespace MasterMemory.Sample.Editor
                 return results.Any() ? Success(results) : Failure($"Not found. {Min} - {Max}");
             }
 
-            public override void Execute(MemoryDatabase database) => TryExecute(database, out RangeView<Person> p);
+            public override void Execute(MemoryDatabase database)
+            {
+                TryExecute(database, out RangeView<Person> p);
+            }
         }
     }
 }

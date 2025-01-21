@@ -8,7 +8,6 @@
     <engine:Template src="QuerySection.uxml" name="Section"/>
 
     <engine:ScrollView vertical-scroller-visibility="AlwaysVisible">
-
         <engine:Instance template="Section" data-source-path="findById" name="findById">
             <engine:AttributeOverrides element-name="title-label" text="Id"/>
             <engine:IntegerField label="Find by id" class="flex-grow">

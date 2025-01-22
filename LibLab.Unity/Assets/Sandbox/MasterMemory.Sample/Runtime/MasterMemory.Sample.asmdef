@@ -1,7 +1,11 @@
 {
     "name": "MasterMemory.Sample",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "VitalRouter",
+        "VitalRouter.MRuby",
+        "UniTask"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

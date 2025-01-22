@@ -27,21 +27,21 @@ namespace SceneLauncher
         public static void Initialize(StartupConfig config)
         {
 #if UNITY_INCLUDE_TESTS
-            var activeScene = SceneManager.GetActiveScene();
+            Scene activeScene = SceneManager.GetActiveScene();
             if (activeScene.path.Contains("TestScene"))
             {
                 Debug.LogWarning("Test mode is enabled.");
                 return;
             }
 #endif
-            foreach (var alias in config.Aliases)
+            foreach (KeyValuePair<string, string> alias in config.Aliases)
             {
                 ScenePathParser.Aliases[alias.Key] = alias.Value;
             }
 
             Installers.Add(config.MainScene, ScenePathParser, SceneInstallers.AddMode.Main);
 
-            foreach (var installer in config.SubScenes)
+            foreach (ISceneInstaller installer in config.SubScenes)
             {
                 Installers.Add(installer, ScenePathParser, SceneInstallers.AddMode.Sub);
             }
@@ -51,9 +51,10 @@ namespace SceneLauncher
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            var loadedScene = scene.path;
+            string loadedScene = scene.path;
 
-            if (Installers.TryGetValue(loadedScene, out var installer, out var addMode))
+            if (Installers.TryGetValue(loadedScene, out ISceneInstaller installer,
+                out SceneInstallers.AddMode addMode))
             {
                 switch (addMode)
                 {
@@ -72,8 +73,13 @@ namespace SceneLauncher
                         break;
                 }
             }
+            else
+            {
+                Debug.LogWarning($"Scene is not registered.: {loadedScene}");
+                return;
+            }
 
-            if (!IsLoadedMainScene(out var path))
+            if (!IsLoadedMainScene(out string path))
             {
 #if UNITY_EDITOR
                 Debug.LogWarning($"Main scene is not loaded.: {path}");
@@ -84,8 +90,8 @@ namespace SceneLauncher
             bool IsLoadedMainScene(out string result)
             {
                 result = null;
-                var mainScenePath = Installers.MainScenePath;
-                for (var i = 0; i < SceneManager.loadedSceneCount; i++)
+                string mainScenePath = Installers.MainScenePath;
+                for (int i = 0; i < SceneManager.loadedSceneCount; i++)
                 {
                     if (mainScenePath == SceneManager.GetSceneAt(i).path)
                     {

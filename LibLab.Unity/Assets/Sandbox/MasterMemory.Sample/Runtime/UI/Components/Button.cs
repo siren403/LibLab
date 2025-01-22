@@ -1,12 +1,9 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-[assembly: UxmlNamespacePrefix("MasterMemory.Sample.Editor", "mmse")]
-
-namespace MasterMemory.Sample.Editor
+namespace MasterMemory.Sample.UI
 {
     [UxmlElement]
     public partial class DispatchButton : Button

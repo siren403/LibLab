@@ -6,6 +6,10 @@
 
 // Optional: If you want to use init keyword, copy-and-paste this.
 
+using UnityEditor.UIElements;
+
+[assembly: UxmlNamespacePrefix("MasterMemory.Sample.UI", "mmui")]
+
 namespace System.Runtime.CompilerServices
 {
     internal sealed class IsExternalInit

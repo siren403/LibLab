@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:mmui="MasterMemory.Sample.UI"
+>
+    <engine:VisualElement>
+        <Bindings>
+            <engine:DataBinding property="enabledSelf" data-source-path="isBusy"
+                                source-to-ui-converters="inverse"/>
+        </Bindings>
+        <engine:IntegerField label="A">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="a"/>
+            </Bindings>
+        </engine:IntegerField>
+        <engine:IntegerField label="B">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="b"/>
+            </Bindings>
+        </engine:IntegerField>
+        <engine:Label text="Result">
+            <Bindings>
+                <engine:DataBinding property="text" data-source-path="result"/>
+            </Bindings>
+        </engine:Label>
+        <mmui:DispatchButton text="Add" event="add"/>
+    </engine:VisualElement>
+</engine:UXML>

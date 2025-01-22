@@ -64,7 +64,7 @@ namespace MasterMemory.Sample.Editor
         private void CreateGUI()
         {
             VisualTreeAsset uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                "Assets/Scripts/MasterMemory.Sample/Editor/SampleWindow.uxml");
+                "Assets/Sandbox/MasterMemory.Sample/Editor/SampleWindow.uxml");
 
             VisualElement root = rootVisualElement;
             root.dataSource = _dataSource;

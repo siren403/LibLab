@@ -2,7 +2,7 @@
 <engine:UXML
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:engine="UnityEngine.UIElements"
-    xmlns:mmse="MasterMemory.Sample.Editor"
+    xmlns:mmui="MasterMemory.Sample.UI"
     xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
 >
     <engine:Style src="/Assets/Styles/generated.uss"/>
@@ -25,5 +25,11 @@
         </Bindings>
     </engine:Label>
 
-    <mmse:CommandButton command="add" text="Add"/>
+    <engine:Label text="status">
+        <Bindings>
+            <engine:DataBinding property="text" data-source-path="status" binding-mode="ToTarget"/>
+        </Bindings>
+    </engine:Label>
+
+    <mmui:DispatchButton event="add" text="Run" class="h-10"/>
 </engine:UXML>

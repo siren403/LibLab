@@ -2,116 +2,68 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Unity.Properties;
-using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 using VitalRouter;
 
 namespace MasterMemory.Sample.UI
 {
 
-    public abstract class SubscribeStrategy
-    {
-        public abstract void Emit(string eventName);
-
-        public class Sync<T> : SubscribeStrategy
-        {
-            private readonly Dictionary<string, Action<T>> _listeners;
-
-            private readonly Func<T> _targetProvider;
-
-            public Sync(Func<T> targetProvider, int listenerCapacity = 4)
-            {
-                Assert.IsNotNull(targetProvider);
-                _targetProvider = targetProvider;
-                _listeners = new Dictionary<string, Action<T>>(listenerCapacity);
-            }
-
-            public void Add(string eventName, Action<T> listener)
-            {
-                _listeners.Add(eventName, listener);
-            }
-
-            public override void Emit(string eventName)
-            {
-                if (_listeners.TryGetValue(eventName, out Action<T> listener))
-                {
-                    listener(_targetProvider());
-                }
-            }
-        }
-    }
-
-
     [UxmlElement]
-    [Routes]
-    public partial class Counter : VisualElement
+    public partial class Counter : Component
     {
-        private readonly Router _router = new();
-        private readonly SubscribeStrategy _subscribeStrategy;
-
         public Counter()
         {
-            RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
-            RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
-
+            Configure(() =>
             {
-                SubscribeStrategy.Sync<Counter> strategy = new(() => this);
-                strategy.Add("increment", static counter => Increment(counter));
-                strategy.Add("decrement", static counter => Decrement(counter));
-                _subscribeStrategy = strategy;
-            }
-
+                dataSource = this;
+                // Drop(OnAsync);
+                Sync(On);
+            });
         }
 
-        [CreateProperty]
-        public int Count { get; private set; }
+        [CreateProperty(ReadOnly = true)]
+        private int Count { get; set; }
 
-        [Route]
-        private void On(DispatchCommand cmd)
+        private void On(DispatchCommand cmd, PublishContext ctx)
         {
-            _subscribeStrategy?.Emit(cmd.EventName);
-        }
-
-        private void OnClick(ClickEvent evt)
-        {
-            switch (evt.target)
+            switch (cmd.EventName)
             {
-                case DispatchButton button:
-                {
-                    evt.StopImmediatePropagation();
-                    _router.PublishAsync(new DispatchCommand
-                    {
-                        EventName = button.EventName
-                    });
+                case "increment":
+                    Count = Math.Min(Count + 1, 10);
                     break;
-                }
+                case "decrement":
+                    Count = Math.Max(Count - 1, 0);
+                    break;
             }
         }
 
-        private static void Increment(Counter counter)
+        private async ValueTask OnAsync(DispatchCommand cmd, PublishContext ctx)
+        {
+            switch (cmd.EventName)
+            {
+                case "increment":
+                    await Increment(this, ctx.CancellationToken);
+                    break;
+                case "decrement":
+                    await Decrement(this, ctx.CancellationToken);
+                    break;
+            }
+        }
+
+        private static async ValueTask Increment(Counter counter, CancellationToken cancellationToken = default)
         {
             counter.Count++;
+            await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
         }
 
-        private static void Decrement(Counter counter)
+        private static async ValueTask Decrement(Counter counter, CancellationToken cancellationToken = default)
         {
             counter.Count--;
-        }
-
-        private void OnAttachToPanel(AttachToPanelEvent evt)
-        {
-            dataSource = this;
-            RegisterCallback<ClickEvent>(OnClick);
-            MapTo(_router);
-        }
-
-        private void OnDetachFromPanel(DetachFromPanelEvent evt)
-        {
-            UnmapRoutes();
-            UnregisterCallback<ClickEvent>(OnClick);
-            dataSource = null;
+            await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
         }
     }
 }

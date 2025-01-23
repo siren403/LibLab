@@ -11,5 +11,10 @@
             <engine:DataBinding property="text" data-source-path="Count"/>
         </Bindings>
     </engine:Label>
+    <engine:IntegerField>
+        <Bindings>
+            <engine:DataBinding property="value" data-source-path="Count"/>
+        </Bindings>
+    </engine:IntegerField>
     <engine:Instance template="CounterControl"/>
 </engine:UXML>

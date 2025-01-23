@@ -1,0 +1,107 @@
+// Licensed to the.NET Foundation under one or more agreements.
+// The.NET Foundation licenses this file to you under the MIT license.
+
+using System;
+using UnityEngine;
+using UnityEngine.UIElements;
+using VitalRouter;
+
+namespace MasterMemory.Sample.UI
+{
+    [UxmlElement]
+    public abstract partial class Component : VisualElement, IBindableRouter
+    {
+        private CommandOrdering? _commandOrdering;
+        private PublishContinuation<DispatchCommand> _dispatchAsyncCallback;
+        private Action<DispatchCommand, PublishContext> _dispatchCallback;
+
+        private Subscription _dispatchSubscription;
+        private Router _router;
+
+        [UxmlAttribute("self-router")]
+        private bool _selfRouter = true;
+
+        protected Component()
+        {
+            if (!Application.isPlaying) return;
+            RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
+            RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+        }
+
+        public Router Router
+        {
+            set
+            {
+                _router?.UnsubscribeAll();
+                _router = value;
+                SubscribeDispatch();
+            }
+            protected get => _router;
+        }
+
+        protected void Configure(Action configuration)
+        {
+            if (!Application.isPlaying) return;
+            configuration();
+        }
+
+        private void SubscribeDispatch()
+        {
+            if (_router == null) return;
+            if (_dispatchAsyncCallback != null)
+            {
+                _dispatchSubscription = _router.SubscribeAwait(_dispatchAsyncCallback, _commandOrdering);
+            }
+            else if (_dispatchCallback != null)
+            {
+                _dispatchSubscription = _router.Subscribe(_dispatchCallback);
+            }
+        }
+
+        protected virtual void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            if (_selfRouter)
+            {
+                _router = new Router();
+            }
+            RegisterCallback<ClickEvent>(OnClick);
+            SubscribeDispatch();
+        }
+
+        protected virtual void OnDetachFromPanel(DetachFromPanelEvent evt)
+        {
+            _dispatchSubscription.Dispose();
+            UnregisterCallback<ClickEvent>(OnClick);
+        }
+
+        protected void Drop(PublishContinuation<DispatchCommand> callback)
+        {
+            _commandOrdering = CommandOrdering.Drop;
+            _dispatchAsyncCallback = callback;
+            _dispatchCallback = null;
+        }
+
+        protected void Sync(Action<DispatchCommand, PublishContext> callback)
+        {
+            _dispatchCallback = callback;
+            _commandOrdering = null;
+            _dispatchAsyncCallback = null;
+        }
+
+        private void OnClick(ClickEvent evt)
+        {
+            switch (evt.target)
+            {
+                case DispatchButton button:
+                {
+                    evt.StopImmediatePropagation();
+                    _router?.PublishAsync(new DispatchCommand
+                    {
+                        EventName = button.EventName
+                    });
+                    break;
+                }
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Properties;
+using UnityEngine;
 using UnityEngine.UIElements;
 using VitalRouter;
 using VitalRouter.MRuby;
@@ -31,6 +32,12 @@ namespace MasterMemory.Sample.UI
         private async ValueTask On(AddCommand cmd, PublishContext ctx)
         {
             await Calculator.On(ctx.CancellationToken);
+        }
+
+        [Route]
+        private void On(DispatchCommand cmd)
+        {
+            Debug.Log($"Received {cmd.EventName} to {nameof(SamplePresenter)}");
         }
     }
 

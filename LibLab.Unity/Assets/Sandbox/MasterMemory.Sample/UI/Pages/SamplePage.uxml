@@ -11,9 +11,9 @@
     <engine:Template src="../Components/Counter.uxml" name="Counter"/>
 
     <mmui:SamplePage name="root">
-        <Coin>
-            <mmui:Coin value="10"/>
-        </Coin>
+        <!-- <Coin> -->
+        <!--     <mmui:Coin value="10"/> -->
+        <!-- </Coin> -->
         <mmui:Calculator>
             <engine:Instance template="Calculator" data-source-path="Presenter.Calculator"/>
             <engine:Label text="TEST">
@@ -37,7 +37,10 @@
         <!--     </engine:Label> -->
         <!-- </mmui:Calculator> -->
     </mmui:SamplePage>
-    <mmui:Counter>
+    <mmui:Counter self-router="true">
         <engine:Instance template="Counter"/>
+        <!-- <Bindings> -->
+        <!--     <mmui:ContextBinding source-name="root" property="Router"/> -->
+        <!-- </Bindings> -->
     </mmui:Counter>
 </engine:UXML>

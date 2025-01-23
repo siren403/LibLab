@@ -8,7 +8,6 @@ using VitalRouter.MRuby;
 
 namespace MasterMemory.Sample.UI
 {
-
     [MRubyObject]
     public partial struct SampleCommand : ICommand
     {

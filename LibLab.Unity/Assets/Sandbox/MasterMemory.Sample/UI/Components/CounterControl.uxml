@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:mmui="MasterMemory.Sample.UI"
+    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:VisualElement class="flex-row justify-center">
+        <mmui:DispatchButton text="Decrement" event="decrement"/>
+        <mmui:DispatchButton text="Increment" event="increment"/>
+    </engine:VisualElement>
+</engine:UXML>

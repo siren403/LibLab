@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:Template src="CounterControl.uxml" name="CounterControl"/>
+    <engine:Label text="Counter" class="text-xl text-center"/>
+    <engine:Label text="0" class="text-lg text-center">
+        <Bindings>
+            <engine:DataBinding property="text" data-source-path="Count"/>
+        </Bindings>
+    </engine:Label>
+    <engine:Instance template="CounterControl"/>
+</engine:UXML>

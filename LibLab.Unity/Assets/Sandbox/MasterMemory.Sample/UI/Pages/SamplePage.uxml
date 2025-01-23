@@ -4,11 +4,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:engine="UnityEngine.UIElements"
     xmlns:mmui="MasterMemory.Sample.UI"
-    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd">
-    <engine:Style src="/Assets/Styles/generated.uss"/>
+    xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd">
     <engine:Label name="label" text="Hello, World!" class="text-xl"/>
 
-    <engine:Template src="Components/Calculator.uxml" name="Calculator"/>
+    <engine:Template src="../Components/Calculator.uxml" name="Calculator"/>
+    <engine:Template src="../Components/Counter.uxml" name="Counter"/>
 
     <mmui:SamplePage name="root">
         <Coin>
@@ -37,4 +37,7 @@
         <!--     </engine:Label> -->
         <!-- </mmui:Calculator> -->
     </mmui:SamplePage>
+    <mmui:Counter>
+        <engine:Instance template="Counter"/>
+    </mmui:Counter>
 </engine:UXML>

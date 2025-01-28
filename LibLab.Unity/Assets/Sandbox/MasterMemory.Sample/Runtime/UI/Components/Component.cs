@@ -26,6 +26,7 @@ namespace MasterMemory.Sample.UI
             if (!Application.isPlaying) return;
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+            RegisterCallback<RegisterDispatchEvent>(OnRegisterDispatchEvent);
         }
 
         public Router Router
@@ -37,6 +38,21 @@ namespace MasterMemory.Sample.UI
                 SubscribeDispatch();
             }
             protected get => _router;
+        }
+
+        private void OnRegisterDispatchEvent(RegisterDispatchEvent evt)
+        {
+            evt.StopImmediatePropagation();
+            if (evt.target is not DispatchButton button) return;
+
+            string eventName = button.EventName;
+            button.clicked += () =>
+            {
+                _router?.PublishAsync(new DispatchCommand
+                {
+                    EventName = eventName
+                });
+            };
         }
 
         protected void Configure(Action configuration)
@@ -64,14 +80,12 @@ namespace MasterMemory.Sample.UI
             {
                 _router = new Router();
             }
-            RegisterCallback<ClickEvent>(OnClick);
             SubscribeDispatch();
         }
 
         protected virtual void OnDetachFromPanel(DetachFromPanelEvent evt)
         {
             _dispatchSubscription.Dispose();
-            UnregisterCallback<ClickEvent>(OnClick);
         }
 
         protected void Drop(PublishContinuation<DispatchCommand> callback)
@@ -86,22 +100,6 @@ namespace MasterMemory.Sample.UI
             _dispatchCallback = callback;
             _commandOrdering = null;
             _dispatchAsyncCallback = null;
-        }
-
-        private void OnClick(ClickEvent evt)
-        {
-            switch (evt.target)
-            {
-                case DispatchButton button:
-                {
-                    evt.StopImmediatePropagation();
-                    _router?.PublishAsync(new DispatchCommand
-                    {
-                        EventName = button.EventName
-                    });
-                    break;
-                }
-            }
         }
     }
 }

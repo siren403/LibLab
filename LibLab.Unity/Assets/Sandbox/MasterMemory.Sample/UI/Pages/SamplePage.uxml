@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <engine:UXML
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:engine="UnityEngine.UIElements"
@@ -15,32 +14,13 @@
         <!--     <mmui:Coin value="10"/> -->
         <!-- </Coin> -->
         <mmui:Calculator>
-            <engine:Instance template="Calculator" data-source-path="Presenter.Calculator"/>
-            <engine:Label text="TEST">
-                <Bindings>
-                    <engine:DataBinding data-source-path="Element.Coin.Value" property="text"/>
-                </Bindings>
-            </engine:Label>
-            <Bindings>
-                <mmui:ContextBinding source-name="root" property="Router"/>
-            </Bindings>
+            <!-- <engine:Instance template="Calculator" data-source-path="Presenter.Calculator"/> -->
+            <engine:Instance template="Calculator"/>
         </mmui:Calculator>
-        <!-- <mmui:Calculator> -->
-        <!--     <engine:Instance template="Calculator"/> -->
-        <!--     <Coin> -->
-        <!--         <mmui:Coin value="10"/> -->
-        <!--     </Coin> -->
-        <!--     <engine:Label text="TEST"> -->
-        <!--         <Bindings> -->
-        <!--             <engine:DataBinding data-source-path="Element.Coin.Value" property="text"/> -->
-        <!--         </Bindings> -->
-        <!--     </engine:Label> -->
-        <!-- </mmui:Calculator> -->
+
+        <mmui:Counter>
+            <engine:Instance template="Counter"/>
+        </mmui:Counter>
+
     </mmui:SamplePage>
-    <mmui:Counter self-router="true">
-        <engine:Instance template="Counter"/>
-        <!-- <Bindings> -->
-        <!--     <mmui:ContextBinding source-name="root" property="Router"/> -->
-        <!-- </Bindings> -->
-    </mmui:Counter>
 </engine:UXML>

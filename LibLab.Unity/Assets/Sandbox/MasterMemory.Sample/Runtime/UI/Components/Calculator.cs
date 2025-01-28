@@ -4,14 +4,16 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Unity.Properties;
 using UnityEngine.UIElements;
 using VitalRouter;
-using VitalRouter.MRuby;
+
+// using VitalRouter.MRuby;
 
 namespace MasterMemory.Sample.UI
 {
-    [MRubyObject]
+    // [MRubyObject]
     public partial struct AddCommand : ICommand
     {
         public const string Key = "add";
@@ -44,9 +46,44 @@ namespace MasterMemory.Sample.UI
     }
 
     [UxmlElement]
-    public partial class Calculator : RouterElement
+    public partial class Calculator : Component
     {
+        public Calculator()
+        {
+            Configure(() =>
+            {
+                dataSource = this;
+                Drop(On);
+            });
+        }
+
         [CreateProperty]
-        public SampleObject SampleObject { get; set; }
+        private int A { get; set; }
+
+        [CreateProperty]
+        private int B { get; set; }
+
+        [CreateProperty(ReadOnly = true)]
+        private bool IsBusy { get; set; }
+
+        [CreateProperty(ReadOnly = true)]
+        private int Result { get; set; }
+
+        private async ValueTask On(DispatchCommand cmd, PublishContext ctx)
+        {
+            switch (cmd.EventName)
+            {
+                case "add":
+                {
+                    IsBusy = true;
+                    int total = A + B;
+                    Result = 0;
+                    await UniTask.Delay(TimeSpan.FromSeconds(3), cancellationToken: ctx.CancellationToken);
+                    Result = total;
+                    IsBusy = false;
+                    break;
+                }
+            }
+        }
     }
 }

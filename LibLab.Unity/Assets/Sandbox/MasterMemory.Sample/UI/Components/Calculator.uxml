@@ -4,23 +4,24 @@
     xmlns:mmui="MasterMemory.Sample.UI"
 >
     <engine:VisualElement>
+        <engine:Label text="Calculator" class="text-xl text-center"/>
         <Bindings>
-            <engine:DataBinding property="enabledSelf" data-source-path="isBusy"
+            <engine:DataBinding property="enabledSelf" data-source-path="IsBusy"
                                 source-to-ui-converters="inverse"/>
         </Bindings>
         <engine:IntegerField label="A">
             <Bindings>
-                <engine:DataBinding property="value" data-source-path="a"/>
+                <engine:DataBinding property="value" data-source-path="A"/>
             </Bindings>
         </engine:IntegerField>
         <engine:IntegerField label="B">
             <Bindings>
-                <engine:DataBinding property="value" data-source-path="b"/>
+                <engine:DataBinding property="value" data-source-path="B"/>
             </Bindings>
         </engine:IntegerField>
         <engine:Label text="Result">
             <Bindings>
-                <engine:DataBinding property="text" data-source-path="result"/>
+                <engine:DataBinding property="text" data-source-path="Result"/>
             </Bindings>
         </engine:Label>
         <mmui:DispatchButton text="Add" event="add"/>

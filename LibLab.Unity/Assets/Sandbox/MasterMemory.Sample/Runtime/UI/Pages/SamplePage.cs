@@ -1,45 +1,43 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Unity.Properties;
-using UnityEngine;
 using UnityEngine.UIElements;
 using VitalRouter;
-using VitalRouter.MRuby;
+
+// using VitalRouter.MRuby;
 
 namespace MasterMemory.Sample.UI
 {
-    [MRubyObject]
-    public partial struct SampleCommand : ICommand
-    {
-
-    }
-
-    [Routes]
-    [Serializable]
-    [MRubyCommand("sample", typeof(SampleCommand))]
-    [MRubyCommand(AddCommand.Key, typeof(AddCommand))]
-    public partial class SamplePresenter : MRubyCommandPreset, IPresenter
-    {
-        public readonly CalculatorPresenter Calculator = new();
-
-        [Route]
-        private void On(SampleCommand cmd)
-        {
-        }
-
-        [Route]
-        private async ValueTask On(AddCommand cmd, PublishContext ctx)
-        {
-            await Calculator.On(ctx.CancellationToken);
-        }
-
-        [Route]
-        private void On(DispatchCommand cmd)
-        {
-            Debug.Log($"Received {cmd.EventName} to {nameof(SamplePresenter)}");
-        }
-    }
+    // [MRubyObject]
+    // public partial struct SampleCommand : ICommand
+    // {
+    //
+    // }
+    //
+    // [Routes]
+    // [Serializable]
+    // [MRubyCommand("sample", typeof(SampleCommand))]
+    // [MRubyCommand(AddCommand.Key, typeof(AddCommand))]
+    // public partial class SamplePresenter : MRubyCommandPreset, IPresenter
+    // {
+    //     public readonly CalculatorPresenter Calculator = new();
+    //
+    //     [Route]
+    //     private void On(SampleCommand cmd)
+    //     {
+    //     }
+    //
+    //     [Route]
+    //     private async ValueTask On(AddCommand cmd, PublishContext ctx)
+    //     {
+    //         await Calculator.On(ctx.CancellationToken);
+    //     }
+    //
+    //     [Route]
+    //     private void On(DispatchCommand cmd)
+    //     {
+    //         Debug.Log($"Received {cmd.EventName} to {nameof(SamplePresenter)}");
+    //     }
+    // }
 
     public class Foo
     {
@@ -57,7 +55,7 @@ namespace MasterMemory.Sample.UI
 
 
     [UxmlElement]
-    public partial class SamplePage : PageBase<SamplePresenter>
+    public partial class SamplePage : Component //PageBase<SamplePresenter>
     {
         [CreateProperty]
         public SampleObject SampleObject { get; set; } = new();
@@ -69,17 +67,17 @@ namespace MasterMemory.Sample.UI
         [CreateProperty]
         public Coin Coin { get; set; }
 
-        protected override PageContext CreateContext()
-        {
-            MRubyContext ruby = MRubyContext.Create();
-            return PageContext.Create(this, ruby, new SamplePresenter(), new Router());
-        }
+        // protected override PageContext CreateContext()
+        // {
+        //     MRubyContext ruby = MRubyContext.Create();
+        //     return PageContext.Create(this, ruby, new SamplePresenter(), new Router());
+        // }
     }
 
     [UxmlObject]
     public partial class ContextBinding : CustomBinding
     {
-        public static readonly Dictionary<string, PageContext> Contexts = new();
+        // public static readonly Dictionary<string, PageContext> Contexts = new();
         public static readonly Dictionary<string, Router> Routers = new();
 
         [UxmlAttribute]
@@ -93,10 +91,10 @@ namespace MasterMemory.Sample.UI
 
             switch (context.bindingId.ToString())
             {
-                case nameof(ISharedContext.Context) when target is ISharedContext has:
-                    if (!Contexts.TryGetValue(SourceName, out PageContext ctx)) return;
-                    has.Context = ctx;
-                    break;
+                // case nameof(ISharedContext.Context) when target is ISharedContext has:
+                //     if (!Contexts.TryGetValue(SourceName, out PageContext ctx)) return;
+                //     has.Context = ctx;
+                //     break;
                 case nameof(IBindableRouter.Router) when target is IBindableRouter has:
                     if (!Routers.TryGetValue(SourceName, out Router router)) return;
                     has.Router = router;
@@ -110,8 +108,8 @@ namespace MasterMemory.Sample.UI
         Router Router { set; }
     }
 
-    public interface ISharedContext
-    {
-        PageContext Context { set; }
-    }
+    // public interface ISharedContext
+    // {
+    //     PageContext Context { set; }
+    // }
 }

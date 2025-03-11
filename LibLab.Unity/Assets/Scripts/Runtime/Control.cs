@@ -9,7 +9,14 @@ public abstract class Control
 {
     public abstract Component Source { get; }
     public abstract Type ValueType { get; }
-    public abstract void OnValueChanged();
+    public abstract ChangeResult OnValueChanged();
+}
+
+public enum ChangeResult
+{
+    NotDirty,
+    Success,
+    Failure
 }
 
 [Serializable]
@@ -25,12 +32,18 @@ public abstract class Control<TSource, TValue> : Control where TSource : Compone
 
     public sealed override Component Source => source.Source;
 
-    public sealed override void OnValueChanged()
+    public sealed override ChangeResult OnValueChanged()
     {
-        OnValueChanged(source.Source, value);
+        if (!source.HasSource)
+        {
+            Debug.LogWarning($"Control.OnValueChanged({source}, {value}): source is null");
+            return ChangeResult.Failure;
+        }
+        return OnValueChanged(source.Source, value);
     }
 
-    protected abstract void OnValueChanged(TSource source, TValue value);
+
+    protected abstract ChangeResult OnValueChanged(TSource source, TValue value);
 
     public override string ToString()
     {

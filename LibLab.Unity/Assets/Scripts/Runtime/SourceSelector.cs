@@ -28,4 +28,6 @@ public class SourceSelector<T> : SourceSelector where T : Component
     private T source;
 
     public T Source => source;
+
+    public bool HasSource => source != null;
 }

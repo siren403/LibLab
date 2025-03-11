@@ -1,0 +1,19 @@
+.container {
+    flex-direction: row;
+}
+
+.field__container {
+    flex-direction: row;
+}
+
+.field__component {
+    flex-grow: 1;
+}
+
+.field__location {
+    width: 100px;
+}
+
+.label--disabled {
+    display: none;
+}

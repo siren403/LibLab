@@ -21,8 +21,6 @@ public class ControlPropertyDrawer : PropertyDrawer
             return base.CreatePropertyGUI(property);
         }
 
-        SerializedProperty sourceProperty = property.FindPropertyRelative("source");
-
         VisualElement root = new()
         {
             style =
@@ -35,21 +33,31 @@ public class ControlPropertyDrawer : PropertyDrawer
         {
             text = property.displayName
         };
-        root.Add(label);
-
-        PropertyField valueField = new()
+        PropertyField sourceField = new(property.FindPropertyRelative("source"));
+        PropertyField valueField = new(property.FindPropertyRelative("value"))
         {
-            dataSourceType = control.ValueType
+            dataSourceType = control.ValueType,
+            label = string.Empty,
+            style =
+            {
+                flexGrow = 1
+            }
         };
         valueField.RegisterValueChangeCallback((e) =>
         {
-            Debug.Log($"{e.changedProperty.boolValue} | {control}");
-            control.OnValueChanged();
+            if (property.boxedValue is not Control changedControl)
+            {
+                return;
+            }
+            ChangeResult result = changedControl.OnValueChanged();
+            if (result == ChangeResult.Success)
+            {
+                EditorUtility.SetDirty(changedControl.Source);
+            }
         });
-        valueField.BindProperty(property.FindPropertyRelative("value"));
-        root.Add(valueField);
 
-        PropertyField sourceField = new(property.FindPropertyRelative("source"));
+        root.Add(label);
+        root.Add(valueField);
         root.Add(sourceField);
 
         return root;

@@ -1,0 +1,16 @@
+{
+    "name": "Storybook.Samples.Basic",
+    "rootNamespace": "",
+    "references": [
+        "GUID:fdffc334cc70f084a9725b3d4d180b08"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

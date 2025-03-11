@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Object = UnityEngine.Object;
 
 [CustomPropertyDrawer(typeof(SourceSelector<>))]
 public class SourceSelectorPropertyDrawer : PropertyDrawer
@@ -29,18 +28,28 @@ public class SourceSelectorPropertyDrawer : PropertyDrawer
         {
             style =
             {
-                flexDirection = FlexDirection.Row, maxWidth = 100
+                flexDirection = FlexDirection.Row
             }
         };
 
         ObjectField objectField = new()
         {
-            objectType = type
+            objectType = type,
+            style =
+            {
+                width = 100
+            }
         };
         objectField.BindProperty(property.FindPropertyRelative("source"));
         root.Add(objectField);
 
-        EnumField enumField = new();
+        EnumField enumField = new()
+        {
+            style =
+            {
+                width = 70
+            }
+        };
         enumField.BindProperty(property.FindPropertyRelative("location"));
         enumField.RegisterValueChangedCallback((e) =>
         {

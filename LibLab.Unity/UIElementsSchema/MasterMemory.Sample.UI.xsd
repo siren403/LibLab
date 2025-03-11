@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:mmui="MasterMemory.Sample.UI" xmlns:editor="UnityEditor.UIElements" xmlns:engine="UnityEngine.UIElements" xmlns="ZoboUI.Editor" elementFormDefault="qualified" targetNamespace="MasterMemory.Sample.UI" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:editor="UnityEditor.UIElements" xmlns:AddressablesGUI="UnityEditor.AddressableAssets.GUIElements" xmlns:engine="UnityEngine.UIElements" xmlns:mmui="MasterMemory.Sample.UI" xmlns="ZoboUI.Editor" elementFormDefault="qualified" targetNamespace="MasterMemory.Sample.UI" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:simpleType name="ContextBinding_update-trigger_Type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WhenDirty" />
+      <xs:enumeration value="OnSourceChanged" />
+      <xs:enumeration value="EveryUpdate" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ContextBindingType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="property" type="xs:string" use="optional" />
+        <xs:attribute default="EveryUpdate" name="update-trigger" type="mmui:ContextBinding_update-trigger_Type" use="optional" />
+        <xs:attribute default="" name="source-name" type="xs:string" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ContextBinding" substitutionGroup="engine:VisualElement" type="mmui:ContextBindingType" />
+  <xs:complexType name="SamplePageType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="false" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
+        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute name="self-router" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SamplePage" substitutionGroup="engine:VisualElement" type="mmui:SamplePageType" />
   <xs:complexType name="CounterType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
@@ -25,9 +70,32 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Counter" substitutionGroup="engine:VisualElement" type="mmui:CounterType" />
-  <xs:complexType name="SampleObjectType">
+  <xs:complexType name="CommandButtonType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="name" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
+        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
+        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
+        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
+        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
+        <xs:attribute default="true" name="focusable" type="xs:boolean" use="optional" />
+        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
+        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute default="" name="binding-path" type="xs:string" use="optional" />
+        <xs:attribute default="" name="text" type="xs:string" use="optional" />
+        <xs:attribute default="true" name="enable-rich-text" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="emoji-fallback-support" type="xs:boolean" use="optional" />
+        <xs:attribute default="false" name="parse-escape-sequences" type="xs:boolean" use="optional" />
+        <xs:attribute default="false" name="selectable" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="double-click-selects-word" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="triple-click-selects-line" type="xs:boolean" use="optional" />
+        <xs:attribute default="true" name="display-tooltip-when-elided" type="xs:boolean" use="optional" />
+        <xs:attribute default="" name="icon-image" type="xs:string" use="optional" />
+        <xs:attribute default="" name="command" type="xs:string" use="optional" />
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="class" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />
@@ -35,8 +103,8 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="SampleObject" substitutionGroup="engine:VisualElement" type="mmui:SampleObjectType" />
-  <xs:complexType name="SamplePageType">
+  <xs:element name="CommandButton" substitutionGroup="engine:VisualElement" type="mmui:CommandButtonType" />
+  <xs:complexType name="CalculatorType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
         <xs:attribute default="" name="name" type="xs:string" use="optional" />
@@ -51,6 +119,7 @@
         <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
         <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
         <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
+        <xs:attribute name="self-router" type="xs:boolean" use="optional" />
         <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
         <xs:attribute default="" name="class" type="xs:string" use="optional" />
         <xs:attribute default="" name="style" type="xs:string" use="optional" />
@@ -58,7 +127,18 @@
       </xs:restriction>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="SamplePage" substitutionGroup="engine:VisualElement" type="mmui:SamplePageType" />
+  <xs:element name="Calculator" substitutionGroup="engine:VisualElement" type="mmui:CalculatorType" />
+  <xs:complexType name="SampleObjectType">
+    <xs:complexContent mixed="false">
+      <xs:restriction base="engine:VisualElementType">
+        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
+        <xs:attribute default="" name="class" type="xs:string" use="optional" />
+        <xs:attribute default="" name="style" type="xs:string" use="optional" />
+        <xs:anyAttribute processContents="lax" />
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SampleObject" substitutionGroup="engine:VisualElement" type="mmui:SampleObjectType" />
   <xs:complexType name="DispatchButtonType">
     <xs:complexContent mixed="false">
       <xs:restriction base="engine:VisualElementType">
@@ -105,82 +185,4 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Coin" substitutionGroup="engine:VisualElement" type="mmui:CoinType" />
-  <xs:complexType name="CalculatorType">
-    <xs:complexContent mixed="false">
-      <xs:restriction base="engine:VisualElementType">
-        <xs:attribute default="" name="name" type="xs:string" use="optional" />
-        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
-        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
-        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
-        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
-        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
-        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
-        <xs:attribute default="false" name="focusable" type="xs:boolean" use="optional" />
-        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
-        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
-        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
-        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
-        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
-        <xs:attribute default="" name="class" type="xs:string" use="optional" />
-        <xs:attribute default="" name="style" type="xs:string" use="optional" />
-        <xs:anyAttribute processContents="lax" />
-      </xs:restriction>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="Calculator" substitutionGroup="engine:VisualElement" type="mmui:CalculatorType" />
-  <xs:complexType name="CommandButtonType">
-    <xs:complexContent mixed="false">
-      <xs:restriction base="engine:VisualElementType">
-        <xs:attribute default="" name="name" type="xs:string" use="optional" />
-        <xs:attribute default="true" name="enabled" type="xs:boolean" use="optional" />
-        <xs:attribute default="" name="view-data-key" type="xs:string" use="optional" />
-        <xs:attribute default="Position" name="picking-mode" type="engine:VisualElement_picking-mode_Type" use="optional" />
-        <xs:attribute default="" name="tooltip" type="xs:string" use="optional" />
-        <xs:attribute default="None" name="usage-hints" type="engine:VisualElement_usage-hints_Type" use="optional" />
-        <xs:attribute default="0" name="tabindex" type="xs:int" use="optional" />
-        <xs:attribute default="true" name="focusable" type="xs:boolean" use="optional" />
-        <xs:attribute default="Inherit" name="language-direction" type="engine:VisualElement_language-direction_Type" use="optional" />
-        <xs:attribute default="" name="data-source" type="xs:string" use="optional" />
-        <xs:attribute default="" name="data-source-path" type="xs:string" use="optional" />
-        <xs:attribute default="" name="data-source-type" type="xs:string" use="optional" />
-        <xs:attribute default="" name="binding-path" type="xs:string" use="optional" />
-        <xs:attribute default="" name="text" type="xs:string" use="optional" />
-        <xs:attribute default="true" name="enable-rich-text" type="xs:boolean" use="optional" />
-        <xs:attribute default="true" name="emoji-fallback-support" type="xs:boolean" use="optional" />
-        <xs:attribute default="false" name="parse-escape-sequences" type="xs:boolean" use="optional" />
-        <xs:attribute default="false" name="selectable" type="xs:boolean" use="optional" />
-        <xs:attribute default="true" name="double-click-selects-word" type="xs:boolean" use="optional" />
-        <xs:attribute default="true" name="triple-click-selects-line" type="xs:boolean" use="optional" />
-        <xs:attribute default="true" name="display-tooltip-when-elided" type="xs:boolean" use="optional" />
-        <xs:attribute default="" name="icon-image" type="xs:string" use="optional" />
-        <xs:attribute default="" name="command" type="xs:string" use="optional" />
-        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
-        <xs:attribute default="" name="class" type="xs:string" use="optional" />
-        <xs:attribute default="" name="style" type="xs:string" use="optional" />
-        <xs:anyAttribute processContents="lax" />
-      </xs:restriction>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="CommandButton" substitutionGroup="engine:VisualElement" type="mmui:CommandButtonType" />
-  <xs:simpleType name="ContextBinding_update-trigger_Type">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="WhenDirty" />
-      <xs:enumeration value="OnSourceChanged" />
-      <xs:enumeration value="EveryUpdate" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ContextBindingType">
-    <xs:complexContent mixed="false">
-      <xs:restriction base="engine:VisualElementType">
-        <xs:attribute default="" name="property" type="xs:string" use="optional" />
-        <xs:attribute default="EveryUpdate" name="update-trigger" type="mmui:ContextBinding_update-trigger_Type" use="optional" />
-        <xs:attribute default="" name="source-name" type="xs:string" use="optional" />
-        <xs:attribute default="" name="content-container" type="xs:string" use="optional" />
-        <xs:attribute default="" name="class" type="xs:string" use="optional" />
-        <xs:attribute default="" name="style" type="xs:string" use="optional" />
-        <xs:anyAttribute processContents="lax" />
-      </xs:restriction>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ContextBinding" substitutionGroup="engine:VisualElement" type="mmui:ContextBindingType" />
 </xs:schema>

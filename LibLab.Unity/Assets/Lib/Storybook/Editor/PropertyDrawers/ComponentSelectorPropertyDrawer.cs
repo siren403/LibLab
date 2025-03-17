@@ -25,36 +25,44 @@ namespace Storybook.Editor.PropertyDrawers
                 return base.CreatePropertyGUI(property);
             }
 
-            VisualTreeAsset uxml =
-                Resources.Load<VisualTreeAsset>(
-                    $"{nameof(Storybook)}/{nameof(ComponentSelectorPropertyDrawer)}");
-
+            VisualTreeAsset uxml = AssetLoader.LoadUxml<ComponentSelectorPropertyDrawer>();
             VisualElement root = uxml.Instantiate();
             ComponentSelectorElement element = root.Q<ComponentSelectorElement>();
 
             element.Label = property.displayName;
-            element.ComponentType = selector.SourceType;
-            element.ComponentField.BindProperty(
-                property.FindPropertyRelative("source")
+            Bind(element, selector.SourceType, property, component);
+            return root;
+        }
+
+        public static void Bind(ComponentSelectorElement componentSelector, Type sourceType,
+            SerializedProperty selectorProperty, Component component)
+        {
+            SerializedProperty sourceProperty = selectorProperty.FindPropertyRelative("source");
+            SerializedProperty locationProperty = selectorProperty.FindPropertyRelative("location");
+            componentSelector.ComponentType = sourceType;
+            componentSelector.ComponentField.BindProperty(
+                sourceProperty
             );
-            element.LocationField.BindProperty(
-                property.FindPropertyRelative("location")
+            componentSelector.LocationField.BindProperty(
+                locationProperty
             );
-            element.LocationField.RegisterValueChangedCallback((e) =>
+
+            componentSelector.LocationField.RegisterValueChangedCallback((e) =>
             {
                 SourceLocation? location = e.newValue as SourceLocation?;
                 if (location == SourceLocation.Manual)
                 {
-                    element.ComponentField.value = null;
+                    componentSelector.ComponentField.value = null;
+                    componentSelector.EnableInClassList("failed", true);
                     return;
                 }
-                (bool success, Component result) = GetSource(location, component, selector.SourceType);
-                element.ComponentField.value = result;
+                (bool success, Component result) = GetSource(location, component, sourceType);
+                componentSelector.ComponentField.value = result;
+                componentSelector.EnableInClassList("failed", !success);
             });
-            return root;
         }
 
-        private (bool success, Component result) GetSource(
+        private static (bool success, Component result) GetSource(
             SourceLocation? location,
             Component target,
             Type type)

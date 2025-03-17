@@ -1,0 +1,28 @@
+.component-control {
+    flex-direction: row;
+}
+
+.component-control.failed {
+    background-color: #8E1F1F;
+}
+
+.component-control__container {
+    flex-grow: 1;
+}
+
+.component-control__field {
+    margin-right: 18px;
+}
+
+.component-control__selector {
+}
+
+.component-control__selector.hide {
+    display: none;
+}
+
+Foldout {
+    position: absolute;
+    right: 10px;
+    scale: -1 1 1;
+}

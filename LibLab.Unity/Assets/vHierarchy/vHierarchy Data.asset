@@ -37,7 +37,12 @@ MonoBehaviour:
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-f0467fee589f4444da695fb56dba8cc4-1395353228-0
+        - globalObjectIdString: GlobalObjectId_V1-2-f0467fee589f4444da695fb56dba8cc4-7043955715850732395-0
         values:
+        - colorIndex: 0
+          iconNameOrGuid: Canvas Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
         - colorIndex: 0
           iconNameOrGuid: Canvas Icon
           isIconRecursive: 0
@@ -49,4 +54,4 @@ MonoBehaviour:
   - Assets/Lib/SceneLauncher/Example/Scenes/Scene A.unity
   - Assets/Lib/SceneLauncher/Example/Scenes/Scene B.unity
   - Assets/Lib/SceneLauncher/Example/Scenes/Scene C.unity
-  - Assets/Lib/SceneLauncher/Example/Scenes/StorybookScene.unity
+  - Assets/Lib/Storybook/Samples/Basic/StorybookScene.unity

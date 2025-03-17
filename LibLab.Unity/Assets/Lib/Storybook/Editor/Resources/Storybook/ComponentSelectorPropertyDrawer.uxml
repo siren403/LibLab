@@ -7,7 +7,7 @@
     xsi:noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd"
 >
     <engine:Style src="ComponentSelectorPropertyDrawer.uss"/>
-    <storybook:ComponentSelectorElement label="Component">
+    <storybook:ComponentSelectorElement name="component-selector" label="Component">
         <engine:VisualElement class="container">
             <engine:Label class="label unity-base-field__label"/>
             <engine:VisualElement class="field__container unity-base-field__input">

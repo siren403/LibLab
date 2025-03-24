@@ -1,0 +1,25 @@
+ComponentSelectorElement.failed {
+    background-color: #8E1F1F;
+}
+
+.container {
+    flex-direction: row;
+}
+
+.field__container {
+    flex-direction: row;
+}
+
+.field__component {
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.field__location {
+    width: 100px;
+    flex-shrink: 1;
+}
+
+.label--disabled {
+    display: none;
+}

@@ -15,11 +15,13 @@ namespace SceneLauncher.Example
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         private static void Initialize()
         {
-            var config = new StartupConfig
+            StartupConfig config = new()
             {
                 Aliases = new Dictionary<string, string>
                 {
-                    {"$scenes", "Assets/Lib/SceneLauncher/Example/Scenes"}
+                    {
+                        "$scenes", "Assets/Lib/SceneLauncher/Example/Scenes"
+                    }
                 },
                 MainScene = new MainScene("$scenes/MainScene.unity"),
                 SubScenes = new[]
@@ -79,7 +81,7 @@ namespace SceneLauncher.Example
             {
                 void IInitializable.Initialize()
                 {
-                    if (SceneManager.loadedSceneCount == 1)
+                    if (SceneManager.sceneCount == 1)
                     {
                         SceneLoader.Default.AttachSceneAsync("Lib/SceneLauncher/Example/Scenes/Scene A").Forget();
                     }

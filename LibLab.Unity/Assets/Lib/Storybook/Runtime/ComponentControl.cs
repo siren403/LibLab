@@ -23,7 +23,14 @@ namespace Storybook
         public TValue Value
         {
             get => value;
-            set => this.value = value;
+            set
+            {
+                if (Application.isPlaying)
+                {
+                    OnValueChanged(selector.Source, value);
+                }
+                this.value = value;
+            }
         }
 
         public ChangeResult OnValueChanged()

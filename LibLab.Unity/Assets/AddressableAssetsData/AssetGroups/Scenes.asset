@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Scenes
+  m_EditorClassIdentifier: 
+  m_GroupName: Scenes
+  m_GUID: fac6f5ba076494fbdb6607aa9ec72c7b
+  m_SerializeEntries:
+  - m_GUID: 07fe7f2eae88c4c6ab6091b0c9c868f3
+    m_Address: Assets/App/UI/Scenes/App_UI_StartupScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - /startup
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2407c7fc243414a148fada3473c6205d
+    m_Address: Assets/App/UI/Scenes/App_UI_ModalScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - /
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 591db8ff584af474b9d596ca563e6f73
+    m_Address: Assets/App/UI/Scenes/App_UI_TransitionScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - /
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b296c41a073e4da89e35ff1b2105166
+    m_Address: Assets/App/UI/Scenes/App_UI_IntroScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - /intro
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: af056763a16844439adfc5c4548c4337, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d49769d3d68e34cadab82a2908f7894a, type: 2}
+    - {fileID: 11400000, guid: 667550eb962b14c059a5d6bacb5c1d7d, type: 2}

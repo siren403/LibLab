@@ -31,7 +31,7 @@ namespace SceneLauncher
 
             _isExecutedLaunch = true;
             configuration();
-            var context = LaunchedContext.FromOptions(options);
+            LaunchedContext context = LaunchedContext.FromOptions(options);
             LaunchedSource.Value.TrySetResult(context);
         }
     }

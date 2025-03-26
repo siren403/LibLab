@@ -24,7 +24,6 @@ namespace App
         {
             _router = new AsyncLazy<Router>(async () =>
             {
-                Debug.Log($"Creating router");
                 IObjectResolver container = await PostLaunchLifetimeScope.GetLaunchedTask(gameObject.scene);
                 return container.Resolve<Router>();
             });

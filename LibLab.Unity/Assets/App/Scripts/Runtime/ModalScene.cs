@@ -1,6 +1,7 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
+using System.Collections.Generic;
 using Storybook.Buttons;
 using UnityEngine;
 using VContainer;
@@ -14,8 +15,8 @@ namespace App
         public void Install(IContainerBuilder builder)
         {
             Debug.Log("Installing: " + nameof(ModalScene));
-            builder.RegisterEntryPoint<Init>();
             builder.RegisterComponentInHierarchy<PrimaryButton>();
+            builder.Register<PageContainer>(Lifetime.Singleton).AsSelf();
             bool existsPerson = builder.Exists(
                 typeof(IPerson),
                 true,
@@ -24,27 +25,13 @@ namespace App
             {
                 builder.Register<AlertPerson>(Lifetime.Singleton).As<IPerson>();
             }
-            builder.RegisterVitalRouter((routing) =>
-            {
-                routing.Map<UiPresenter>();
-            });
+
+            builder.RegisterVitalRouter((routing) => { routing.Map<UiPresenter>(); });
         }
+    }
 
-        private class Init : IInitializable
-        {
-            private PrimaryButton _button;
-            private IPerson _person;
+    public class PageContainer : Dictionary<string, Page>
+    {
 
-            public Init(PrimaryButton button, IPerson person)
-            {
-                _button = button;
-                _person = person;
-            }
-
-            public void Initialize()
-            {
-                _button.Label = _person.Name;
-            }
-        }
     }
 }

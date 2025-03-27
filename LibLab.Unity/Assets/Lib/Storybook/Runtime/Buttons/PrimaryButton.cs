@@ -25,5 +25,7 @@ namespace Storybook.Buttons
         {
             set => label.Value = value;
         }
+
+        public Button Button => button.Source;
     }
 }

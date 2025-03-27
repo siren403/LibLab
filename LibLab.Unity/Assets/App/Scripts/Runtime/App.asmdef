@@ -8,13 +8,18 @@
         "SceneLauncher",
         "VContainer",
         "Storybook",
-        "VitalRouter"
+        "VitalRouter",
+        "R3.Unity",
+        "LitMotion",
+        "LitMotion.Extensions"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "R3.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],

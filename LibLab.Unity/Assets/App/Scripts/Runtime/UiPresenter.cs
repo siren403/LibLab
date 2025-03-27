@@ -18,11 +18,21 @@ namespace App
     [Routes]
     public partial class UiPresenter
     {
+        private readonly PageContainer _pages;
+
+        public UiPresenter(PageContainer pages)
+        {
+            _pages = pages;
+        }
+
         [Route(CommandOrdering.Drop)]
         private async ValueTask OnClick(ClickCommand command, CancellationToken cancellationToken)
         {
             Debug.Log("Clicked: " + command.Id);
-            await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
+            if (_pages.TryGetValue(command.Id, out var page))
+            {
+                await page.Show();
+            }
         }
     }
 }

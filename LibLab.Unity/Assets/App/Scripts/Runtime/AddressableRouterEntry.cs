@@ -21,6 +21,9 @@ namespace App
             await Addressables.InitializeAsync();
             await Addressables.CheckForCatalogUpdates();
 
+            var firstScene = SceneManager.GetSceneAt(0);
+            if (firstScene.buildIndex != 0) return;
+
             IList<IResourceLocation> locations =
                 await Addressables.LoadResourceLocationsAsync("/").Task.AsUniTask();
 

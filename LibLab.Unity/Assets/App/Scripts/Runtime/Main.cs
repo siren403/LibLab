@@ -9,10 +9,29 @@ namespace App
     public class Main
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Initialize()
+        private static void RegisterSceneLoaded()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        private static void CheckMainScene()
+        {
+            bool loadedMainScene = false;
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                var scene = SceneManager.GetSceneAt(i);
+                if (scene.buildIndex != 0) continue;
+
+                loadedMainScene = true;
+                break;
+            }
+
+            if (!loadedMainScene)
+            {
+                SceneManager.LoadScene(0, LoadSceneMode.Additive);
+            }
         }
 
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -26,10 +45,10 @@ namespace App
                     nameof(StartupLifetimeScope),
                     new MainScene()
                 );
+                SceneManager.SetActiveScene(scene);
             }
             else
             {
-                Debug.Log($"MainScene +> {scene.path}");
                 IInstaller installer = scene.path switch
                 {
                     _ when scene.path.Contains("ModalScene") => new ModalScene(),
@@ -42,6 +61,5 @@ namespace App
                 );
             }
         }
-
     }
 }

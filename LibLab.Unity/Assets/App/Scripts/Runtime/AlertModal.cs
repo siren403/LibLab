@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
 using R3;
+using SceneLauncher.VContainer;
 using Storybook;
 using Storybook.Buttons;
 using UnityEngine;
+using VContainer;
 
 namespace App
 {
@@ -24,6 +26,17 @@ namespace App
                     page.Hide().Forget();
                 }).AddTo(this);
             }
+
+            PostLaunchLifetimeScope.GetLaunchedTask(gameObject.scene).ContinueWith((container) =>
+            {
+                if (container.TryResolve(out AlertState state))
+                {
+                    state.Message.AsObservable().Subscribe((str) =>
+                    {
+                        closeButton.Source.Label = str;
+                    }).AddTo(this);
+                }
+            });
         }
     }
 }

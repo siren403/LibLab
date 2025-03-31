@@ -1,3 +1,5 @@
+using App.Scenes;
+using App.Scenes.Modal;
 using SceneLauncher;
 using SceneLauncher.VContainer;
 using UnityEngine;
@@ -21,7 +23,7 @@ namespace App
             bool loadedMainScene = false;
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                var scene = SceneManager.GetSceneAt(i);
+                Scene scene = SceneManager.GetSceneAt(i);
                 if (scene.buildIndex != 0) continue;
 
                 loadedMainScene = true;

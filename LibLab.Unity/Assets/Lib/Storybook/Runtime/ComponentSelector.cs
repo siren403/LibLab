@@ -35,5 +35,13 @@ namespace Storybook
         public T Source => source;
 
         public bool HasSource => source != null;
+
+        public bool TryGetComponent(out T component)
+        {
+            component = source;
+            return HasSource;
+        }
+
+        public static implicit operator T(ComponentSelector<T> selector) => selector.Source;
     }
 }

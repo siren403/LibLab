@@ -5,14 +5,13 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace App
+namespace App.Scenes
 {
     internal class MainScene : IInstaller
     {
         public void Install(IContainerBuilder builder)
         {
             Debug.Log("Installing: " + builder.ApplicationOrigin);
-            builder.Register<MainPerson>(Lifetime.Singleton).As<IPerson>();
             builder.RegisterEntryPoint<AddressableRouterEntry>();
         }
     }

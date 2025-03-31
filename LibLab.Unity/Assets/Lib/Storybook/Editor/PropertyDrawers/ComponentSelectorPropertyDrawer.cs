@@ -43,6 +43,11 @@ namespace Storybook.Editor.PropertyDrawers
             componentSelector.ComponentField.BindProperty(
                 sourceProperty
             );
+            componentSelector.ComponentField.RegisterValueChangedCallback(e =>
+            {
+                componentSelector.EnableInClassList("failed", componentSelector.ComponentField.value == null);
+            });
+
             componentSelector.LocationField.BindProperty(
                 locationProperty
             );
@@ -52,8 +57,7 @@ namespace Storybook.Editor.PropertyDrawers
                 SourceLocation? location = e.newValue as SourceLocation?;
                 if (location == SourceLocation.Manual)
                 {
-                    componentSelector.ComponentField.value = null;
-                    componentSelector.EnableInClassList("failed", true);
+                    componentSelector.EnableInClassList("failed", componentSelector.ComponentField.value == null);
                     return;
                 }
                 (bool success, Component result) = GetSource(location, component, sourceType);

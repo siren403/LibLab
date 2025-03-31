@@ -11,7 +11,8 @@
         "VitalRouter",
         "R3.Unity",
         "LitMotion",
-        "LitMotion.Extensions"
+        "LitMotion.Extensions",
+        "LitMotion.Animation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

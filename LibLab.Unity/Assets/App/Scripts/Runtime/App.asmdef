@@ -12,7 +12,8 @@
         "R3.Unity",
         "LitMotion",
         "LitMotion.Extensions",
-        "LitMotion.Animation"
+        "LitMotion.Animation",
+        "ImprovedTimers"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

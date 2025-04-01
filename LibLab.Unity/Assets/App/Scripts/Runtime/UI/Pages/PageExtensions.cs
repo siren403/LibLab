@@ -15,7 +15,7 @@ namespace App.UI.Pages
         {
             builder.RegisterVitalRouter(routing =>
             {
-                routing.Map<PageController>();
+                routing.Map<PagePresenter>();
             });
             builder.Register<PageNavigator>(Lifetime.Singleton).AsSelf();
             builder.RegisterEntryPoint<InputBackOnPop>();

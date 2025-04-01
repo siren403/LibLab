@@ -19,6 +19,7 @@ namespace App.UI.Pages
         public void Add(string id, IPage page)
         {
             _pages.Add(id, page);
+            Debug.Log($"Added Page {id}");
         }
 
         public async UniTask Push(string id, CancellationToken cancellationToken = default)
@@ -28,14 +29,22 @@ namespace App.UI.Pages
             {
                 return;
             }
+
             if (!_pages.TryGetValue(id, out IPage page))
             {
+                return;
+            }
+
+            if (_history.Count > 0 && _history.Peek() == id)
+            {
+                Debug.LogWarning($"Already pushing page {id}");
                 return;
             }
 
             _history.Push(id);
             try
             {
+                Debug.Log($"Pushing page {id}");
                 _processing = true;
                 await page.Show(cancellationToken);
             }
@@ -56,6 +65,7 @@ namespace App.UI.Pages
             {
                 return;
             }
+
             if (_history.Count == 0)
             {
                 Debug.LogWarning("No pages to pop");
@@ -71,6 +81,7 @@ namespace App.UI.Pages
 
             try
             {
+                Debug.Log($"Popping page {id}");
                 _processing = true;
                 await page.Hide(cancellationToken);
             }

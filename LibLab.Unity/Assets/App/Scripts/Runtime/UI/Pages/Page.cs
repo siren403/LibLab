@@ -96,15 +96,8 @@ namespace App.UI.Pages
 
         private void Reset()
         {
-            Canvas canvas = GetComponent<Canvas>();
-            canvas.vertexColorAlwaysGammaSpace = true;
-
-            RectTransform tr = GetComponent<RectTransform>();
-            tr.anchorMin = Vector2.zero;
-            tr.anchorMax = Vector2.one;
-
-            tr.offsetMin = Vector2.zero;
-            tr.offsetMax = Vector2.zero;
+            gameObject.ResetCanvas();
+            gameObject.ResetRectTransform();
         }
     }
 }

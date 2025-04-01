@@ -1,0 +1,13 @@
+﻿// Licensed to the.NET Foundation under one or more agreements.
+// The.NET Foundation licenses this file to you under the MIT license.
+
+using System;
+using VitalRouter;
+
+namespace App.UI.Working
+{
+    public partial struct DelayedCommand : ICommand
+    {
+        public TimeSpan Duration { get; init; }
+    }
+}

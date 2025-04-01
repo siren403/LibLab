@@ -9,7 +9,7 @@ namespace App.Scenes.Modal
     {
         public IReadOnlyBindableReactiveProperty<string> Message => _message;
 
-        private readonly BindableReactiveProperty<string> _message = new();
+        private readonly BindableReactiveProperty<string> _message = new("Pending");
 
         public void Success()
         {

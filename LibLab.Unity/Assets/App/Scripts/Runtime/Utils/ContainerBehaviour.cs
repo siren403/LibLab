@@ -12,7 +12,7 @@ namespace App.Utils
     {
         protected virtual bool AutoInject => true;
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             PostLaunchLifetimeScope.GetLaunchedTask(gameObject.scene).ContinueWith(container =>
             {

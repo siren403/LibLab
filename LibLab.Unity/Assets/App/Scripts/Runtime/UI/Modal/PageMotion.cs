@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace App.UI.Modal
 {
-    public class LitMotionAdapter : MonoBehaviour, IPageAnimation
+    public class PageMotion : MonoBehaviour, IPageAnimation
     {
         [SerializeField] private LitMotionAnimation show;
         [SerializeField] private LitMotionAnimation hide;

@@ -15,10 +15,12 @@ namespace App.Scenes.Modal
     {
         public void Install(IContainerBuilder builder)
         {
-            builder.RegisterPages();
+            builder.RegisterPages((page) =>
+            {
+                page.AddFetcher<AlertFetcher>();
+            });
             builder.RegisterWorking(working => { working.ExpectDuration = TimeSpan.FromSeconds(0.3f); });
             builder.Register<AlertState>(Lifetime.Singleton).AsSelf();
-            builder.Register<AlertFetcher>(Lifetime.Scoped).As<IPageFetcher>();
         }
     }
 }

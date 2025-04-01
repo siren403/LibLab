@@ -7,7 +7,7 @@ namespace App.Scenes
     {
         public static class Pages
         {
-            public const string Alert = "lert";
+            public const string Alert = "alert";
         }
     }
 }

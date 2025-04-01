@@ -5,21 +5,27 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
+using Microsoft.Extensions.Logging;
 using UnityEngine.Assertions;
 
 namespace App.UI.Pages
 {
     public class PageNavigator
     {
+        private readonly ILogger<PageNavigator> _logger;
         private readonly Dictionary<string, IPage> _pages = new();
         private readonly Stack<string> _history = new();
         private bool _processing;
 
+        public PageNavigator(ILogger<PageNavigator> logger)
+        {
+            _logger = logger;
+        }
+
         public void Add(string id, IPage page)
         {
             _pages.Add(id, page);
-            Debug.Log($"Added Page {id}");
+            _logger.AddedPage(id);
         }
 
         public async UniTask Push(string id, CancellationToken cancellationToken = default)
@@ -32,26 +38,27 @@ namespace App.UI.Pages
 
             if (!_pages.TryGetValue(id, out IPage page))
             {
+                _logger.NotFoundPage(id, "Push");
                 return;
             }
 
-            if (_history.Count > 0 && _history.Peek() == id)
+            if (_history.Count > 0 && _history.Contains(id))
             {
-                Debug.LogWarning($"Already pushing page {id}");
+                _logger.ContainsPage(id);
                 return;
             }
 
             _history.Push(id);
             try
             {
-                Debug.Log($"Pushing page {id}");
+                _logger.BeginShowPage(id);
                 _processing = true;
                 await page.Show(cancellationToken);
             }
-            catch
+            catch (Exception e)
             {
                 string errorId = _history.Pop();
-                Debug.LogError("Error showing page: " + errorId);
+                _logger.ShowFailedPage(errorId, e.Message);
             }
             finally
             {
@@ -68,26 +75,26 @@ namespace App.UI.Pages
 
             if (_history.Count == 0)
             {
-                Debug.LogWarning("No pages to pop");
+                _logger.EmptyHistory();
                 return;
             }
 
             string id = _history.Pop();
             if (!_pages.TryGetValue(id, out IPage page))
             {
-                Debug.LogWarning($"Page with id {id} not found");
+                _logger.NotFoundPage(id, "Pop");
                 return;
             }
 
             try
             {
-                Debug.Log($"Popping page {id}");
+                _logger.BeginHidePage(id);
                 _processing = true;
                 await page.Hide(cancellationToken);
             }
-            catch
+            catch (Exception e)
             {
-                Debug.LogError("Error hiding page: " + id);
+                _logger.HideFailedPage(id, e.Message);
             }
             finally
             {

@@ -2,10 +2,12 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Cysharp.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using VitalRouter.VContainer;
+using ZLogger.Unity;
 
 namespace App.UI.Pages
 {
@@ -13,12 +15,18 @@ namespace App.UI.Pages
     {
         public static void RegisterPages(this IContainerBuilder builder)
         {
-            builder.RegisterVitalRouter(routing =>
-            {
-                routing.Map<PagePresenter>();
-            });
+            builder.RegisterVitalRouter(routing => { routing.Map<PagePresenter>(); });
             builder.Register<PageNavigator>(Lifetime.Singleton).AsSelf();
             builder.RegisterEntryPoint<InputBackOnPop>();
+
+            var loggerFactory = LoggerFactory.Create(logging =>
+            {
+                logging.SetMinimumLevel(LogLevel.Trace);
+                logging.AddZLoggerUnityDebug(); // log to UnityDebug
+            });
+
+            builder.Register<ILogger<PageNavigator>>(
+                (container) => loggerFactory.CreateLogger<PageNavigator>(), Lifetime.Singleton);
         }
 
         private class InputBackOnPop : ITickable

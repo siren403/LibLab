@@ -4,8 +4,10 @@
 using System;
 using App.UI.Pages;
 using App.UI.Working;
+using Microsoft.Extensions.Logging;
 using VContainer;
 using VContainer.Unity;
+using ZLogger.Unity;
 
 namespace App.Scenes.Modal
 {

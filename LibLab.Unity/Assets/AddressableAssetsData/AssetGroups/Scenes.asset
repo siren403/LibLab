@@ -21,23 +21,21 @@ MonoBehaviour:
     m_SerializedLabels:
     - /startup
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2407c7fc243414a148fada3473c6205d
-    m_Address: Assets/App/UI/Scenes/App_UI_ModalScene.unity
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - /
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 591db8ff584af474b9d596ca563e6f73
-    m_Address: Assets/App/UI/Scenes/App_UI_TransitionScene.unity
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - /
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b296c41a073e4da89e35ff1b2105166
     m_Address: Assets/App/UI/Scenes/App_UI_IntroScene.unity
     m_ReadOnly: 0
     m_SerializedLabels:
     - /intro
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 995e0f68c5927e9418662f1d6e2129a0
+    m_Address: Assets/App/UI/Prefabs/Logo.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bab65e4b6d93045429056922cf8bccae
+    m_Address: Assets/App/UI/Prefabs/LogoPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: af056763a16844439adfc5c4548c4337, type: 2}

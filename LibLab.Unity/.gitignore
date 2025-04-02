@@ -1,4 +1,5 @@
 !*.rsp
+ServerData/
 
 # Created by https://www.toptal.com/developers/gitignore/api/Unity,rider
 # Edit at https://www.toptal.com/developers/gitignore?templates=Unity,rider
@@ -149,6 +150,7 @@ sysinfo.txt
 
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*.meta
 
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta

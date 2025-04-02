@@ -16,10 +16,11 @@ namespace App.Scenes.Indicators
         [SerializeField] private LitMotionAnimation loop;
         [SerializeField] private LitMotionAnimation hide;
 
-        public async UniTask OnShow()
+        public UniTask OnShow()
         {
             show.Play();
             loop.Play();
+            return UniTask.CompletedTask;
         }
 
         public async UniTask OnHide()

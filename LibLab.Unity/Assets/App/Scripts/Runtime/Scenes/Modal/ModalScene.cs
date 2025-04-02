@@ -4,10 +4,8 @@
 using System;
 using App.UI.Pages;
 using App.UI.Working;
-using Microsoft.Extensions.Logging;
 using VContainer;
 using VContainer.Unity;
-using ZLogger.Unity;
 
 namespace App.Scenes.Modal
 {
@@ -15,11 +13,12 @@ namespace App.Scenes.Modal
     {
         public void Install(IContainerBuilder builder)
         {
-            builder.RegisterPages((page) =>
+            builder.RegisterPages(page =>
             {
                 page.AddFetcher<AlertFetcher>();
             });
             builder.RegisterWorking(working => { working.ExpectDuration = TimeSpan.FromSeconds(0.3f); });
+
             builder.Register<AlertState>(Lifetime.Singleton).AsSelf();
         }
     }

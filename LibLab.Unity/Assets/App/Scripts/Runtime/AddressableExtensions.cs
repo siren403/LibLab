@@ -17,11 +17,6 @@ namespace App
             var handle = Addressables.InitializeAsync(false);
             var snapshot = await handle.CaptureWithRelease();
 
-            if (snapshot.Status != AsyncOperationStatus.Succeeded)
-            {
-                throw snapshot.OperationException;
-            }
-
             return snapshot;
         }
 
@@ -29,17 +24,20 @@ namespace App
         {
             var handle = Addressables.CheckForCatalogUpdates(false);
             var snapshot = await handle.CaptureWithRelease();
-            if (snapshot.Status != AsyncOperationStatus.Succeeded)
+            if (snapshot.Status == AsyncOperationStatus.Succeeded)
             {
-                var ex = snapshot.OperationException;
-                var wrappedException = ex.Message switch
-                {
-                    // { } msg when msg.Contains("RemoteProviderException") => new RemoteProviderException(ex.Message),
-                    // { } msg when msg.Contains("ConnectionError") => new CatalogUpdateConnectionException(ex),
-                    _ => ex,
-                };
-                throw wrappedException;
+                return snapshot;
             }
+
+            var ex = snapshot.OperationException;
+            var wrappedException = ex.Message switch
+            {
+                // { } msg when msg.Contains("RemoteProviderException") => new RemoteProviderException(ex.Message),
+                // { } msg when msg.Contains("ConnectionError") => new CatalogUpdateConnectionException(ex),
+                _ => ex,
+            };
+            // throw wrappedException;
+            snapshot = snapshot with { OperationException = wrappedException };
 
             return snapshot;
         }

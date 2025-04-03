@@ -14,7 +14,8 @@
         "LitMotion.Extensions",
         "LitMotion.Animation",
         "ImprovedTimers",
-        "ZLogger.Unity"
+        "ZLogger.Unity",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

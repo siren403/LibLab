@@ -32,6 +32,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bfa35882abf1b943a526427b052fad8
+    m_Address: Assets/App/UI/Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bab65e4b6d93045429056922cf8bccae
     m_Address: Assets/App/UI/Prefabs/LogoPanel.prefab
     m_ReadOnly: 0

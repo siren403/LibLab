@@ -20,28 +20,12 @@ public static class ZLoggerExtensions
 
         var appLogger = loggerFactory.CreateLogger<Application>();
         builder.RegisterInstance(appLogger);
-        // Application.logMessageReceived += onApplicationLog;
-        builder.RegisterDisposeCallback(_ =>
-        {
-            loggerFactory.Dispose();
-            // Application.logMessageReceived -= onApplicationLog;
-        });
-
-        // void onApplicationLog(string message, string stackTrace, LogType type)
-        // {
-        //     switch (type)
-        //     {
-        //         case LogType.Exception:
-        //         case LogType.Error:
-        //             appLogger.LogCritical(message);
-        //             break;
-        //     }
-        // }
+        builder.RegisterDisposeCallback(_ => { loggerFactory.Dispose(); });
     }
 
     public static void WithEditorConsolePro(this PlainTextZLoggerFormatter formatter)
     {
-        formatter.SetPrefixFormatter($"{0} | {1:short} | {2} | ",
+        formatter.SetPrefixFormatter($"{0} | {1:short} | ({2}) | ",
             (in MessageTemplate template, in LogInfo info) =>
                 template.Format(info.Timestamp, info.LogLevel, info.Category));
     }

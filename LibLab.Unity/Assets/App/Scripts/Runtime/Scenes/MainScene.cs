@@ -25,6 +25,7 @@ namespace App.Scenes
                     options.UsePlainTextFormatter(formatter => { formatter.WithEditorConsolePro(); });
                 });
             });
+            builder.RegisterComponentInHierarchy<AddressableComponents>();
         }
     }
 }

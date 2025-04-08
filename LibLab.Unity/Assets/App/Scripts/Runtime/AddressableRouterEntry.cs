@@ -3,33 +3,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
+using App.Navigation;
 using App.Scenes;
 using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.ResourceLocators;
-using UnityEngine.Assertions;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
-using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.SceneManagement;
 using VContainer.Unity;
-using ZLogger;
 
 namespace App
 {
     public class AddressableRouterEntry : IAsyncStartable, IDisposable
     {
+        private readonly SceneNavigator _navigator;
         private readonly ILogger<AddressableRouterEntry> _logger;
         private readonly AddressableComponents _components;
         private DisposableBag _disposables;
 
-        public AddressableRouterEntry(ILogger<AddressableRouterEntry> logger, AddressableComponents components)
+        public AddressableRouterEntry(
+            SceneNavigator navigator,
+            ILogger<AddressableRouterEntry> logger,
+            AddressableComponents components)
         {
+            _navigator = navigator;
             _logger = logger;
             _components = components;
 
@@ -75,152 +74,45 @@ namespace App
 
             components.PushButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha3)))
-                .SubscribeAwait(async (_, cancellationToken) => { await Push("/intro"); }, AwaitOperation.Drop)
+                .SubscribeAwait(async (_, cancellationToken) =>
+                {
+                    string? location = _navigator.LoadedLocation;
+                    if (location == null)
+                    {
+                        return;
+                    }
+                    switch (location)
+                    {
+                        case "/":
+                            await _navigator.To("/intro");
+                            break;
+                        case "/intro":
+                            await _navigator.To("/startup");
+                            break;
+                        case "/startup":
+                            await _navigator.To("/intro");
+                            break;
+                    }
+                }, AwaitOperation.Drop)
                 .AddTo(ref _disposables);
             components.PopButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha4)))
-                .SubscribeAwait(async (_, cancellationToken) => { await Pop(); },
+                .SubscribeAwait(async (_, cancellationToken) => { await _navigator.Back(); },
                     AwaitOperation.Drop)
                 .AddTo(ref _disposables);
         }
 
         public async UniTask StartAsync(CancellationToken cancellationToken)
         {
-            var initialized = await AddressableExtensions.Initialize();
-            if (initialized.Status == AsyncOperationStatus.Failed)
+            await _navigator.Initialize();
+
+            if (!_navigator.IsInitialized)
             {
-                _logger.LogError("Failed to Initialize Addressables.");
+                _components.LogLabel!.text = $"{nameof(SceneNavigator)} Initializing failed.";
                 return;
             }
 
-            _components.LogLabel!.text = $"Initialized Addressables. {initialized.Result.Keys.Count()}";
-            _logger.ZLogInformation($"Addressable Initialized: {initialized.Result.Keys.Count()}");
-
-            // Try enter root route
-            var firstScene = SceneManager.GetSceneAt(0);
-            if (firstScene.buildIndex != 0)
-            {
-                return;
-            }
-
-            await Push("/");
-        }
-
-        private readonly Stack<string> _history = new();
-
-        private async UniTask Push(string path)
-        {
-            if (_history.Count == 0 && path != "/")
-            {
-                _logger.ZLogError($"Path {path} has not been initialized.");
-                return;
-            }
-
-            IList<IResourceLocation> locations =
-                await Addressables.LoadResourceLocationsAsync(path).Task;
-
-            if (locations.Count == 0)
-            {
-                _logger.ZLogError($"Failed to load resource locations: {path}");
-                return;
-            }
-
-            if (_history.Contains(path))
-            {
-                _logger.ZLogWarning($"Already pushed: {path}");
-                return;
-            }
-
-            _history.Push(path);
-
-            HashSet<string> loadedScenes = new();
-            for (int i = 0; i < SceneManager.sceneCount; i++)
-            {
-                loadedScenes.Add(SceneManager.GetSceneAt(i).path);
-            }
-
-            List<AsyncOperationHandle<SceneInstance>> sceneHandles = new();
-            List<UniTask> sceneLoadTasks = new();
-            foreach (IResourceLocation location in locations)
-            {
-                if (loadedScenes.Contains(location.ToString()))
-                {
-                    _logger.ZLogDebug($"Scene already loaded: {location}");
-                    continue;
-                }
-
-                string locationStr = location.ToString();
-                _logger.ZLogDebug($"Loading scene: {locationStr}");
-                AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(location,
-                    LoadSceneMode.Additive,
-                    SceneReleaseMode.ReleaseSceneWhenSceneUnloaded, false);
-                // handle.Destroyed += operationHandle => { Debug.Log("Scene destroyed: " + locationStr); };
-                sceneHandles.Add(handle);
-                sceneLoadTasks.Add(handle.ToUniTask());
-            }
-
-            if (sceneLoadTasks.Count == 0)
-            {
-                _logger.ZLogError($"Nothing to load scenes: {path}");
-                return;
-            }
-
-            await UniTask.WhenAll(sceneLoadTasks);
-
-            foreach (AsyncOperationHandle<SceneInstance> sceneHandle in sceneHandles)
-            {
-                await sceneHandle.Result.ActivateAsync();
-            }
-
-            _logger.ZLogInformation($"Load completed: {path}");
-        }
-
-        public async UniTask Pop()
-        {
-            if (_history.Count == 1)
-            {
-                _logger.LogWarning("Only the root path remains");
-                return;
-            }
-
-            string path = _history.Pop();
-            IList<IResourceLocation> locations =
-                await Addressables.LoadResourceLocationsAsync(path).Task;
-
-            HashSet<string> loadedScenes = new();
-            for (int i = 0; i < SceneManager.sceneCount; i++)
-            {
-                loadedScenes.Add(SceneManager.GetSceneAt(i).path);
-            }
-
-            List<UniTask> sceneUnloadTasks = new();
-            foreach (IResourceLocation location in locations)
-            {
-                if (!loadedScenes.Contains(location.ToString()))
-                {
-                    _logger.ZLogWarning($"Try unloading {location} scene. but not loaded");
-                    continue;
-                }
-
-                var operation = SceneManager.UnloadSceneAsync(location.ToString());
-                if (operation == null)
-                {
-                    _logger.ZLogError($"Failed to unload operation {location} scene");
-                    continue;
-                }
-
-                sceneUnloadTasks.Add(operation.ToUniTask());
-            }
-
-            if (sceneUnloadTasks.Count == 0)
-            {
-                _logger.ZLogError($"Nothing to unload: {path}");
-                return;
-            }
-
-            await UniTask.WhenAll(sceneUnloadTasks);
-
-            _logger.ZLogInformation($"Unload completed: {path}");
+            _components.LogLabel!.text = $"{nameof(SceneNavigator)} Initialized";
         }
 
         public void Dispose()

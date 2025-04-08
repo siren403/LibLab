@@ -1,9 +1,11 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
+using App.Navigation;
 using Microsoft.Extensions.Logging;
 using VContainer;
 using VContainer.Unity;
+using VitalRouter.VContainer;
 using ZLogger;
 using ZLogger.Unity;
 
@@ -26,6 +28,12 @@ namespace App.Scenes
                 });
             });
             builder.RegisterComponentInHierarchy<AddressableComponents>();
+
+            builder.RegisterVitalRouter((routing) => { });
+            builder.RegisterSceneNavigator((nav) =>
+            {
+                nav.StartupRootOnlyMainScene();
+            });
         }
     }
 }

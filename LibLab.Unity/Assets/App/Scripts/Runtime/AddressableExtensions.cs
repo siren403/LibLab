@@ -63,6 +63,8 @@ namespace App
             public Exception OperationException { get; init; }
             public string DebugName { get; init; }
 
+            public bool IsSuccess => Status == AsyncOperationStatus.Succeeded;
+
             public void Deconstruct(out AsyncOperationStatus status, out T result, out Exception operationException,
                 out string debugName)
             {

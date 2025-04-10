@@ -136,7 +136,7 @@ namespace App.Navigation
             IList<IResourceLocation> locations = await GetLocations(path);
             if (locations.Count == 0)
             {
-                _logger.ZLogError($"Failed to load resource locations: {path}");
+                _logger.ZLogError($"Empty resource locations: {path}");
                 return;
             }
 
@@ -277,7 +277,7 @@ namespace App.Navigation
                     continue;
                 }
 
-                await handle.ToUniTask();
+                await handle.Task;
 
                 _loadingSceneHandles.Add(handle);
             }

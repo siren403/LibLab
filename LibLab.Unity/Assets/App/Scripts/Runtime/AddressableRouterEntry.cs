@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using App.Navigation;
 using App.Scenes;
 using Cysharp.Threading.Tasks;
+using LitMotion;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
@@ -32,44 +34,27 @@ namespace App
             _logger = logger;
             _components = components;
 
-            AsyncLazy readyCache = new(async () => { await UniTask.WaitUntil(() => Caching.ready); });
-            List<string> catalogs = new List<string>();
-
-
             components.CheckUpdateButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha1)))
                 .SubscribeAwait(async (_, cancellationToken) =>
                 {
+                    var fade = _components.ScreenFadeFeature!;
+                    await LMotion.Create(0f, 1f, 0.3f).Bind(t => fade.Progress = t);
+
                     components.LogLabel!.text = nameof(AddressableExtensions.CheckForCatalogUpdates);
                     var updates = await AddressableExtensions.CheckForCatalogUpdates();
-                    catalogs.Clear();
-                    if (updates.Status == AsyncOperationStatus.Succeeded)
-                    {
-                        catalogs.AddRange(updates.Result);
-                        components.LogLabel!.text = $"{catalogs.Count} catalogs loaded.";
-                    }
-                    else
-                    {
-                        components.LogLabel!.text = updates.OperationException.Message;
-                    }
+                    components.LogLabel!.text = updates.Status == AsyncOperationStatus.Succeeded
+                        ? $"{updates.Result.Count} catalogs loaded."
+                        : updates.OperationException.Message;
+                    await UniTask.Delay(TimeSpan.FromSeconds(1));
+
+                    await LMotion.Create(1f, 0f, 0.3f).Bind(t => fade.Progress = t);
                 }, AwaitOperation.Drop)
                 .AddTo(ref _disposables);
             components.UpdateButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha2)))
-                .SubscribeAwait(async (_, cancellationToken) =>
-                {
-                    components.LogLabel!.text = nameof(Addressables.UpdateCatalogs);
-                    await readyCache;
-                    if (catalogs.Count == 0)
-                    {
-                        _logger.LogWarning("Empty catalog list.");
-                        return;
-                    }
-
-                    await Addressables.UpdateCatalogs(true, catalogs);
-                    components.LogLabel!.text = $"{catalogs.Count} catalogs updated.";
-                    catalogs.Clear();
-                }, AwaitOperation.Drop)
+                .SubscribeAwait(async (_, cancellationToken) => { await _navigator.CheckForUpdates(); },
+                    AwaitOperation.Drop)
                 .AddTo(ref _disposables);
 
             components.PushButton!.OnClickAsObservable()
@@ -81,6 +66,8 @@ namespace App
                     {
                         return;
                     }
+                    var fade = _components.ScreenFadeFeature!;
+                    await LMotion.Create(0f, 1f, 0.3f).Bind(t => fade.Progress = t);
                     switch (location)
                     {
                         case "/":
@@ -93,6 +80,9 @@ namespace App
                             await _navigator.To("/intro");
                             break;
                     }
+                    await UniTask.Delay(TimeSpan.FromSeconds(1));
+                    await LMotion.Create(1f, 0f, 0.3f).Bind(t => fade.Progress = t);
+
                 }, AwaitOperation.Drop)
                 .AddTo(ref _disposables);
             components.PopButton!.OnClickAsObservable()

@@ -14,5 +14,6 @@ namespace App.Scenes
         [field: SerializeField] public Button? PushButton { get; private set; }
         [field: SerializeField] public Button? PopButton { get; private set; }
         [field: SerializeField] public TextMeshProUGUI? LogLabel { get; private set; }
+        [field: SerializeField] public ScreenFadeFeature? ScreenFadeFeature { get; private set; }
     }
 }

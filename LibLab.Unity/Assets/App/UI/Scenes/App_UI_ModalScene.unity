@@ -2512,8 +2512,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
       propertyPath: m_SortingOrder
       value: 9990
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -963179083
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
+      propertyPath: m_UpdateRectTransformForStandalone
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6880585742480648526, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
       propertyPath: m_Name

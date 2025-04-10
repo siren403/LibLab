@@ -34,6 +34,8 @@ namespace App.Scenes
             {
                 nav.StartupRootOnlyMainScene();
             });
+
+            
         }
     }
 }

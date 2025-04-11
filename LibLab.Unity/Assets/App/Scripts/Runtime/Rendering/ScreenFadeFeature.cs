@@ -49,7 +49,7 @@ public class ScreenFadeFeature : ScriptableRendererFeature
         if (_screenFadePass != null)
         {
             _screenFadePass.renderPassEvent = renderPassEvent;
-            _screenFadePass.ConfigureInput(ScriptableRenderPassInput.Color);
+            // _screenFadePass.ConfigureInput(ScriptableRenderPassInput.Color);
             _screenFadePass.SetupMembers(passMaterial, passIndex);
             _screenFadePass.requiresIntermediateTexture = fetchColorBuffer;
             renderer.EnqueuePass(_screenFadePass);

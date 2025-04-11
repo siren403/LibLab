@@ -965,7 +965,7 @@ MonoBehaviour:
   <PushButton>k__BackingField: {fileID: 1602800890}
   <PopButton>k__BackingField: {fileID: 191382466}
   <LogLabel>k__BackingField: {fileID: 302967370}
-  <ScreenFadeFeature>k__BackingField: {fileID: 4154229598385444319, guid: f288ae1f4751b564a96ac7587541f7a2, type: 2}
+  <ScreenFadeFeature>k__BackingField: {fileID: 4154229598385444319, guid: 535e2e3ec2cc3c04dad145d3478374e8, type: 2}
 --- !u!1 &1102374648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1914,7 +1914,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 1
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1

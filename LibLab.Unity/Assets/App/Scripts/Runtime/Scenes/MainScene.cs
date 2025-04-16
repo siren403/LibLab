@@ -15,7 +15,6 @@ namespace App.Scenes
     {
         public void Install(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<AddressableRouterEntry>();
             builder.RegisterZLogger(logging =>
             {
                 logging.SetMinimumLevel(LogLevel.Trace);
@@ -27,7 +26,6 @@ namespace App.Scenes
                     options.UsePlainTextFormatter(formatter => { formatter.WithEditorConsolePro(); });
                 });
             });
-            builder.RegisterComponentInHierarchy<AddressableComponents>();
 
             builder.RegisterVitalRouter((routing) => { });
             builder.RegisterSceneNavigator((nav) =>
@@ -35,7 +33,7 @@ namespace App.Scenes
                 nav.StartupRootOnlyMainScene();
             });
 
-            
+
         }
     }
 }

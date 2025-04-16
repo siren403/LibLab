@@ -10,24 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: LayeredBlocks
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
-  m_GUID: be9dcd6e2c7e24a25aaa9a6270479763
+  m_GroupName: LayeredBlocks
+  m_GUID: 3b31b644c2c1a44c09ca039516ffa134
   m_SerializeEntries:
-  - m_GUID: 2407c7fc243414a148fada3473c6205d
-    m_Address: Assets/App/UI/Scenes/App_UI_ModalScene.unity
+  - m_GUID: 6b17c325c0bb44d2b97d72d212b40b92
+    m_Address: Assets/App/Features/LayeredBlocks/Scenes/LB_BasicScene.unity
     m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 591db8ff584af474b9d596ca563e6f73
-    m_Address: Assets/App/UI/Scenes/App_UI_TransitionScene.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - /
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: af056763a16844439adfc5c4548c4337, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 92df746792bda4b848d6c255d9860d7a, type: 2}
-    - {fileID: 11400000, guid: 90bb0b2bb7f5343caab092768bc9ff71, type: 2}
+    - {fileID: 11400000, guid: 8b0b8a13fac554a7592cd1f2e45e71a3, type: 2}
+    - {fileID: 11400000, guid: dbbd0963fd18840d5909d2b7bf427195, type: 2}

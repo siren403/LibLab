@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using UnityEngine;
@@ -14,6 +15,7 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using VContainer;
+using VContainer.Unity;
 using VitalRouter;
 using ZLogger;
 
@@ -33,7 +35,10 @@ namespace App.Navigation
 
     public static class SceneNavigatorExtensions
     {
-        private static AsyncLazy _readyCache = new(async () => { await UniTask.WaitUntil(() => Caching.ready); });
+        private static readonly AsyncLazy _readyCache = new(async () =>
+        {
+            await UniTask.WaitUntil(() => Caching.ready);
+        });
 
         public static void RegisterSceneNavigator(this IContainerBuilder builder,
             Action<SceneNavigatorBuilder> configure)
@@ -41,8 +46,12 @@ namespace App.Navigation
             var nav = new SceneNavigatorBuilder(builder);
             configure(nav);
 
-            builder.RegisterInstance(new SceneNavigatorOptions() { StartupRoot = nav.StartupRoot, });
+            builder.RegisterInstance(new SceneNavigatorOptions()
+            {
+                StartupRoot = nav.StartupRoot,
+            });
             builder.Register<SceneNavigator>(Lifetime.Singleton).AsSelf();
+            builder.RegisterEntryPoint<SceneNavigatorInitializer>();
         }
 
         public static void StartupRootOnlyMainScene(this SceneNavigatorBuilder builder)
@@ -80,6 +89,21 @@ namespace App.Navigation
         public bool StartupRoot { get; init; } = true;
     }
 
+    public class SceneNavigatorInitializer : IAsyncStartable
+    {
+        private readonly SceneNavigator _navigator;
+
+        public SceneNavigatorInitializer(SceneNavigator navigator)
+        {
+            _navigator = navigator;
+        }
+
+        public UniTask StartAsync(CancellationToken cancellation = default)
+        {
+            return _navigator.Initialize();
+        }
+    }
+
     public class SceneNavigator
     {
         private readonly SceneNavigatorOptions _options;
@@ -115,7 +139,10 @@ namespace App.Navigation
             }
 
             _logger.LogInformation("Initialized");
-            _ = _router.PublishAsync(new InitializedCommand() { Keys = initialized.Result.Keys.ToArray() });
+            _ = _router.PublishAsync(new InitializedCommand()
+            {
+                Keys = initialized.Result.Keys.ToArray()
+            });
 
             _initialized = true;
 
@@ -136,7 +163,7 @@ namespace App.Navigation
             IList<IResourceLocation> locations = await GetLocations(path);
             if (locations.Count == 0)
             {
-                _logger.ZLogError($"Empty resource locations: {path}");
+                _logger.ZLogWarning($"Empty resource locations: {path}");
                 return;
             }
 
@@ -216,7 +243,10 @@ namespace App.Navigation
                 return;
             }
 
-            _ = _router.PublishAsync(new PreUnloadRouteCommand() { Path = path });
+            _ = _router.PublishAsync(new PreUnloadRouteCommand()
+            {
+                Path = path
+            });
 
             GetLoadedScenes(_loadedScenesCache);
 
@@ -252,7 +282,10 @@ namespace App.Navigation
                 return;
             }
 
-            _ = _router.PublishAsync(new PreLoadRouteCommand() { Path = path });
+            _ = _router.PublishAsync(new PreLoadRouteCommand()
+            {
+                Path = path
+            });
 
             GetLoadedScenes(_loadedScenesCache);
 
@@ -284,7 +317,7 @@ namespace App.Navigation
 
             if (_loadingSceneHandles.Count == 0)
             {
-                _logger.ZLogError($"Failed to load resource locations: {path}");
+                _logger.ZLogWarning($"Failed to load resource locations: {path}");
                 return;
             }
 

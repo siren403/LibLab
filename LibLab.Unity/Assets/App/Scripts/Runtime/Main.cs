@@ -8,8 +8,23 @@ using VContainer.Unity;
 
 namespace App
 {
+    public class SceneInstallerResolver
+    {
+        public IInstaller Resolve(Scene scene)
+        {
+            return scene switch
+            {
+                {buildIndex: 0} => new MainScene(),
+                _ when scene.path.Contains("ModalScene") => new ModalScene(),
+                _ => UnitInstaller.Instance
+            };
+        }
+    }
+
     public class Main
     {
+        private static readonly SceneInstallerResolver _sceneInstallerResolver = new();
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void RegisterSceneLoaded()
         {
@@ -40,22 +55,18 @@ namespace App
         {
             Debug.Log($"[{scene.buildIndex}] Scene loaded: {scene.path}");
             bool isMainScene = scene.buildIndex == 0;
+            var installer = _sceneInstallerResolver.Resolve(scene);
             if (isMainScene)
             {
                 ScopeInjector.CreateScope<StartupLifetimeScope>(
                     scene,
                     nameof(StartupLifetimeScope),
-                    new MainScene()
+                    installer
                 );
                 SceneManager.SetActiveScene(scene);
             }
             else
             {
-                IInstaller installer = scene.path switch
-                {
-                    _ when scene.path.Contains("ModalScene") => new ModalScene(),
-                    _ => UnitInstaller.Instance
-                };
                 ScopeInjector.CreateScope<PostLaunchLifetimeScope>(
                     scene,
                     nameof(PostLaunchLifetimeScope),

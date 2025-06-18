@@ -1,5 +1,7 @@
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEditor.VersionControl;
+using UnityEngine;
 
 namespace App.Features.LayeredBlocks.Editor
 {
@@ -8,13 +10,24 @@ namespace App.Features.LayeredBlocks.Editor
         [OnOpenAsset]
         public static bool OnOpenAsset(int instanceID)
         {
-            if (AssetDatabase.GetMainAssetTypeAtPath(AssetDatabase.GetAssetPath(instanceID)) == typeof(LevelAsset))
+            string path = AssetDatabase.GetAssetPath(instanceID);
+            if (AssetDatabase.GetMainAssetTypeAtPath(path) !=
+                typeof(LevelAsset)) return false;
+
+            string guid = AssetDatabase.AssetPathToGUID(path);
+            foreach (var w in Resources.FindObjectsOfTypeAll<LevelAssetWindow>())
             {
-                LevelAssetWindow.ShowWindow();
-                return true;
+                if (w.SelectedGuid == guid)
+                {
+                    w.Focus();
+                    return true;
+                }
             }
 
-            return false;
+            var window = EditorWindow.CreateWindow<LevelAssetWindow>(typeof(LevelAssetWindow), typeof(SceneView));
+            window.Initialize(guid);
+            window.Focus();
+            return true;
         }
     }
 }

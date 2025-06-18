@@ -1,0 +1,8 @@
+{
+    "name": "VExtensions.CommandBus",
+    "references": [
+        "UniTask",
+        "VContainer",
+        "VitalRouter"
+    ]
+}

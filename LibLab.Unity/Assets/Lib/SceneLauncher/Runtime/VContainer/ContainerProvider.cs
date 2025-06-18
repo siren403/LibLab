@@ -6,7 +6,7 @@ using SceneLauncher.VContainer;
 using UnityEngine;
 using VContainer;
 
-namespace App.Utils
+namespace SceneLauncher.VContainer
 {
     public class ContainerProvider
     {

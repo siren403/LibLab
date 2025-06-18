@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using App.Utils;
 using Cysharp.Threading.Tasks;
+using SceneLauncher.VContainer;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -15,14 +16,14 @@ namespace App.UI.Pages
     [RequireComponent(typeof(GraphicRaycaster))]
     public class Page : MonoBehaviour, IPage
     {
-        [SerializeField] private string id;
+        [SerializeField] private string id = null!;
 
         private ComponentCache<Canvas> _canvas;
         private ComponentCache<GraphicRaycaster> _raycaster;
         private ComponentCache<RectTransform> _rectTransform;
 
-        private ContainerProvider _container;
-        private (bool has, IPageAnimation result) _animation = (false, null);
+        private ContainerProvider? _container;
+        private (bool has, IPageAnimation? result) _animation = (false, null);
 
         private void Awake()
         {
@@ -57,7 +58,7 @@ namespace App.UI.Pages
             {
                 if (_animation.has)
                 {
-                    await _animation.result.Show(cancellationToken);
+                    await _animation.result!.Show(cancellationToken);
                 }
             }
             catch (Exception e)
@@ -65,7 +66,7 @@ namespace App.UI.Pages
                 Debug.LogError($"Error during show animation: {e}");
                 if (_animation.has)
                 {
-                    _animation.result.Cancel();
+                    _animation.result!.Cancel();
                 }
             }
         }
@@ -76,7 +77,7 @@ namespace App.UI.Pages
             {
                 if (_animation.has)
                 {
-                    await _animation.result.Hide(cancellationToken);
+                    await _animation.result!.Hide(cancellationToken);
                 }
             }
             catch (Exception e)
@@ -84,7 +85,7 @@ namespace App.UI.Pages
                 Debug.LogError($"Error during hide animation: {e}");
                 if (_animation.has)
                 {
-                    _animation.result.Cancel();
+                    _animation.result!.Cancel();
                 }
             }
             finally

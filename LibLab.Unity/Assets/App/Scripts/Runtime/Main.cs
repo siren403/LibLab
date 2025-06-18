@@ -1,3 +1,4 @@
+using App.Features.LayeredBlocks;
 using App.Scenes;
 using App.Scenes.Modal;
 using SceneLauncher;
@@ -16,6 +17,7 @@ namespace App
             {
                 {buildIndex: 0} => new MainScene(),
                 _ when scene.path.Contains("ModalScene") => new ModalScene(),
+                _ when scene.path.Contains("LB_") => new LayerdBlocksScene(),
                 _ => UnitInstaller.Instance
             };
         }

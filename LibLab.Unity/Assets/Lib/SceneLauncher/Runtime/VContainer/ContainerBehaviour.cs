@@ -2,11 +2,10 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Cysharp.Threading.Tasks;
-using SceneLauncher.VContainer;
 using UnityEngine;
 using VContainer;
 
-namespace App.Utils
+namespace SceneLauncher.VContainer
 {
     public abstract class ContainerBehaviour : MonoBehaviour
     {

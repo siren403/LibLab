@@ -1,9 +1,9 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using App.Utils;
 using R3;
+using SceneLauncher.VContainer;
 using UnityEngine;
 using VContainer;
 using VitalRouter;
@@ -65,11 +65,11 @@ namespace App.UI.Indicators
                     Canvas canvas = _canvas;
                     switch (command)
                     {
-                        case { IsStarted: true }:
+                        case {IsStarted: true}:
                             canvas.enabled = true;
                             await indicator.OnBegin();
                             break;
-                        case { IsFinished: true }:
+                        case {IsFinished: true}:
                             await indicator.OnEnd();
                             canvas.enabled = false;
                             break;

@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using App.UI.Pages;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
-using VitalRouter;
 
 namespace App.Scenes.Modal
 {
     public class AlertFetcher : IPageFetcher
     {
         private readonly AlertState _state;
+
         // TODO: ID Database with SourceGenerator
         public string Id => Ids.Pages.Alert;
 

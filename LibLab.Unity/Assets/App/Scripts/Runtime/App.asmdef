@@ -17,7 +17,8 @@
         "ZLogger.Unity",
         "Unity.TextMeshPro",
         "Unity.RenderPipelines.Universal.Runtime",
-        "Unity.RenderPipelines.Core.Runtime"
+        "Unity.RenderPipelines.Core.Runtime",
+        "App.Features.LayerdBlocks"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

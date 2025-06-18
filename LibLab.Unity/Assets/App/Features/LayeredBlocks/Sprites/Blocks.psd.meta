@@ -100,28 +100,6 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: decorations-wrapper-layer
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 1958
-      y: 1932
-      width: 0
-      height: 0
-    spriteID: abd686b496cd444d4ac9a4a87aef4132
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 1958, y: 1932}
-    spritePosition: {x: 0, y: 1920}
   - name: H
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -403,7 +381,13 @@ ScriptedImporter:
     categories: []
   spritePackingTag: 
   resliceFromLayer: 0
-  pSDLayerImportSetting: []
+  pSDLayerImportSetting:
+  - spriteId: abd686b496cd444d4ac9a4a87aef4132
+    name: decorations-wrapper-layer
+    layerId: 0
+    flatten: 0
+    isGroup: 0
+    importLayer: 0
   psdLayers:
   - name: decorations-wrapper-layer
     spriteName: decorations-wrapper-layer
@@ -413,7 +397,7 @@ ScriptedImporter:
     layerID: 0
     mosaicPosition: {x: 1958, y: 1932}
     flatten: 0
-    isImported: 1
+    isImported: 0
     isVisible: 1
   - name: H
     spriteName: H

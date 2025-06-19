@@ -12,7 +12,7 @@ namespace VExtensions.CommandBus
     // {
     // }
 
-    public interface ICommand : ICommand<Void>
+    public interface ICommandBus : ICommand<Void>
     {
     }
 

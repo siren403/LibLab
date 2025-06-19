@@ -9,36 +9,39 @@ namespace VExtensions.CommandBus.Tests
 {
     public class BasicUseCaseTest : TestWithCancellationToken
     {
-        private readonly IObjectResolver _resolver;
-
-        public BasicUseCaseTest()
-        {
-            var bld = new ContainerBuilder();
-            bld.UseCommandBus();
-            bld.Register<FullNameHandler>(Lifetime.Singleton);
-            bld.Register<CommandHandlerRegistry>(container =>
-            {
-                var registry = new CommandHandlerRegistry();
-                registry.TryAdd(typeof(GetFullName), container.Resolve<FullNameHandler>());
-                return registry;
-            }, Lifetime.Singleton);
-            // bld.Register<FullNameHandler>(Lifetime.Singleton).As<ICommandHandler<ICommand<string>, string>>();
-            _resolver = bld.Build();
-        }
-
         [UnityTest]
         public IEnumerator ExecuteGetFullName() => UniTask.ToCoroutine(async () =>
         {
-            string result = await new GetFullName()
-            {
-                FirstName = "John", LastName = "Doe"
-            }.ExecuteAsync(DisposeCancellationToken);
+            var bld = new ContainerBuilder();
+            bld.UseCommandBus(bus => { bus.AddCommand<GetFullName, FullNameHandler, string>(); });
+            using var resolver = bld.Build();
+            string result = await new GetFullName() { FirstName = "John", LastName = "Doe" }
+                .ExecuteAsync(DisposeCancellationToken);
             Assert.AreEqual("John Doe", result, "Full name should be 'John Doe'");
         });
 
-        protected override void OnDisposed()
+        [Test]
+        public void NotRegisteredCommandThrowsException()
         {
-            _resolver.Dispose();
+            var bld = new ContainerBuilder();
+            using var resolver = bld.Build();
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await new GetFullName() { FirstName = "John", LastName = "Doe" }
+                    .ExecuteAsync(DisposeCancellationToken);
+            }, "Should throw an exception for unregistered command");
         }
+
+        [UnityTest]
+        public IEnumerator ExecuteFilteredGetFullName() => UniTask.ToCoroutine(async () =>
+        {
+            var bld = new ContainerBuilder();
+
+            bld.UseCommandBus(bus => { bus.AddFilterCommand<GetFullName, FilteredFullNameHandler, string>(); });
+            using var resolver = bld.Build();
+            string result = await new GetFullName() { FirstName = "John", LastName = "Doe" }
+                .ExecuteAsync(DisposeCancellationToken);
+            Assert.AreEqual("John Doe (filtered)", result, "Full name should be 'John Doe (filtered)'");
+        });
     }
 }

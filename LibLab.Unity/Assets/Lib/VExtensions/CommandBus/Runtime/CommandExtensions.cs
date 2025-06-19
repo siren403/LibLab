@@ -9,9 +9,12 @@ using VitalRouter;
 
 namespace VExtensions.CommandBus
 {
+    public delegate UniTask<TResult> CommandHandlerExecutor<TResult>(IObjectResolver container, object command,
+        CancellationToken token);
     public static class CommandExtensions
     {
         internal static IObjectResolver? _container;
+
 
         public static async UniTask<TResult> ExecuteAsync<TResult>(
             this ICommand<TResult> command,
@@ -25,22 +28,26 @@ namespace VExtensions.CommandBus
                 );
             }
 
-            var router = _container.Resolve<Router>()!;
+            var router = _container.Resolve<Router>();
 
             TResult result = default!;
             {
                 var registry = _container.Resolve<CommandHandlerRegistry>();
-                registry.TryGetValue(command.GetType(), out object handler);
+                bool hasExecutor = registry.TryGetValue(command.GetType(), out object executor);
+                if (!hasExecutor)
+                {
+                    throw new InvalidOperationException(
+                        $"No command handler registered for command type {command.GetType().Name}. Please ensure that a handler is registered in the CommandHandlerRegistry."
+                    );
+                }
+
                 using var subscription = router.SubscribeAwait<ICommand<TResult>>(async (cmd, ctx) =>
                 {
-                    UniTask<TResult> task = (UniTask<TResult>)handler.GetType().GetMethod("ExecuteAsync").Invoke(
-                        handler, new object[]
-                        {
-                            cmd, ctx.CancellationToken
-                        });
-                    // result = await ((ICommandHandler<ICommand<TResult>, TResult>)handler).ExecuteAsync(cmd,
-                    //     ctx.CancellationToken);
-                    result = await task;
+                    result = await ((CommandHandlerExecutor<TResult>)executor!).Invoke(
+                        _container,
+                        cmd,
+                        ctx.CancellationToken
+                    );
                 });
 
                 await router.PublishAsync(command, ct);

@@ -18,7 +18,8 @@
         "Unity.TextMeshPro",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Core.Runtime",
-        "App.Features.LayerdBlocks"
+        "App.Features.LayerdBlocks",
+        "SceneLauncher.VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

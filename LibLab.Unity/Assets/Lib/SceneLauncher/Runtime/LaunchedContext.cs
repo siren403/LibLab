@@ -6,20 +6,14 @@ namespace SceneLauncher
     {
         private LaunchedContext()
         {
+            Options = LaunchOptions.Create();
         }
 
-#if VCONTAINER
-        public LifetimeScope Scope { get; private init; }
-#endif
+        public LaunchOptions Options { get; private init; }
 
         internal static LaunchedContext FromOptions(LaunchOptions options)
         {
-            return new LaunchedContext
-            {
-#if VCONTAINER
-                Scope = options.Scope
-#endif
-            };
+            return new LaunchedContext { Options = options };
         }
     }
 }

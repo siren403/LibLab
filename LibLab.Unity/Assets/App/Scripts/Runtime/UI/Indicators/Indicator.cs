@@ -1,6 +1,7 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using App.Utils;
 using R3;
 using SceneLauncher.VContainer;
@@ -13,13 +14,13 @@ namespace App.UI.Indicators
     [RequireComponent(typeof(Canvas))]
     public partial class Indicator : ContainerBehaviour
     {
-        [SerializeField] private string id;
+        [SerializeField] private string id = string.Empty;
 
         private ComponentCache<Canvas> _canvas;
         private ComponentCache<RectTransform> _rectTransform;
 
-        private (bool has, IIndeterminate result) _indeterminate = (false, null);
-        private (bool has, IDeterminate result) _determinate = (false, null);
+        private (bool has, IIndeterminate result) _indeterminate = (false, null!);
+        private (bool has, IDeterminate result) _determinate = (false, null!);
 
         protected override void Awake()
         {

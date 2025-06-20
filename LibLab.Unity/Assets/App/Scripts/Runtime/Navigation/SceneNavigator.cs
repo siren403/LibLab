@@ -120,6 +120,8 @@ namespace App.Navigation
 
         public string? LoadedLocation => _history.Any() ? _history.Peek() : null;
 
+        public bool HasHistory => _history.Count > 1;
+
         public SceneNavigator(SceneNavigatorOptions options, Router router, ILogger<SceneNavigator> logger)
         {
             _options = options;
@@ -129,6 +131,11 @@ namespace App.Navigation
 
         public async UniTask Initialize()
         {
+            if (_initialized)
+            {
+                throw new InvalidOperationException("Already initialized.");
+            }
+
             var initialized = await AddressableExtensions.Initialize();
 
             if (!initialized.IsSuccess)
@@ -186,7 +193,7 @@ namespace App.Navigation
 
         public async UniTask Back()
         {
-            if (_history.Count <= 1)
+            if (!HasHistory)
             {
                 _logger.LogWarning("Back failed. empty history");
                 return;

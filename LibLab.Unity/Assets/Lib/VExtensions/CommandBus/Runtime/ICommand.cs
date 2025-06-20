@@ -8,11 +8,7 @@ namespace VExtensions.CommandBus
         internal static readonly Void _instance = new();
     }
 
-    // public interface ICommandBase
-    // {
-    // }
-
-    public interface ICommandBus : ICommand<Void>
+    public interface ICommandWithoutResult : ICommand<Void>
     {
     }
 

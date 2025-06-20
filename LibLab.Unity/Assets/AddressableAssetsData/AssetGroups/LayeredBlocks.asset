@@ -18,8 +18,7 @@ MonoBehaviour:
   - m_GUID: 6b17c325c0bb44d2b97d72d212b40b92
     m_Address: Assets/App/Features/LayeredBlocks/Scenes/LB_BasicScene.unity
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - /
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: af056763a16844439adfc5c4548c4337, type: 2}

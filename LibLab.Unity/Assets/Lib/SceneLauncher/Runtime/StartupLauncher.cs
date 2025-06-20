@@ -7,18 +7,18 @@ namespace SceneLauncher
 {
     public static partial class StartupLauncher
     {
-        private static readonly InitializableLazy<UniTaskCompletionSource<LaunchedContext>> LaunchedSource =
+        private static readonly InitializableLazy<UniTaskCompletionSource<LaunchedContext>> _launchedSource =
             new(() => new UniTaskCompletionSource<LaunchedContext>());
 
         private static bool _isExecutedLaunch;
 
-        public static UniTask<LaunchedContext> LaunchedTask => LaunchedSource.Value.Task;
+        public static UniTask<LaunchedContext> LaunchedTask => _launchedSource.Value.Task;
 
         // Domain reload support
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void OnSubsystemRegistration()
         {
-            LaunchedSource.Initialize();
+            _launchedSource.Initialize();
             _isExecutedLaunch = false;
         }
 
@@ -32,7 +32,7 @@ namespace SceneLauncher
             _isExecutedLaunch = true;
             configuration();
             LaunchedContext context = LaunchedContext.FromOptions(options);
-            LaunchedSource.Value.TrySetResult(context);
+            _launchedSource.Value.TrySetResult(context);
         }
     }
 }

@@ -1,9 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using App.Features.LayeredBlocks;
 using App.Scenes;
 using App.Scenes.Modal;
 using SceneLauncher;
 using SceneLauncher.VContainer;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
@@ -11,22 +15,36 @@ namespace App
 {
     public class SceneInstallerResolver
     {
+        public static SceneInstallerResolver Instance { get; } = new();
+
+        private static readonly Dictionary<string, IInstaller> _installers = new();
+
         public IInstaller Resolve(Scene scene)
         {
+            if (_installers.TryGetValue(scene.path, out var installer))
+            {
+                return installer;
+            }
+
             return scene switch
             {
-                {buildIndex: 0} => new MainScene(),
+                { buildIndex: 0 } => new MainScene(),
                 _ when scene.path.Contains("ModalScene") => new ModalScene(),
                 _ when scene.path.Contains("LB_") => new LayerdBlocksScene(),
                 _ => UnitInstaller.Instance
             };
         }
+
+        public void Register(string path, IInstaller installer)
+        {
+            Assert.IsFalse(string.IsNullOrWhiteSpace(path));
+            Assert.IsNotNull(installer);
+            _installers[path] = installer;
+        }
     }
 
     public class Main
     {
-        private static readonly SceneInstallerResolver _sceneInstallerResolver = new();
-
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void RegisterSceneLoaded()
         {
@@ -57,7 +75,7 @@ namespace App
         {
             Debug.Log($"[{scene.buildIndex}] Scene loaded: {scene.path}");
             bool isMainScene = scene.buildIndex == 0;
-            var installer = _sceneInstallerResolver.Resolve(scene);
+            var installer = SceneInstallerResolver.Instance.Resolve(scene);
             if (isMainScene)
             {
                 ScopeInjector.CreateScope<StartupLifetimeScope>(

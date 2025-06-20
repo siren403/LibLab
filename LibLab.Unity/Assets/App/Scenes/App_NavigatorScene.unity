@@ -932,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
       propertyPath: m_SortingOrder
-      value: 10000
+      value: 9999
       objectReference: {fileID: 0}
     - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
       propertyPath: m_PlaneDistance

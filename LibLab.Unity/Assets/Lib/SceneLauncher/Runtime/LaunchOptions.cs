@@ -1,8 +1,18 @@
-﻿namespace SceneLauncher
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+
+namespace SceneLauncher
 {
-    public sealed partial class LaunchOptions
+    public sealed class LaunchOptions
     {
-        private static readonly LaunchOptions Default = new();
+        private static readonly LaunchOptions _default = new();
+
+        public IDictionary<string, object?> Extensions
+        {
+            get { return _extensions ??= new ConcurrentDictionary<string, object?>(); }
+        }
+
+        private ConcurrentDictionary<string, object?>? _extensions;
 
         private LaunchOptions()
         {
@@ -10,7 +20,7 @@
 
         public static LaunchOptions Create()
         {
-            return Default;
+            return _default;
         }
     }
 }

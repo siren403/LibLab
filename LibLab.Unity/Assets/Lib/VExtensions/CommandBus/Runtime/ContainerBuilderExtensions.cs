@@ -2,6 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using Cysharp.Threading.Tasks;
 using VContainer;
 using VitalRouter.VContainer;
 
@@ -9,7 +10,7 @@ namespace VExtensions.CommandBus
 {
     public static class ContainerBuilderExtensions
     {
-        public static void UseCommandBus(this IContainerBuilder builder, Action<CommandBusBuilder> configuration)
+        public static void RegisterCommandBus(this IContainerBuilder builder, Action<CommandBusBuilder> configuration)
         {
             AddCommandBus(builder);
             builder.RegisterVitalRouter(routing =>
@@ -67,13 +68,27 @@ namespace VExtensions.CommandBus
                     var registry = container.Resolve<CommandHandlerRegistry>();
                     registry.TryAdd(typeof(TCommand),
                         (CommandHandlerExecutor<TResult>)(
-                            static async (container, cmd, ct) =>
+                            static (container, cmd, ct) =>
                             {
-                                var router = container.Resolve<VitalRouter.Router>();
-                                var handler = container.Resolve<THandler>();
-                                await router.PublishAsync((TCommand)cmd, ct);
-                                return handler.Result;
+                                var result = container.Resolve<THandler>().Result;
+                                return UniTask.FromResult(result);
                             }));
+                });
+            }
+
+            public void AddCommand<TCommand, THandler>()
+                where TCommand : class, ICommandWithoutResult
+                where THandler : ICommandHandler<TCommand>
+            {
+                _builder.Register<THandler>(Lifetime.Singleton);
+                _builder.RegisterBuildCallback(container =>
+                {
+                    var registry = container.Resolve<CommandHandlerRegistry>();
+                    registry.TryAdd(typeof(TCommand),
+                        (CommandHandlerExecutor)(
+                            static (container, cmd, ct) =>
+                                container.Resolve<THandler>().ExecuteAsync(
+                                    (TCommand)cmd, ct)));
                 });
             }
         }

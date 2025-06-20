@@ -1,8 +1,10 @@
 {
-    "name": "SceneLauncher",
+    "name": "SceneLauncher.VContainer",
+    "rootNamespace": "",
     "references": [
-        "UniTask",
-        "VContainer"
+        "GUID:ee347d01761fd6942ab48f96ec87b985",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,7 +12,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "VCONTAINER"
+    ],
     "versionDefines": [
         {
             "name": "jp.hadashikick.vcontainer",

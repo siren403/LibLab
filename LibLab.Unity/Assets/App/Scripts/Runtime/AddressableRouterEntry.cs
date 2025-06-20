@@ -2,37 +2,38 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using App.Navigation;
 using App.Scenes;
+using App.Scenes.UI;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VContainer.Unity;
+using VitalRouter;
 
 namespace App
 {
-    public class AddressableRouterEntry : IAsyncStartable, IDisposable
+    public class AddressableRouterEntry : IStartable, IDisposable
     {
         private readonly SceneNavigator _navigator;
         private readonly ILogger<AddressableRouterEntry> _logger;
         private readonly AddressableComponents _components;
+        private readonly Router _router;
         private DisposableBag _disposables;
 
         public AddressableRouterEntry(
             SceneNavigator navigator,
             ILogger<AddressableRouterEntry> logger,
-            AddressableComponents components)
+            AddressableComponents components,
+            Router router)
         {
             _navigator = navigator;
             _logger = logger;
             _components = components;
+            _router = router;
 
             components.CheckUpdateButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha1)))
@@ -66,8 +67,8 @@ namespace App
                     {
                         return;
                     }
-                    var fade = _components.ScreenFadeFeature!;
-                    await LMotion.Create(0f, 1f, 0.3f).Bind(t => fade.Progress = t);
+
+                    await _router.PublishAsync(TransitionScene.FadeCommand.In());
                     switch (location)
                     {
                         case "/":
@@ -80,22 +81,25 @@ namespace App
                             await _navigator.To("/intro");
                             break;
                     }
-                    await UniTask.Delay(TimeSpan.FromSeconds(1));
-                    await LMotion.Create(1f, 0f, 0.3f).Bind(t => fade.Progress = t);
 
+                    await _router.PublishAsync(TransitionScene.FadeCommand.Out());
                 }, AwaitOperation.Drop)
                 .AddTo(ref _disposables);
             components.PopButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha4)))
-                .SubscribeAwait(async (_, cancellationToken) => { await _navigator.Back(); },
+                .Where(_ => _navigator.HasHistory)
+                .SubscribeAwait(async (_, cancellationToken) =>
+                    {
+                        await _router.PublishAsync(TransitionScene.FadeCommand.In());
+                        await _navigator.Back();
+                        await _router.PublishAsync(TransitionScene.FadeCommand.Out());
+                    },
                     AwaitOperation.Drop)
                 .AddTo(ref _disposables);
         }
 
-        public async UniTask StartAsync(CancellationToken cancellationToken)
+        public void Start()
         {
-            await _navigator.Initialize();
-
             if (!_navigator.IsInitialized)
             {
                 _components.LogLabel!.text = $"{nameof(SceneNavigator)} Initializing failed.";

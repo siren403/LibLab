@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - /
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fcb7c964fe5a748e89e3b4b8f26c97f9
+    m_Address: Assets/App/Scenes/App_NavigatorScene.unity
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - /
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: af056763a16844439adfc5c4548c4337, type: 2}
   m_SchemaSet:

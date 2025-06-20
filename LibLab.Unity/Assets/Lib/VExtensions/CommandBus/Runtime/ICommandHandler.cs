@@ -14,7 +14,7 @@ namespace VExtensions.CommandBus
     {
     }
 
-    public interface ICommandHandler<in TCommand> : ICommandHandler<TCommand, Void> where TCommand : ICommandBus
+    public interface ICommandHandler<in TCommand> : ICommandHandler<TCommand, Void> where TCommand : ICommandWithoutResult
     {
         new UniTask ExecuteAsync(TCommand command, CancellationToken ct);
 

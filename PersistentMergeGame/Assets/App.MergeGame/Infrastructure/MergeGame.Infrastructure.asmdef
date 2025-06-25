@@ -1,0 +1,23 @@
+{
+    "name": "MergeGame.Infrastructure",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b7b46ece38eac2d4f8b0748622f1fefc",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Supabase.Postgrest.dll",
+        "Newtonsoft.Json.dll",
+        "Supabase.Realtime.dll",
+        "Supabase.dll",
+        "Supabase.Core.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

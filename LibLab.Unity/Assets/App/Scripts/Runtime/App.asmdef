@@ -5,7 +5,6 @@
         "Unity.Addressables",
         "UniTask",
         "Unity.ResourceManager",
-        "SceneLauncher",
         "VContainer",
         "Storybook",
         "VitalRouter",
@@ -19,7 +18,8 @@
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Core.Runtime",
         "App.Features.LayerdBlocks",
-        "SceneLauncher.VContainer"
+        "SceneLauncher.VContainer",
+        "VExtensions.ZLogger"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

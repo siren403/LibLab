@@ -1,0 +1,8 @@
+{
+    "name": "com.aaron.vextensions.zlogger",
+    "displayName": "VExtensions ZLogger",
+    "version": "1.0.0",
+    "unity": "6000.0",
+    "description": "A Unity package that integrates ZLogger with VExtensions for enhanced logging capabilities.",
+    "license": "MIT"
+}

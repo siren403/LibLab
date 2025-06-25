@@ -11,15 +11,6 @@ namespace App.Scenes.UI
 {
     public class TransitionScene : IInstaller
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void Register()
-        {
-            SceneInstallerResolver.Instance.Register(
-                "Assets/App/Features/UI/Scenes/App_UI_TransitionScene.unity",
-                new TransitionScene()
-            );
-        }
-
         public void Install(IContainerBuilder builder)
         {
             builder.RegisterComponentInHierarchy<CanvasGroup>();

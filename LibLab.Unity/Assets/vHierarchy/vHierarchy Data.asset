@@ -49,9 +49,4 @@ MonoBehaviour:
           isColorRecursive: 0
   bookmarks: []
   bookmarkedScenePaths:
-  - Assets/Lib/SceneLauncher/Example/Scenes/UiScene.unity
-  - Assets/Lib/SceneLauncher/Example/Scenes/MainScene.unity
-  - Assets/Lib/SceneLauncher/Example/Scenes/Scene A.unity
-  - Assets/Lib/SceneLauncher/Example/Scenes/Scene B.unity
-  - Assets/Lib/SceneLauncher/Example/Scenes/Scene C.unity
   - Assets/Lib/Storybook/Samples/Basic/StorybookScene.unity

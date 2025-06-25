@@ -1,0 +1,8 @@
+{
+    "name": "com.aaron.vextensions.mediator.abstractions",
+    "version": "1.0.0",
+    "displayName": "VExtensions Mediator Abstractions",
+    "description": "Abstractions for the VExtensions Mediator system, providing interfaces and base classes for creating and handling events and commands.",
+    "unity": "6000.0",
+    "license": "MIT"
+}

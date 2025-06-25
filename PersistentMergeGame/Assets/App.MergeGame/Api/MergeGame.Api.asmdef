@@ -1,0 +1,22 @@
+{
+    "name": "MergeGame.Api",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b7b46ece38eac2d4f8b0748622f1fefc",
+        "GUID:11a1e6972538dc147b424541f54bb4c9",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:77aea589fe3f34fa883d9f7e26eee12e",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b42f043ca9d08d64bb7219daecd8c292",
+        "GUID:d33e99d624f1c2b4582c736bc6558bfa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

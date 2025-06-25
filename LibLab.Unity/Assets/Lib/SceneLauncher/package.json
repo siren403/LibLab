@@ -1,0 +1,10 @@
+{
+    "name": "com.aaron.scene-launcher",
+    "displayName": "Scene Launcher",
+    "version": "1.0.0",
+    "unity": "6000.0",
+    "license": "MIT",
+    "dependencies": {
+        "com.cysharp.unitask": "2.5.10"
+    }
+}

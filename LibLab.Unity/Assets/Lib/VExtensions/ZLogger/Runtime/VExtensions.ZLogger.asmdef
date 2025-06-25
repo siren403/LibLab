@@ -1,0 +1,7 @@
+﻿{
+    "name": "VExtensions.ZLogger",
+    "references": [
+        "VContainer",
+        "ZLogger.Unity"
+    ]
+}

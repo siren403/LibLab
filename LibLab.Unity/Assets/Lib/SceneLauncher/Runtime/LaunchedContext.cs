@@ -1,6 +1,4 @@
-﻿using VContainer.Unity;
-
-namespace SceneLauncher
+﻿namespace SceneLauncher
 {
     public sealed record LaunchedContext
     {

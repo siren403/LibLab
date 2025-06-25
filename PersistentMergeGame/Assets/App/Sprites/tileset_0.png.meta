@@ -1,0 +1,651 @@
+fileFormatVersion: 2
+guid: 0bb0a43377e524cc4a758ed348848d76
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: A
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17fb907be41694d24be3bd658dc710be
+      internalID: -1456805921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: B
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ff160e07c5504d1fba310b583b33e37
+      internalID: 1818660241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: C
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 326e07530a5cb492a99ca1e5ee1d5d86
+      internalID: 2060474947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: D
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bb08c14ca150466d8769eed08d9e694
+      internalID: -497241384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: E
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4fdd94e44f1b4896827905261c6425f
+      internalID: 1743755018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: F
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b084e227d069e450980dada5a532840b
+      internalID: -1858764115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: G
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 520
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d628814acd4de482a8b2dd8cbc4f9c9b
+      internalID: -919802540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: H
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 235
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29205c617335d42cb9788fdabc32ca7b
+      internalID: -1905459983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_9
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 260
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd7c69f4d7a764e14967d731450a9506
+      internalID: 1088625844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_10
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 260
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71eab5c714809418b95a38a08d40e2d0
+      internalID: -1324920451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_11
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 260
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c947ab6d2d774720adb4c94f24daf6b
+      internalID: -1071446161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_12
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 260
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd2a8cfb1e8d439b9488911dff22bf0
+      internalID: 2046903421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_13
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 260
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfe8b1a6f0e5345d6895c3e38fe8928d
+      internalID: 55006208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_14
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 260
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0d663032690b4253a4551999ee2a496
+      internalID: 1333986446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00d3a95e8aa404a12832d67b70dfc67a
+      internalID: -447038843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_17
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57b5f6c3f0d2b4eeb9b366bfcdca349d
+      internalID: -838855803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_18
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcea7ca9a78474264bac36dfba00a472
+      internalID: -1773105332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_19
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3271353f18d6d4b92b1ca181a0f27d45
+      internalID: -685279610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_20
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc843f1ed30b049d5902b8f2b66e1a9b
+      internalID: 1885734134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_21
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaeb6ab367d9f439181c3452774728f8
+      internalID: 1663158490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_22
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70d7e2dd1bd7b4392b31e711465b8a6c
+      internalID: -463760652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_23
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 0
+        width: 235
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02bfc96bc307c42fb88b313280ea0d84
+      internalID: -861701453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 70a79942634504a01937d562ad246e30
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      A: -1456805921
+      B: 1818660241
+      C: 2060474947
+      D: -497241384
+      E: 1743755018
+      F: -1858764115
+      G: -919802540
+      H: -1905459983
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_10: -1324920451
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_11: -1071446161
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_12: 2046903421
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_13: 55006208
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_14: 1333986446
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_15: -1856819738
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_16: -447038843
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_17: -838855803
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_18: -1773105332
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_19: -685279610
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_20: 1885734134
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_21: 1663158490
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_22: -463760652
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_23: -861701453
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_7: 1975137193
+      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_9: 1088625844
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

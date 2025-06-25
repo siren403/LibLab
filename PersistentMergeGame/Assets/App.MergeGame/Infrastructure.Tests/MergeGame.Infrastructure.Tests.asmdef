@@ -1,0 +1,31 @@
+{
+    "name": "MergeGame.Infrastructure.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:11a1e6972538dc147b424541f54bb4c9",
+        "GUID:b7b46ece38eac2d4f8b0748622f1fefc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Supabase.dll",
+        "Supabase.Gotrue.dll",
+        "Supabase.Realtime.dll",
+        "Supabase.Storage.dll",
+        "Supabase.Postgrest.dll",
+        "Supabase.Core.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SceneLauncher
 {
-    public static partial class StartupLauncher
+    public static class StartupLauncher
     {
         private static readonly InitializableLazy<UniTaskCompletionSource<LaunchedContext>> _launchedSource =
             new(() => new UniTaskCompletionSource<LaunchedContext>());

@@ -6,7 +6,8 @@ using System.Threading;
 using App.Scenes.MergeGame.Commands;
 using Cysharp.Threading.Tasks;
 using MergeGame.Api;
-using MergeGame.Core.ValueObjects;
+using MergeGame.Api.Extensions;
+using MergeGame.Api.Game;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
@@ -18,14 +19,14 @@ namespace App.Scenes.MergeGame
 {
     public class MergeGameEntryPoint : IInitializable, IAsyncStartable, IDisposable
     {
-        private readonly MergeGameController _controller;
+        private readonly GameController _controller;
         private readonly IMediator _mediator;
         private readonly Router _router;
         private readonly ILogger<MergeGameEntryPoint> _logger;
         private DisposableBag _disposable;
 
         public MergeGameEntryPoint(
-            MergeGameController controller,
+            GameController controller,
             IMediator mediator,
             Router router,
             ILogger<MergeGameEntryPoint> logger)
@@ -46,15 +47,15 @@ namespace App.Scenes.MergeGame
 
         public async UniTask StartAsync(CancellationToken ct)
         {
-            (int width, int height) = await _controller.CreateBoard(ct);
-            await _router.PublishAsync(new SpawnTilesCommand() { Width = width, Height = height }, ct);
-
-            var blocks = await _controller.GetBlocks(ct);
-            foreach ((EntityId, Vector2Int) block in blocks)
+            var response = await _controller.CreateGame(new CreateGameRequest(7, 9), ct);
+            if (response.Error())
             {
-                (EntityId id, Vector2Int position) = block;
-                _ = _router.PublishAsync(new SpawnBlockCommand() { Id = id, Position = position }, ct);
+                throw new InvalidOperationException(
+                    $"Failed to create game session: {response}");
             }
+
+            await _router.PublishAsync(new SpawnTilesCommand() { Width = response.Width, Height = response.Height },
+                ct);
         }
 
         public void Dispose()

@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 8189272975244452241, guid: 1a06ac99f6444b141827fe63506e9cea, type: 3}
   stuffPrefabs:
+  - {fileID: 4944448500175953087, guid: f032795f2a3c493448b341c8b6d0d608, type: 3}
   - {fileID: 244766847657188308, guid: 95b9467a5e0448b4d8b14dfb94737f42, type: 3}
   - {fileID: 165393273319023755, guid: 68f62e3d9796ad44e815414dccf0b892, type: 3}
   - {fileID: 8761651305294775924, guid: 823d61ea9ce503e4da2dfb7a580747b5, type: 3}

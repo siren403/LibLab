@@ -1,4 +1,5 @@
 using System;
+using R3;
 using UnityEngine;
 
 namespace App.Scenes.MergeGame
@@ -6,11 +7,12 @@ namespace App.Scenes.MergeGame
     [RequireComponent(typeof(BoxCollider2D))]
     public class Block : MonoBehaviour
     {
-        public event Action<Block>? OnBlockClicked;
+        private readonly Subject<Block> _onClicked = new Subject<Block>();
+        public Observable<Block> OnClicked => _onClicked;
 
         private void OnMouseDown()
         {
-            OnBlockClicked?.Invoke(this);
+            _onClicked.OnNext(this);
         }
     }
 }

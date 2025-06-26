@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using App.Scenes.MergeGame.Commands;
 using Com.LuisPedroFonseca.ProCamera2D;
-using MergeGame.Core.ValueObjects;
+using R3;
 using UnityEngine;
 using VContainer;
 using VitalRouter;
@@ -71,13 +71,13 @@ namespace App.Scenes.MergeGame
                 transform
             );
             _blockPositions[block] = command.Position;
-            block.OnBlockClicked += target =>
+            block.OnClicked.Subscribe(b =>
             {
-                if (_blockPositions.TryGetValue(target, out var pos))
+                if (_blockPositions.TryGetValue(b, out var pos))
                 {
                     _router?.PublishAsync(new SelectBlockCommand() { Position = pos });
                 }
-            };
+            }).AddTo(this);
         }
 
         private void SpawnTile(int x, int y, TilePositionCalculator calculator)

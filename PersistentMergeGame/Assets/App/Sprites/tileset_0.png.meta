@@ -475,7 +475,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_18
+      name: empty
       rect:
         serializedVersion: 2
         x: 476
@@ -585,7 +585,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_23
+      name: gold
       rect:
         serializedVersion: 2
         x: 1666
@@ -628,6 +628,8 @@ TextureImporter:
       F: -1858764115
       G: -919802540
       H: -1905459983
+      empty: -1773105332
+      gold: -861701453
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_10: -1324920451
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_11: -1071446161
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_12: 2046903421
@@ -636,12 +638,10 @@ TextureImporter:
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_15: -1856819738
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_16: -447038843
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_17: -838855803
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_18: -1773105332
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_19: -685279610
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_20: 1885734134
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_21: 1663158490
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_22: -463760652
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_23: -861701453
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_7: 1975137193
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_9: 1088625844
   mipmapLimitGroupName: 

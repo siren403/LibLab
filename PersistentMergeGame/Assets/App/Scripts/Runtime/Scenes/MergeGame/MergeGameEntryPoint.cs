@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using MergeGame.Api;
 using MergeGame.Api.Extensions;
 using MergeGame.Api.Game;
+using MergeGame.Contracts.Board;
 using Microsoft.Extensions.Logging;
 using R3;
 using UnityEngine;
@@ -47,15 +48,23 @@ namespace App.Scenes.MergeGame
 
         public async UniTask StartAsync(CancellationToken ct)
         {
-            var response = await _controller.CreateGame(new CreateGameRequest(7, 9), ct);
+            var response = await _controller.CreateGame(new CreateGameRequest(), ct);
             if (response.Error())
             {
                 throw new InvalidOperationException(
                     $"Failed to create game session: {response}");
             }
 
-            await _router.PublishAsync(new SpawnTilesCommand() { Width = response.Width, Height = response.Height },
+            _ = _router.PublishAsync(
+                new SpawnTilesCommand() { Width = response.Width, Height = response.Height },
                 ct);
+
+            foreach (IBoardCell cell in response.Cells)
+            {
+                _ = _router.PublishAsync(
+                    new SpawnBlockCommand() { Position = new Vector2Int(cell.X, cell.Y), Id = cell.BlockId, },
+                    ct);
+            }
         }
 
         public void Dispose()

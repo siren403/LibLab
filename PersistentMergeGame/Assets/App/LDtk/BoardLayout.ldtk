@@ -11,7 +11,7 @@
 	"iid": "64613120-3740-11f0-acbf-35ecb6249482",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 20,
+	"nextUid": 23,
 	"identifierStyle": "Lowercase",
 	"toc": [],
 	"worldLayout": "Free",
@@ -152,9 +152,9 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "place_type",
+					"identifier": "block_state",
 					"doc": null,
-					"__type": "LocalEnum.place_type",
+					"__type": "LocalEnum.block_state",
 					"uid": 15,
 					"type": "F_Enum(14)",
 					"isArray": false,
@@ -268,9 +268,9 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "place_type",
+					"identifier": "block_state",
 					"doc": null,
-					"__type": "LocalEnum.place_type",
+					"__type": "LocalEnum.block_state",
 					"uid": 16,
 					"type": "F_Enum(14)",
 					"isArray": false,
@@ -384,9 +384,9 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "place_type",
+					"identifier": "block_state",
 					"doc": null,
-					"__type": "LocalEnum.place_type",
+					"__type": "LocalEnum.block_state",
 					"uid": 17,
 					"type": "F_Enum(14)",
 					"isArray": false,
@@ -500,9 +500,9 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "place_type",
+					"identifier": "block_state",
 					"doc": null,
-					"__type": "LocalEnum.place_type",
+					"__type": "LocalEnum.block_state",
 					"uid": 18,
 					"type": "F_Enum(14)",
 					"isArray": false,
@@ -616,10 +616,126 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "place_type",
+					"identifier": "block_state",
 					"doc": null,
-					"__type": "LocalEnum.place_type",
+					"__type": "LocalEnum.block_state",
 					"uid": 19,
+					"type": "F_Enum(14)",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"exportToToc": false,
+					"searchable": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["movable"]
+					},
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				}
+			]
+		},
+		{
+			"identifier": "movable_bag_3",
+			"uid": 20,
+			"tags": [],
+			"exportToToc": false,
+			"allowOutOfBounds": false,
+			"doc": null,
+			"width": 10,
+			"height": 10,
+			"resizableX": false,
+			"resizableY": false,
+			"minWidth": null,
+			"maxWidth": null,
+			"minHeight": null,
+			"maxHeight": null,
+			"keepAspectRatio": false,
+			"tileOpacity": 1,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#1867EB",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileRenderMode": "FitInside",
+			"tileRect": null,
+			"uiTileRect": null,
+			"nineSliceBorders": [],
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": [
+				{
+					"identifier": "block",
+					"doc": null,
+					"__type": "LocalEnum.block",
+					"uid": 21,
+					"type": "F_Enum(8)",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"exportToToc": false,
+					"searchable": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["block_bag_3"]
+					},
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				},
+				{
+					"identifier": "block_state",
+					"doc": null,
+					"__type": "LocalEnum.block_state",
+					"uid": 22,
 					"type": "F_Enum(14)",
 					"isArray": false,
 					"canBeNull": false,
@@ -668,9 +784,10 @@
 			{ "id": "block_bread_4", "tileRect": null, "color": 16690740 },
 			{ "id": "block_bread_5", "tileRect": null, "color": 16705377 },
 			{ "id": "block_bag_1", "tileRect": null, "color": 6539085 },
-			{ "id": "block_bag_2", "tileRect": null, "color": 4098376 }
+			{ "id": "block_bag_2", "tileRect": null, "color": 4098376 },
+			{ "id": "block_bag_3", "tileRect": null, "color": 1199753 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "place_type", "uid": 14, "values": [
+		{ "identifier": "block_state", "uid": 14, "values": [
 			{ "id": "untouchable", "tileRect": null, "color": 12470831 },
 			{ "id": "mergeable", "tileRect": null, "color": 14120515 },
 			{ "id": "movable", "tileRect": null, "color": 15389866 }
@@ -682,7 +799,7 @@
 			"iid": "64615830-3740-11f0-acbf-1b198dd40a97",
 			"uid": 0,
 			"worldX": 0,
-			"worldY": 0,
+			"worldY": -90,
 			"worldDepth": 0,
 			"pxWid": 70,
 			"pxHei": 90,
@@ -736,10 +853,10 @@
 							"px": [10,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -755,10 +872,10 @@
 							"px": [20,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -774,10 +891,10 @@
 							"px": [30,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -793,10 +910,10 @@
 							"px": [30,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -812,10 +929,10 @@
 							"px": [60,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -831,10 +948,10 @@
 							"px": [50,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -850,10 +967,10 @@
 							"px": [50,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -869,10 +986,10 @@
 							"px": [60,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -888,10 +1005,10 @@
 							"px": [40,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -907,10 +1024,10 @@
 							"px": [10,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -926,10 +1043,10 @@
 							"px": [20,60],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 60
+							"__worldY": -30
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -945,10 +1062,10 @@
 							"px": [20,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 70
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -964,10 +1081,10 @@
 							"px": [0,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 70
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -983,10 +1100,10 @@
 							"px": [40,60],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 60
+							"__worldY": -30
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1002,10 +1119,10 @@
 							"px": [50,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 70
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1021,10 +1138,10 @@
 							"px": [60,60],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 60
+							"__worldY": -30
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1040,10 +1157,10 @@
 							"px": [50,80],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 80
+							"__worldY": -10
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1059,10 +1176,10 @@
 							"px": [30,80],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 80
+							"__worldY": -10
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1078,10 +1195,10 @@
 							"px": [20,80],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 80
+							"__worldY": -10
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1097,10 +1214,10 @@
 							"px": [0,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1116,10 +1233,10 @@
 							"px": [10,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1135,10 +1252,10 @@
 							"px": [20,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1154,10 +1271,10 @@
 							"px": [30,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1173,10 +1290,10 @@
 							"px": [40,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1192,10 +1309,10 @@
 							"px": [20,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1211,10 +1328,10 @@
 							"px": [20,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1230,10 +1347,10 @@
 							"px": [10,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1249,48 +1366,10 @@
 							"px": [10,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 70
-						},
-						{
-							"__identifier": "untouchable_thing",
-							"__grid": [1,8],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#D77643",
-							"iid": "b57bafa0-3740-11f0-acbf-936e1cb01e88",
-							"width": 10,
-							"height": 10,
-							"defUid": 2,
-							"px": [10,80],
-							"fieldInstances": [
-								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
-							],
-							"__worldX": 10,
-							"__worldY": 80
-						},
-						{
-							"__identifier": "untouchable_thing",
-							"__grid": [0,8],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#D77643",
-							"iid": "b5bde8c0-3740-11f0-acbf-91d0d92531cc",
-							"width": 10,
-							"height": 10,
-							"defUid": 2,
-							"px": [0,80],
-							"fieldInstances": [
-								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
-							],
-							"__worldX": 0,
-							"__worldY": 80
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1306,10 +1385,10 @@
 							"px": [40,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 70
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1325,10 +1404,10 @@
 							"px": [60,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1344,10 +1423,10 @@
 							"px": [0,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1363,10 +1442,10 @@
 							"px": [0,60],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 60
+							"__worldY": -30
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1382,10 +1461,10 @@
 							"px": [60,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 70
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1401,10 +1480,10 @@
 							"px": [50,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1420,10 +1499,10 @@
 							"px": [40,0],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 0
+							"__worldY": -90
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1439,10 +1518,10 @@
 							"px": [40,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1458,10 +1537,10 @@
 							"px": [40,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1477,10 +1556,10 @@
 							"px": [60,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1496,10 +1575,10 @@
 							"px": [60,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1515,10 +1594,10 @@
 							"px": [50,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1534,10 +1613,10 @@
 							"px": [50,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1553,10 +1632,10 @@
 							"px": [60,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1572,10 +1651,10 @@
 							"px": [50,60],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 60
+							"__worldY": -30
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1591,10 +1670,10 @@
 							"px": [60,80],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 60,
-							"__worldY": 80
+							"__worldY": -10
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1610,10 +1689,10 @@
 							"px": [40,80],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 80
+							"__worldY": -10
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1629,10 +1708,10 @@
 							"px": [30,70],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 70
+							"__worldY": -20
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1648,10 +1727,10 @@
 							"px": [10,60],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 60
+							"__worldY": -30
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1667,10 +1746,10 @@
 							"px": [0,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1686,10 +1765,10 @@
 							"px": [0,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1705,10 +1784,10 @@
 							"px": [10,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_accessory",
@@ -1724,10 +1803,10 @@
 							"px": [20,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_3", "__tile": null, "defUid": 11, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 17, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1743,10 +1822,10 @@
 							"px": [0,10],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 10
+							"__worldY": -80
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1762,10 +1841,10 @@
 							"px": [0,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 0,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_bread",
@@ -1781,10 +1860,10 @@
 							"px": [50,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_1", "__tile": null, "defUid": 9, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 15, "realEditorValues": [] }
 							],
 							"__worldX": 50,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1800,10 +1879,10 @@
 							"px": [10,20],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 10,
-							"__worldY": 20
+							"__worldY": -70
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1819,10 +1898,10 @@
 							"px": [20,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 20,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1838,10 +1917,10 @@
 							"px": [30,30],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 30
+							"__worldY": -60
 						},
 						{
 							"__identifier": "untouchable_thing",
@@ -1857,10 +1936,10 @@
 							"px": [40,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
 							],
 							"__worldX": 40,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
 							"__identifier": "movable_bag_2",
@@ -1876,10 +1955,10 @@
 							"px": [30,40],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_bag_2", "__tile": null, "defUid": 13, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "movable", "__tile": null, "defUid": 19, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "movable", "__tile": null, "defUid": 19, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 40
+							"__worldY": -50
 						},
 						{
 							"__identifier": "movable_bag_1",
@@ -1895,29 +1974,67 @@
 							"px": [30,50],
 							"fieldInstances": [
 								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_bag_1", "__tile": null, "defUid": 12, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "movable", "__tile": null, "defUid": 18, "realEditorValues": [] }
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "movable", "__tile": null, "defUid": 18, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 50
+							"__worldY": -40
 						},
 						{
-							"__identifier": "movable_bag_1",
+							"__identifier": "untouchable_thing",
+							"__grid": [0,8],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#D77643",
+							"iid": "25511da0-3740-11f0-b09b-0bd67c733634",
+							"width": 10,
+							"height": 10,
+							"defUid": 2,
+							"px": [0,80],
+							"fieldInstances": [
+								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+							],
+							"__worldX": 0,
+							"__worldY": -10
+						},
+						{
+							"__identifier": "untouchable_thing",
+							"__grid": [1,8],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#D77643",
+							"iid": "27111d20-3740-11f0-b09b-a50e5391e5e9",
+							"width": 10,
+							"height": 10,
+							"defUid": 2,
+							"px": [10,80],
+							"fieldInstances": [
+								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_untouchable_2", "__tile": null, "defUid": 10, "realEditorValues": [] },
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "untouchable", "__tile": null, "defUid": 16, "realEditorValues": [] }
+							],
+							"__worldX": 10,
+							"__worldY": -10
+						},
+						{
+							"__identifier": "movable_bag_3",
 							"__grid": [3,6],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#0099DB",
-							"iid": "d593c7f0-3740-11f0-acbf-11f3583e89ec",
+							"__smartColor": "#1867EB",
+							"iid": "9d992ee0-3740-11f0-b09b-fd97b4a534c6",
 							"width": 10,
 							"height": 10,
-							"defUid": 4,
+							"defUid": 20,
 							"px": [30,60],
 							"fieldInstances": [
-								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_bag_1", "__tile": null, "defUid": 12, "realEditorValues": [] },
-								{ "__identifier": "place_type", "__type": "LocalEnum.place_type", "__value": "movable", "__tile": null, "defUid": 18, "realEditorValues": [] }
+								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_bag_3", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "movable", "__tile": null, "defUid": 22, "realEditorValues": [] }
 							],
 							"__worldX": 30,
-							"__worldY": 60
+							"__worldY": -30
 						}
 					]
 				}

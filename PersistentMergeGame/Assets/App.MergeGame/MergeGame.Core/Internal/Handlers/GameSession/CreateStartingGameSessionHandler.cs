@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading;
-using App.MergeGame.Core.Internal.Extensions;
+using MergeGame.Core.Internal.Extensions;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.GameSession;
 using MergeGame.Core.Internal.Managers;
@@ -34,7 +34,7 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
             var board = _manager.GetBoard(session);
             foreach (BoardCellSpec spec in layout.Cells)
             {
-                bool result = board.PlaceBlock(spec.Position, spec.BlockId, spec.PlaceBlockType);
+                bool result = board.PlaceBlock(spec.Position, spec.BlockId, spec.State);
                 if (!result)
                 {
                     throw new InvalidOperationException(

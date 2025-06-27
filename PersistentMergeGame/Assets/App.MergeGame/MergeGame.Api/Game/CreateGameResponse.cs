@@ -2,6 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using MergeGame.Contracts.Board;
 
 namespace MergeGame.Api.Game
 {
@@ -9,17 +10,18 @@ namespace MergeGame.Api.Game
         int StatusCode,
         Ulid SessionId,
         int Width,
-        int Height
+        int Height,
+        IBoardCell[] Cells
     ) : Response(StatusCode)
     {
-        public static CreateGameResponse Ok(Ulid sessionId, int width, int height)
+        public static CreateGameResponse Ok(Ulid sessionId, int width, int height, IBoardCell[] cells)
         {
-            return new CreateGameResponse(0, sessionId, width, height);
+            return new CreateGameResponse(0, sessionId, width, height, cells);
         }
 
         public static CreateGameResponse Error()
         {
-            return new CreateGameResponse(-1, Ulid.Empty, 0, 0);
+            return new CreateGameResponse(-1, Ulid.Empty, 0, 0, Array.Empty<IBoardCell>());
         }
     }
 }

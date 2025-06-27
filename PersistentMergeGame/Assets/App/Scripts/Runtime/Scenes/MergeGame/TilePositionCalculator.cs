@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace App.Scenes.MergeGame
 {
-    public class TilePositionCalculator
+    public struct TilePositionCalculator
     {
         private readonly Vector2 _tileSize;
         private readonly Vector2 _boardSize;

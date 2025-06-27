@@ -3,8 +3,5 @@
 
 namespace MergeGame.Api.Game
 {
-    public record CreateGameRequest(
-        int Width,
-        int Height
-    );
+    public record CreateGameRequest();
 }

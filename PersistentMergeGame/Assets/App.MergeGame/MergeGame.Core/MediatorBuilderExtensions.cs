@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Commands.GameSession;
+using MergeGame.Core.Application.Data;
 using MergeGame.Core.Internal.Handlers.Board;
 using MergeGame.Core.Internal.Handlers.GameSession;
 using MergeGame.Core.ValueObjects;
@@ -16,6 +17,8 @@ namespace MergeGame.Core
     {
         public static void RegisterCommands(this IMediatorBuilder builder)
         {
+            #region GameSession
+
             builder.RegisterCommand<CreateGameSessionCommand, CreateGameSessionHandler, CreateGameSessionResult>();
             builder.RegisterCommand<
                 CreateStartingGameSessionCommand,
@@ -23,12 +26,21 @@ namespace MergeGame.Core
                 CreateGameSessionResult
             >();
 
+            #endregion
+
+            #region Board
+
             builder.RegisterCommand<GetBoardSizeCommand, GetBoardSizeHandler, BoardSize>();
+            builder.RegisterCommand<GetBoardCellsCommand, GetBoardCellsHandler, BoardCell[]>();
+
+            #endregion
         }
     }
 
     public static class MediatorExtensions
     {
+        #region GameSession
+
         public static UniTask<CreateGameSessionResult> ExecuteCreateGameSession(this IMediator mediator,
             CreateGameSessionCommand command, CancellationToken ct = default)
         {
@@ -41,10 +53,22 @@ namespace MergeGame.Core
             return mediator.ExecuteAsync<CreateStartingGameSessionCommand, CreateGameSessionResult>(command, ct);
         }
 
+        #endregion
+
+        #region Board
+
         public static UniTask<BoardSize> ExecuteGetBoardSize(this IMediator mediator,
             GetBoardSizeCommand command, CancellationToken ct = default)
         {
             return mediator.ExecuteAsync<GetBoardSizeCommand, BoardSize>(command, ct);
         }
+
+        public static UniTask<BoardCell[]> ExecuteGetBoardCells(this IMediator mediator,
+            GetBoardCellsCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<GetBoardCellsCommand, BoardCell[]>(command, ct);
+        }
+
+        #endregion
     }
 }

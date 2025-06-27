@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Api.Game;
+using MergeGame.Contracts.Board;
 using MergeGame.Core;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Commands.GameSession;
@@ -36,7 +37,11 @@ namespace MergeGame.Api
                 new GetBoardSizeCommand() { SessionId = sessionId }, ct
             );
 
-            return CreateGameResponse.Ok(sessionId, width, height);
+            IBoardCell[] boardCells = await _mediator.ExecuteGetBoardCells(
+                new GetBoardCellsCommand() { SessionId = sessionId }, ct
+            );
+
+            return CreateGameResponse.Ok(sessionId, width, height, boardCells);
         }
     }
 }

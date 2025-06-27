@@ -2,6 +2,9 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using MergeGame.Core.ValueObjects;
 
 namespace MergeGame.Core.Internal.Entities
@@ -63,6 +66,11 @@ namespace MergeGame.Core.Internal.Entities
         {
             (int x, int y) = position.AsPrimitive();
             return Cells[x, y];
+        }
+
+        public IEnumerable<BoardCell> GetCells()
+        {
+            return Cells.Cast<BoardCell>();
         }
 
         public override string ToString()

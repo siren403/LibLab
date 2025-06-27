@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378a2ac0495f4236ae6dcf87451eedea, type: 3}
   m_Name: StartingBoardLayout
   m_EditorClassIdentifier: 
-  json: {fileID: 4900000, guid: fae66a612064c9949a1f26b2d9646b12, type: 3}
+  json: {fileID: 4900000, guid: 359130ce5c1454d4995c3a3fa5822753, type: 3}
+  scalePerUnit: 10

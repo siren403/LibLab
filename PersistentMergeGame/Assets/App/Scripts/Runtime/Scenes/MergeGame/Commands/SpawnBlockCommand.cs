@@ -8,7 +8,7 @@ namespace App.Scenes.MergeGame.Commands
 {
     public struct SpawnBlockCommand : ICommand
     {
-        public int Id { get; init; }
+        public long Id { get; init; }
         public Vector2Int Position { get; init; }
     }
 }

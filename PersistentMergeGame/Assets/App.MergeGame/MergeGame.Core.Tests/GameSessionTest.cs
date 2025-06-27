@@ -1,6 +1,6 @@
 using System;
-using App.MergeGame.Core.Enums;
-using App.MergeGame.Core.Internal.Extensions;
+using MergeGame.Core.Internal.Extensions;
+using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Managers;
 using NUnit.Framework;
 using UnityEngine;
@@ -50,12 +50,12 @@ namespace MergeGame.Core.Tests
             var board = manager.GetBoard(session);
 
             var pos1 = board.CreatePosition(0, 0);
-            bool result = board.PlaceBlock(pos1, 0, PlaceBlockType.Untouchable);
+            bool result = board.PlaceBlock(pos1, 0, BoardCellState.Untouchable);
             Assert.IsTrue(result, "Failed to place block at position (0, 0).");
 
             (int maxX, int maxY) = board.MaxPosition.AsPrimitive();
             var pos2 = board.CreatePosition(maxX, maxY);
-            result = board.PlaceBlock(pos2, 1, PlaceBlockType.Untouchable);
+            result = board.PlaceBlock(pos2, 1, BoardCellState.Untouchable);
             Assert.IsTrue(result, $"Failed to place block at position ({maxX}, {maxY}).");
 
             Assert.Throws<ArgumentOutOfRangeException>(() => { board.CreatePosition(-1, -1); });

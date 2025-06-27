@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using App.MergeGame.Core.Enums;
+using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.ValueObjects;
 using Newtonsoft.Json;
@@ -35,29 +35,31 @@ namespace MergeGame.Infrastructure.Data
                 {
                     int x = entity.X / scalePerUnit;
                     int y = entity.Y / scalePerUnit;
+                    y = height - 1 - y;
 
                     var customFields = entity.CustomFields;
                     BlockId blockId = customFields.Block switch
                     {
-                        "block_untouchable_1" => 0,
-                        "block_untouchable_2" => 0,
-                        "block_untouchable_3" => 0,
-                        "block_bag_1" => 1,
-                        "block_bag_2" => 2,
+                        "block_bag_1" => 0,
+                        "block_bag_2" => 1,
+                        "block_bag_3" => 2,
+                        "block_untouchable_1" => 10000,
+                        "block_untouchable_2" => 10001,
+                        "block_untouchable_3" => 10002,
                         _ => throw new InvalidOperationException($"Unknown block type: {customFields.Block}")
                     };
-                    PlaceBlockType placeType = customFields.PlaceType switch
+                    BoardCellState cellState = customFields.BlockState switch
                     {
-                        "untouchable" => PlaceBlockType.Untouchable,
-                        "mergeable" => PlaceBlockType.Mergeable,
-                        "movable" => PlaceBlockType.Movable,
-                        _ => throw new InvalidOperationException($"Unknown place type: {customFields.PlaceType}")
+                        "untouchable" => BoardCellState.Untouchable,
+                        "mergeable" => BoardCellState.Mergeable,
+                        "movable" => BoardCellState.Movable,
+                        _ => throw new InvalidOperationException($"Unknown place type: {customFields.BlockState}")
                     };
 
                     var cellSpec = new BoardCellSpec(
                         new Position(x, y),
                         blockId,
-                        placeType
+                        cellState
                     );
 
                     cells.Add(cellSpec);
@@ -87,7 +89,7 @@ namespace MergeGame.Infrastructure.Data
         public record CustomFields
         {
             [JsonProperty("block")] public string Block { get; set; } = string.Empty;
-            [JsonProperty("place_type")] public string PlaceType { get; set; } = string.Empty;
+            [JsonProperty("block_state")] public string BlockState { get; set; } = string.Empty;
         }
     }
 }

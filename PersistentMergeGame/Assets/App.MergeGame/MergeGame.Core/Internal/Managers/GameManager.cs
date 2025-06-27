@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using App.MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Entities;
-using MergeGame.Core.ValueObjects;
 
 namespace MergeGame.Core.Internal.Managers
 {

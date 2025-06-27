@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace App.Scenes.MergeGame
+namespace App.MergeGame
 {
     public class Tile : MonoBehaviour
     {

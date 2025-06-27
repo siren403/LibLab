@@ -2,7 +2,7 @@
 	"identifier": "starting",
 	"uniqueIdentifer": "64615830-3740-11f0-acbf-1b198dd40a97",
 	"x": 0,
-	"y": 0,
+	"y": -90,
 	"width": 70,
 	"height": 90,
 	"bgColor": "#696A79",
@@ -22,7 +22,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -36,7 +36,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -50,7 +50,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -64,7 +64,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -78,7 +78,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -92,7 +92,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -106,7 +106,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -120,7 +120,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -134,7 +134,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -148,7 +148,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -162,7 +162,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -176,7 +176,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -190,7 +190,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -204,7 +204,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -218,7 +218,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -232,7 +232,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -246,7 +246,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -260,7 +260,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -274,7 +274,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -288,7 +288,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -302,7 +302,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -316,7 +316,7 @@
 				"color": 12470831,
 				"customFields": {
 					"block": "block_untouchable_1",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			}
 		],
@@ -332,7 +332,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -346,7 +346,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -360,7 +360,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -374,7 +374,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -388,7 +388,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -402,7 +402,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -416,7 +416,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -430,7 +430,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -444,35 +444,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
-				}
-			},
-			{
-				"id": "untouchable_thing",
-				"iid": "b57bafa0-3740-11f0-acbf-936e1cb01e88",
-				"layer": "entities",
-				"x": 10,
-				"y": 80,
-				"width": 10,
-				"height": 10,
-				"color": 14120515,
-				"customFields": {
-					"block": "block_untouchable_2",
-					"place_type": "untouchable"
-				}
-			},
-			{
-				"id": "untouchable_thing",
-				"iid": "b5bde8c0-3740-11f0-acbf-91d0d92531cc",
-				"layer": "entities",
-				"x": 0,
-				"y": 80,
-				"width": 10,
-				"height": 10,
-				"color": 14120515,
-				"customFields": {
-					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -486,7 +458,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -500,7 +472,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -514,7 +486,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -528,7 +500,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -542,7 +514,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -556,7 +528,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -570,7 +542,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -584,7 +556,7 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -598,7 +570,35 @@
 				"color": 14120515,
 				"customFields": {
 					"block": "block_untouchable_2",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
+				}
+			},
+			{
+				"id": "untouchable_thing",
+				"iid": "25511da0-3740-11f0-b09b-0bd67c733634",
+				"layer": "entities",
+				"x": 0,
+				"y": 80,
+				"width": 10,
+				"height": 10,
+				"color": 14120515,
+				"customFields": {
+					"block": "block_untouchable_2",
+					"block_state": "untouchable"
+				}
+			},
+			{
+				"id": "untouchable_thing",
+				"iid": "27111d20-3740-11f0-b09b-a50e5391e5e9",
+				"layer": "entities",
+				"x": 10,
+				"y": 80,
+				"width": 10,
+				"height": 10,
+				"color": 14120515,
+				"customFields": {
+					"block": "block_untouchable_2",
+					"block_state": "untouchable"
 				}
 			}
 		],
@@ -614,7 +614,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -628,7 +628,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -642,7 +642,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -656,7 +656,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -670,7 +670,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -684,7 +684,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -698,7 +698,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -712,7 +712,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -726,7 +726,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -740,7 +740,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -754,7 +754,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -768,7 +768,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -782,7 +782,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -796,7 +796,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -810,7 +810,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -824,7 +824,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -838,7 +838,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			},
 			{
@@ -852,7 +852,7 @@
 				"color": 15389866,
 				"customFields": {
 					"block": "block_untouchable_3",
-					"place_type": "untouchable"
+					"block_state": "untouchable"
 				}
 			}
 		],
@@ -868,7 +868,7 @@
 				"color": 2943221,
 				"customFields": {
 					"block": "block_bag_2",
-					"place_type": "movable"
+					"block_state": "movable"
 				}
 			}
 		],
@@ -884,21 +884,23 @@
 				"color": 39387,
 				"customFields": {
 					"block": "block_bag_1",
-					"place_type": "movable"
+					"block_state": "movable"
 				}
-			},
+			}
+		],
+		"movable_bag_3": [
 			{
-				"id": "movable_bag_1",
-				"iid": "d593c7f0-3740-11f0-acbf-11f3583e89ec",
+				"id": "movable_bag_3",
+				"iid": "9d992ee0-3740-11f0-b09b-fd97b4a534c6",
 				"layer": "entities",
 				"x": 30,
 				"y": 60,
 				"width": 10,
 				"height": 10,
-				"color": 39387,
+				"color": 1599467,
 				"customFields": {
-					"block": "block_bag_1",
-					"place_type": "movable"
+					"block": "block_bag_3",
+					"block_state": "movable"
 				}
 			}
 		]

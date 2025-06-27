@@ -164,6 +164,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 8189272975244452241, guid: 1a06ac99f6444b141827fe63506e9cea, type: 3}
+  blockData:
+  - {fileID: 11400000, guid: b31efe10ecc3e3f4fa416db05b2be84c, type: 2}
+  - {fileID: 11400000, guid: bacbd0101aa4ff948bbec4977733f982, type: 2}
+  - {fileID: 11400000, guid: 83c5a5f50ec492e4c93217844595153b, type: 2}
+  - {fileID: 11400000, guid: 588f9d562a833c8468ed9b959f90f274, type: 2}
+  - {fileID: 11400000, guid: 35477c4d85bf7f44fa42e1dd69b00f50, type: 2}
+  - {fileID: 11400000, guid: 8da1b27f3d3596e4cbe91eded3fbcaf2, type: 2}
+  - {fileID: 11400000, guid: b3807c299fc3e6748944e80e90cf8d9b, type: 2}
+  - {fileID: 11400000, guid: d0d943cd3cde6f44cb086564b99b76fa, type: 2}
+  - {fileID: 11400000, guid: b18e59266368a584cb6a485564ac6715, type: 2}
+  - {fileID: 11400000, guid: 819e06482b5e8b8418cb085070fe693e, type: 2}
+  - {fileID: 11400000, guid: 2ce22a78bb68c3c4c92522012e043bab, type: 2}
   stuffPrefabs:
   - {fileID: 4944448500175953087, guid: f032795f2a3c493448b341c8b6d0d608, type: 3}
   - {fileID: 244766847657188308, guid: 95b9467a5e0448b4d8b14dfb94737f42, type: 3}

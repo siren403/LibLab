@@ -2,7 +2,6 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using App.MergeGame.Core.Enums;
 using MergeGame.Core.Enums;
 using MergeGame.Core.ValueObjects;
 
@@ -19,11 +18,6 @@ namespace MergeGame.Core.Internal.Entities
         public BlockId? BlockId { get; private set; }
         public BoardCellState State { get; private set; }
 
-        public bool CanMove { get; private set; }
-        public bool CanMerge { get; private set; }
-
-        public bool IsSelectable => State == BoardCellState.Occupied && CanMove && CanMerge;
-
         public static BoardCell CreateEmptyCell(Ulid id, Ulid boardId, Position position)
         {
             return new BoardCell()
@@ -32,41 +26,22 @@ namespace MergeGame.Core.Internal.Entities
                 BoardId = boardId,
                 Position = position,
                 BlockId = null,
-                State = BoardCellState.Empty,
-                CanMove = false,
-                CanMerge = false
+                State = BoardCellState.Untouchable,
             };
         }
 
-        public bool PlaceBlock(BlockId blockId, PlaceBlockType type)
+        public bool PlaceBlock(BlockId blockId, BoardCellState state)
         {
-            if (State != BoardCellState.Empty)
+            if (HasBlock)
             {
                 return false;
             }
 
             BlockId = blockId;
-            State = BoardCellState.Occupied;
-
-            switch (type)
-            {
-                case PlaceBlockType.Untouchable:
-                    CanMove = false;
-                    CanMerge = false;
-                    break;
-                case PlaceBlockType.Mergeable:
-                    CanMove = false;
-                    CanMerge = true;
-                    break;
-                case PlaceBlockType.Movable:
-                    CanMove = true;
-                    CanMerge = true;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-
+            State = state;
             return true;
         }
+
+        public bool HasBlock => BlockId.HasValue;
     }
 }

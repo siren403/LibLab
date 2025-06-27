@@ -1,7 +1,7 @@
-// Licensed to the.NET Foundation under one or more agreements.
-// The.NET Foundation licenses this file to you under the MIT license.
-
 using System.Collections.Generic;
+using System.Linq;
+using App.MergeGame;
+using App.MergeGame.Data;
 using App.Scenes.MergeGame.Commands;
 using Com.LuisPedroFonseca.ProCamera2D;
 using R3;
@@ -15,16 +15,23 @@ namespace App.Scenes.MergeGame
     public partial class MergeGamePresenter : MonoBehaviour
     {
         [SerializeField] private Tile tilePrefab = null!;
-        [SerializeField] private List<Block> stuffPrefabs = new();
-        [SerializeField] private Vector2 origin = new Vector2(0.5f, 0.5f);
+        [SerializeField] private List<BlockData> blockData = new();
+        [SerializeField] private Vector2 origin = new(0.5f, 0.5f);
         [SerializeField] private ProCamera2DContentFitter cameraContentFitter = null!;
         [SerializeField] private float contentMargin = 0.1f;
 
-        private TilePositionCalculator? _positionCalculator;
+        private TilePositionCalculator _positionCalculator;
 
         private readonly Dictionary<Block, Vector2Int> _blockPositions = new();
 
         [Inject] private Router? _router;
+
+        private Dictionary<long, BlockData>? _blockData;
+
+        private void Awake()
+        {
+            _blockData = blockData.ToDictionary(data => data.Id, data => data);
+        }
 
         [Route]
         private void On(SpawnTilesCommand command)
@@ -55,17 +62,14 @@ namespace App.Scenes.MergeGame
         [Route]
         private void On(SpawnBlockCommand command)
         {
-            if (_positionCalculator == null)
+            var position = _positionCalculator.GetTilePosition(command.Position);
+            if (!(_blockData?.TryGetValue(command.Id, out BlockData data) ?? false))
             {
-                throw new System.InvalidOperationException(
-                    "Position calculator is not initialized. Ensure that tiles are spawned first."
-                );
+                return;
             }
 
-            var position = _positionCalculator.GetTilePosition(command.Position);
-            int index = (int)command.Id - 1;
             Block block = Instantiate(
-                stuffPrefabs[index],
+                data.Prefab,
                 position,
                 Quaternion.identity,
                 transform

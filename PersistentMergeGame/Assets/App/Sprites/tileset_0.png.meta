@@ -299,16 +299,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_9
+      name: I
       rect:
         serializedVersion: 2
         x: 238
         y: 260
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -321,16 +321,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_10
+      name: J
       rect:
         serializedVersion: 2
         x: 476
         y: 260
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -343,16 +343,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_11
+      name: K
       rect:
         serializedVersion: 2
         x: 714
         y: 260
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -365,16 +365,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_12
+      name: L
       rect:
         serializedVersion: 2
         x: 952
         y: 260
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -387,16 +387,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_13
+      name: M
       rect:
         serializedVersion: 2
         x: 1190
         y: 260
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -409,16 +409,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_14
+      name: N
       rect:
         serializedVersion: 2
         x: 1428
         y: 260
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -431,16 +431,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_16
+      name: O
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -453,16 +453,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_17
+      name: P
       rect:
         serializedVersion: 2
         x: 238
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -475,16 +475,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: empty
+      name: Empty
       rect:
         serializedVersion: 2
         x: 476
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -497,16 +497,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_19
+      name: Q
       rect:
         serializedVersion: 2
         x: 714
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -519,16 +519,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_20
+      name: R
       rect:
         serializedVersion: 2
         x: 952
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -541,16 +541,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_21
+      name: S
       rect:
         serializedVersion: 2
         x: 1190
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -563,16 +563,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_22
+      name: T
       rect:
         serializedVersion: 2
-        x: 1428
+        x: 1433
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -585,16 +585,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gold
+      name: Gold
       rect:
         serializedVersion: 2
         x: 1666
         y: 0
         width: 235
         height: 258
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.56}
+      border: {x: 0, y: 32, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -625,25 +625,25 @@ TextureImporter:
       C: 2060474947
       D: -497241384
       E: 1743755018
+      Empty: -1773105332
       F: -1858764115
       G: -919802540
+      Gold: -861701453
       H: -1905459983
-      empty: -1773105332
-      gold: -861701453
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_10: -1324920451
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_11: -1071446161
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_12: 2046903421
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_13: 55006208
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_14: 1333986446
+      I: 1088625844
+      J: -1324920451
+      K: -1071446161
+      L: 2046903421
+      M: 55006208
+      N: 1333986446
+      O: -447038843
+      P: -838855803
+      Q: -685279610
+      R: 1885734134
+      S: 1663158490
+      T: -463760652
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_15: -1856819738
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_16: -447038843
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_17: -838855803
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_19: -685279610
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_20: 1885734134
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_21: 1663158490
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_22: -463760652
       sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_7: 1975137193
-      sactx-0-2048x1024-ETC2-Atlas_Tileset_animals-8c44e174-CAB-31f6cc39103c70a85a5fa0ab9f8584bc--2992583034356036006_9: 1088625844
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

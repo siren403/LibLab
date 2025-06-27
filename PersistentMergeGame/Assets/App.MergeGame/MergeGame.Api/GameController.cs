@@ -1,14 +1,13 @@
-// Licensed to the.NET Foundation under one or more agreements.
-// The.NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using MergeGame.Api.Game;
 using MergeGame.Contracts.Board;
+using MergeGame.Api.Game;
 using MergeGame.Core;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Commands.GameSession;
+using MergeGame.Core.ValueObjects;
+using UnityEngine;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Api
@@ -42,6 +41,15 @@ namespace MergeGame.Api
             );
 
             return CreateGameResponse.Ok(sessionId, width, height, boardCells);
+        }
+
+        public async UniTask<bool> IsMovableCell(Ulid sessionId, Vector2Int position, CancellationToken ct = default)
+        {
+            bool isMovable = await _mediator.ExecuteIsMovableCell(
+                new IsMovableCellCommand() { SessionId = sessionId, Position = new Position(position.x, position.y) },
+                ct);
+
+            return isMovable;
         }
     }
 }

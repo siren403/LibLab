@@ -21,29 +21,25 @@ namespace App.Scenes.MergeGame
     public class MergeGameEntryPoint : IInitializable, IAsyncStartable, IDisposable
     {
         private readonly GameController _controller;
-        private readonly IMediator _mediator;
         private readonly Router _router;
+        private readonly FocusFrame _focusFrame;
         private readonly ILogger<MergeGameEntryPoint> _logger;
         private DisposableBag _disposable;
 
         public MergeGameEntryPoint(
             GameController controller,
-            IMediator mediator,
             Router router,
+            FocusFrame focusFrame,
             ILogger<MergeGameEntryPoint> logger)
         {
             _controller = controller;
-            _mediator = mediator;
             _router = router;
+            _focusFrame = focusFrame;
             _logger = logger;
         }
 
         public void Initialize()
         {
-            _router.Subscribe<SelectBlockCommand>((cmd, ctx) =>
-            {
-                _logger.LogInformation("Block selected: position {Position}", cmd.Position);
-            }).AddTo(ref _disposable);
         }
 
         public async UniTask StartAsync(CancellationToken ct)
@@ -65,6 +61,36 @@ namespace App.Scenes.MergeGame
                     new SpawnBlockCommand() { Position = new Vector2Int(cell.X, cell.Y), Id = cell.BlockId, },
                     ct);
             }
+
+            var sessionId = response.SessionId;
+            bool isMovable = false;
+            bool isMoved = false;
+            _router.SubscribeAwait<SelectTileCommand>(async (cmd, ctx) =>
+            {
+                _focusFrame.Show(cmd.WorldPosition);
+                isMovable = await _controller.IsMovableCell(sessionId, cmd.CellPosition, ctx.CancellationToken);
+            }, CommandOrdering.Drop).AddTo(ref _disposable);
+            _router.Subscribe<DragTileCommand>((cmd, ctx) =>
+            {
+                if (!isMovable) return;
+                isMoved = true;
+                _focusFrame.Hide();
+                _router.PublishAsync(new MoveBlockPositionCommand() { Position = cmd.CellPosition },
+                    ctx.CancellationToken);
+            }).AddTo(ref _disposable);
+
+            _router.Subscribe<DropTileCommand>((cmd, ctx) =>
+            {
+                if (isMoved)
+                {
+                    _focusFrame.Restore();
+                }
+
+                isMovable = false;
+                isMoved = false;
+                _router.PublishAsync(new ReturnBlockPositionCommand() { Position = cmd.CellPosition },
+                    ctx.CancellationToken);
+            }).AddTo(ref _disposable);
         }
 
         public void Dispose()

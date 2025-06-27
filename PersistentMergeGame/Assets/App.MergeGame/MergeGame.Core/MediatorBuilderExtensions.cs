@@ -32,6 +32,7 @@ namespace MergeGame.Core
 
             builder.RegisterCommand<GetBoardSizeCommand, GetBoardSizeHandler, BoardSize>();
             builder.RegisterCommand<GetBoardCellsCommand, GetBoardCellsHandler, BoardCell[]>();
+            builder.RegisterCommand<IsMovableCellCommand, IsMovableCellHandler, bool>();
 
             #endregion
         }
@@ -67,6 +68,12 @@ namespace MergeGame.Core
             GetBoardCellsCommand command, CancellationToken ct = default)
         {
             return mediator.ExecuteAsync<GetBoardCellsCommand, BoardCell[]>(command, ct);
+        }
+
+        public static UniTask<bool> ExecuteIsMovableCell(this IMediator mediator,
+            IsMovableCellCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<IsMovableCellCommand, bool>(command, ct);
         }
 
         #endregion

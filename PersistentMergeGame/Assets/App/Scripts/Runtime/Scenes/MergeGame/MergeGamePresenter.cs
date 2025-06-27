@@ -4,6 +4,8 @@ using App.MergeGame;
 using App.MergeGame.Data;
 using App.Scenes.MergeGame.Commands;
 using Com.LuisPedroFonseca.ProCamera2D;
+using LitMotion;
+using LitMotion.Extensions;
 using R3;
 using UnityEngine;
 using VContainer;
@@ -14,6 +16,7 @@ namespace App.Scenes.MergeGame
     [Routes]
     public partial class MergeGamePresenter : MonoBehaviour
     {
+        [SerializeField] private Camera targetCamera = null!;
         [SerializeField] private Tile tilePrefab = null!;
         [SerializeField] private List<BlockData> blockData = new();
         [SerializeField] private Vector2 origin = new(0.5f, 0.5f);
@@ -22,7 +25,8 @@ namespace App.Scenes.MergeGame
 
         private TilePositionCalculator _positionCalculator;
 
-        private readonly Dictionary<Block, Vector2Int> _blockPositions = new();
+        private readonly Dictionary<Vector2Int, Block> _blocks = new();
+        private readonly Dictionary<Vector2Int, Tile> _tiles = new();
 
         [Inject] private Router? _router;
 
@@ -74,24 +78,74 @@ namespace App.Scenes.MergeGame
                 Quaternion.identity,
                 transform
             );
-            _blockPositions[block] = command.Position;
-            block.OnClicked.Subscribe(b =>
+            _blocks[command.Position] = block;
+        }
+
+        [Route]
+        private void On(MoveBlockPositionCommand positionCommand)
+        {
+            if (!_blocks.TryGetValue(positionCommand.Position, out var block))
             {
-                if (_blockPositions.TryGetValue(b, out var pos))
-                {
-                    _router?.PublishAsync(new SelectBlockCommand() { Position = pos });
-                }
-            }).AddTo(this);
+                return;
+            }
+
+            var inputPosition = targetCamera.ScreenToWorldPoint(Input.mousePosition);
+            block.transform.position = inputPosition;
+            block.OnMovePosition();
+        }
+
+        private MotionHandle _returnBlockHandle = MotionHandle.None;
+
+        [Route]
+        private void On(ReturnBlockPositionCommand command)
+        {
+            if (!_tiles.TryGetValue(command.Position, out var tile))
+            {
+                return;
+            }
+
+            if (!_blocks.TryGetValue(command.Position, out var block))
+            {
+                return;
+            }
+
+            var fromPosition = block.transform.position;
+            var toPosition = tile.transform.position;
+
+            _returnBlockHandle.TryComplete();
+            _returnBlockHandle = LMotion.Create(fromPosition, toPosition, 0.05f)
+                .WithOnComplete(() => { block.OnReturnPosition(); })
+                .BindToPosition(block.transform);
         }
 
         private void SpawnTile(int x, int y, TilePositionCalculator calculator)
         {
+            var position = new Vector2Int(x, y);
             Tile tile = Instantiate(tilePrefab, transform)!;
             tile.name = $"Tile {x} {y}";
 
-            var position = new Vector2Int(x, y);
+            tile.OnPressed.Subscribe(selected =>
+            {
+                _router?.PublishAsync(new SelectTileCommand
+                {
+                    CellPosition = position, WorldPosition = selected.transform.position
+                });
+            }).AddTo(this);
+
+            tile.OnDragged.Subscribe(dragged =>
+            {
+                _router?.PublishAsync(new DragTileCommand() { CellPosition = position });
+            }).AddTo(this);
+
+            tile.OnReleased.Subscribe(released =>
+            {
+                _router?.PublishAsync(new DropTileCommand() { CellPosition = position });
+            }).AddTo(this);
+
+            _tiles[position] = tile;
 
             tile.transform.position = calculator.GetTilePosition(position);
+
             tile.OnChangedPosition(position);
         }
     }

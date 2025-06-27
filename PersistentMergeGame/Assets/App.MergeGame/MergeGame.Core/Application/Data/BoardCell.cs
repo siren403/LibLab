@@ -1,7 +1,4 @@
-﻿// Licensed to the.NET Foundation under one or more agreements.
-// The.NET Foundation licenses this file to you under the MIT license.
-
-using MergeGame.Contracts.Board;
+﻿using MergeGame.Contracts.Board;
 
 namespace MergeGame.Core.Application.Data
 {
@@ -9,5 +6,15 @@ namespace MergeGame.Core.Application.Data
         int X,
         int Y,
         long BlockId
-    ) : IBoardCell;
+    ) : IBoardCell
+    {
+        internal static BoardCell FromEntity(MergeGame.Core.Internal.Entities.BoardCell entity)
+        {
+            return new BoardCell(
+                entity.Position.AsPrimitive().x,
+                entity.Position.AsPrimitive().y,
+                entity.BlockId?.AsPrimitive() ?? -1
+            );
+        }
+    }
 }

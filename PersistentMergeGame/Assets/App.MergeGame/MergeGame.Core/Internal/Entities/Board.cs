@@ -42,9 +42,8 @@ namespace MergeGame.Core.Internal.Entities
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Ulid cellId = Ulid.NewUlid();
                     Position position = new(x, y);
-                    cells[x, y] = BoardCell.CreateEmptyCell(cellId, boardId, position);
+                    cells[x, y] = BoardCell.CreateEmptyCell(boardId, position);
                 }
             }
 

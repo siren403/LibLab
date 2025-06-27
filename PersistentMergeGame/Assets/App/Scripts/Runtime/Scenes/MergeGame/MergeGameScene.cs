@@ -14,10 +14,8 @@ namespace App.Scenes.MergeGame
         {
             builder.RegisterMergeGame();
             builder.RegisterEntryPoint<MergeGameEntryPoint>();
-            builder.RegisterVitalRouter(routing =>
-            {
-                routing.MapComponentInHierarchy<MergeGamePresenter>();
-            });
+            builder.RegisterVitalRouter(routing => { routing.MapComponentInHierarchy<MergeGamePresenter>(); });
+            builder.RegisterComponentInHierarchy<FocusFrame>();
         }
     }
 }

@@ -44,8 +44,11 @@ TagManager:
   - name: Tile
     uniqueID: 2883617923
     locked: 0
-  - name: Stuff
+  - name: Block
     uniqueID: 3907674249
+    locked: 0
+  - name: Focus
+    uniqueID: 3117733007
     locked: 0
   m_RenderingLayers:
   - Default

@@ -1,7 +1,4 @@
-﻿// Licensed to the.NET Foundation under one or more agreements.
-// The.NET Foundation licenses this file to you under the MIT license.
-
-using System;
+﻿using System;
 using MergeGame.Core.Enums;
 using MergeGame.Core.ValueObjects;
 
@@ -12,17 +9,15 @@ namespace MergeGame.Core.Internal.Entities
     /// </summary>
     internal class BoardCell
     {
-        public Ulid Id { get; private init; }
         public Ulid BoardId { get; private init; }
         public Position Position { get; private init; }
         public BlockId? BlockId { get; private set; }
         public BoardCellState State { get; private set; }
 
-        public static BoardCell CreateEmptyCell(Ulid id, Ulid boardId, Position position)
+        public static BoardCell CreateEmptyCell(Ulid boardId, Position position)
         {
             return new BoardCell()
             {
-                Id = id,
                 BoardId = boardId,
                 Position = position,
                 BlockId = null,

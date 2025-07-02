@@ -1,7 +1,9 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
+using App.MergeGame;
 using MergeGame.Api;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using VitalRouter.VContainer;
@@ -14,8 +16,20 @@ namespace App.Scenes.MergeGame
         {
             builder.RegisterMergeGame();
             builder.RegisterEntryPoint<MergeGameEntryPoint>();
-            builder.RegisterVitalRouter(routing => { routing.MapComponentInHierarchy<MergeGamePresenter>(); });
+            builder.RegisterVitalRouter(routing =>
+            {
+                routing.MapComponentInHierarchy<MergeGamePresenter>()
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+
+                Debug.Log(Debug.isDebugBuild);
+
+                routing.Map<MergeGameEventLogger>();
+            });
             builder.RegisterComponentInHierarchy<FocusFrame>();
+            builder.RegisterComponentInHierarchy<CanvasGroup>();
+            builder.RegisterComponentInHierarchy<InputPointerHandler>();
+            builder.RegisterEntryPoint<TileSelector>();
         }
     }
 }

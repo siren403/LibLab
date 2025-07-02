@@ -8,6 +8,7 @@ namespace App.Scenes.MergeGame.Commands
 {
     public readonly struct MoveBlockPositionCommand : ICommand
     {
-        public Vector2Int Position { get; init; }
+        public Vector2Int CellPosition { get; init; }
+        public Vector3 WorldPosition { get; init; }
     }
 }

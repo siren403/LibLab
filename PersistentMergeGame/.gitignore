@@ -1,6 +1,10 @@
 !*.rsp
 ServerData/
 
+WebGL Builds/Merge Game/**
+!WebGL Builds/Merge Game/.gitkeep
+connectwebgl.zip
+
 # Created by https://www.toptal.com/developers/gitignore/api/Unity,rider
 # Edit at https://www.toptal.com/developers/gitignore?templates=Unity,rider
 

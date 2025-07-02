@@ -886,20 +886,18 @@
 					"block": "block_bag_1",
 					"block_state": "movable"
 				}
-			}
-		],
-		"movable_bag_3": [
+			},
 			{
-				"id": "movable_bag_3",
-				"iid": "9d992ee0-3740-11f0-b09b-fd97b4a534c6",
+				"id": "movable_bag_1",
+				"iid": "918b8580-3740-11f0-aab0-7dd36b748aa3",
 				"layer": "entities",
 				"x": 30,
 				"y": 60,
 				"width": 10,
 				"height": 10,
-				"color": 1599467,
+				"color": 39387,
 				"customFields": {
-					"block": "block_bag_3",
+					"block": "block_bag_1",
 					"block_state": "movable"
 				}
 			}

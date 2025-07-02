@@ -33,7 +33,10 @@ namespace App.Scenes.MergeGame
 
         public void Restore()
         {
-            Show(_latestShowPosition);
+            if (!motion.IsActive)
+            {
+                Show(_latestShowPosition);
+            }
         }
     }
 }

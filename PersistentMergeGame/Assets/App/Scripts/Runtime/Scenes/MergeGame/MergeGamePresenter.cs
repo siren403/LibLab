@@ -8,13 +8,19 @@ using LitMotion;
 using LitMotion.Extensions;
 using R3;
 using UnityEngine;
-using VContainer;
+using UnityEngine.InputSystem;
 using VitalRouter;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace App.Scenes.MergeGame
 {
+    public interface IOnSpawnTile
+    {
+        Observable<(Vector2Int cell, Tile tile)> On { get; }
+    }
+
     [Routes]
-    public partial class MergeGamePresenter : MonoBehaviour
+    public partial class MergeGamePresenter : MonoBehaviour, IOnSpawnTile
     {
         [SerializeField] private Camera targetCamera = null!;
         [SerializeField] private Tile tilePrefab = null!;
@@ -22,19 +28,36 @@ namespace App.Scenes.MergeGame
         [SerializeField] private Vector2 origin = new(0.5f, 0.5f);
         [SerializeField] private ProCamera2DContentFitter cameraContentFitter = null!;
         [SerializeField] private float contentMargin = 0.1f;
+        [SerializeField] private InputAction inputPointer = null!;
 
         private TilePositionCalculator _positionCalculator;
 
         private readonly Dictionary<Vector2Int, Block> _blocks = new();
         private readonly Dictionary<Vector2Int, Tile> _tiles = new();
 
-        [Inject] private Router? _router;
-
         private Dictionary<long, BlockData>? _blockData;
+
+        #region Events
+
+        private readonly Subject<(Vector2Int cell, Tile tile)> _onSpawnTile = new();
+
+        Observable<(Vector2Int cell, Tile tile)> IOnSpawnTile.On => _onSpawnTile;
+
+        #endregion
 
         private void Awake()
         {
             _blockData = blockData.ToDictionary(data => data.Id, data => data);
+        }
+
+        private void OnEnable()
+        {
+            inputPointer.Enable();
+        }
+
+        private void OnDisable()
+        {
+            inputPointer.Disable();
         }
 
         [Route]
@@ -82,16 +105,29 @@ namespace App.Scenes.MergeGame
         }
 
         [Route]
-        private void On(MoveBlockPositionCommand positionCommand)
+        private void On(MoveBlockPositionCommand command)
         {
-            if (!_blocks.TryGetValue(positionCommand.Position, out var block))
+            if (!_blocks.TryGetValue(command.CellPosition, out var block))
             {
                 return;
             }
 
-            var inputPosition = targetCamera.ScreenToWorldPoint(Input.mousePosition);
-            block.transform.position = inputPosition;
+            // var inputPoint = GetPointPosition();
+            // var worldPoint = targetCamera.ScreenToWorldPoint(inputPoint);
+            block.transform.position = command.WorldPosition;
             block.OnMovePosition();
+
+            return;
+
+            Vector2 GetPointPosition()
+            {
+                if (Touch.activeTouches.Count > 0)
+                {
+                    return Touch.activeTouches.First().screenPosition;
+                }
+
+                return Mouse.current.position.ReadValue();
+            }
         }
 
         private MotionHandle _returnBlockHandle = MotionHandle.None;
@@ -123,30 +159,10 @@ namespace App.Scenes.MergeGame
             var position = new Vector2Int(x, y);
             Tile tile = Instantiate(tilePrefab, transform)!;
             tile.name = $"Tile {x} {y}";
-
-            tile.OnPressed.Subscribe(selected =>
-            {
-                _router?.PublishAsync(new SelectTileCommand
-                {
-                    CellPosition = position, WorldPosition = selected.transform.position
-                });
-            }).AddTo(this);
-
-            tile.OnDragged.Subscribe(dragged =>
-            {
-                _router?.PublishAsync(new DragTileCommand() { CellPosition = position });
-            }).AddTo(this);
-
-            tile.OnReleased.Subscribe(released =>
-            {
-                _router?.PublishAsync(new DropTileCommand() { CellPosition = position });
-            }).AddTo(this);
-
             _tiles[position] = tile;
-
             tile.transform.position = calculator.GetTilePosition(position);
-
             tile.OnChangedPosition(position);
+            _onSpawnTile.OnNext((position, tile));
         }
     }
 }

@@ -1,0 +1,99 @@
+﻿// Licensed to the.NET Foundation under one or more agreements.
+// The.NET Foundation licenses this file to you under the MIT license.
+
+using System;
+using System.Linq;
+using MergeGame.Api;
+using Microsoft.Extensions.Logging;
+using R3;
+using UnityEngine;
+using VContainer.Unity;
+using VitalRouter;
+
+namespace App.MergeGame;
+
+public readonly struct TileSelectedCommand : ICommand
+{
+    public GameObject Tile { get; init; }
+}
+
+public readonly struct TileDraggingCommand : ICommand
+{
+    public GameObject Tile { get; init; }
+    public Vector3 WorldPosition { get; init; }
+}
+
+public readonly struct TileReleasedCommand : ICommand
+{
+    public GameObject? Target { get; init; }
+
+    public bool HasTarget => !ReferenceEquals(Target, null);
+
+    public bool TryGetTarget(out GameObject tile)
+    {
+        tile = Target!;
+        return HasTarget;
+    }
+}
+
+public class TileSelector : IInitializable, IDisposable
+{
+    private readonly InputPointerHandler _handler;
+    private readonly Router _router;
+    private DisposableBag _disposable;
+
+    public TileSelector(InputPointerHandler handler, Router router)
+    {
+        _handler = handler;
+        _router = router;
+    }
+
+    public void Initialize()
+    {
+        int hitCount = 0;
+        var hits = new RaycastHit2D[1];
+        int tileMask = LayerMask.GetMask("Tile");
+        _handler.OnPressed.Subscribe(result =>
+        {
+            hitCount = Physics2D.Raycast(result.WorldPosition, Vector2.zero,
+                new ContactFilter2D { useLayerMask = true, layerMask = tileMask },
+                hits);
+            if (hitCount > 0)
+            {
+                _router.PublishAsync(new TileSelectedCommand { Tile = hits.First().transform.gameObject });
+            }
+        }).AddTo(ref _disposable);
+
+
+        _handler.OnDragging.Subscribe(result =>
+        {
+            if (hitCount > 0)
+            {
+                _router.PublishAsync(new TileDraggingCommand()
+                {
+                    Tile = hits.First().transform.gameObject, WorldPosition = result.WorldPosition
+                });
+            }
+        }).AddTo(ref _disposable);
+
+        _handler.OnReleased.Subscribe(result =>
+        {
+            if (hitCount == 0) return;
+
+            hitCount = Physics2D.Raycast(result.WorldPosition, Vector2.zero,
+                new ContactFilter2D { useLayerMask = true, layerMask = tileMask },
+                hits);
+            TileReleasedCommand cmd = hitCount > 0
+                ? new TileReleasedCommand { Target = hits.First().transform.gameObject }
+                : new TileReleasedCommand();
+            _router.PublishAsync(cmd);
+
+            hitCount = 0;
+        }).AddTo(ref _disposable);
+    }
+
+    public void Dispose()
+    {
+        _disposable.Dispose();
+    }
+}

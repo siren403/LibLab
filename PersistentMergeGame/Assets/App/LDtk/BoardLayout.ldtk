@@ -2018,20 +2018,20 @@
 							"__worldY": -10
 						},
 						{
-							"__identifier": "movable_bag_3",
+							"__identifier": "movable_bag_1",
 							"__grid": [3,6],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#1867EB",
-							"iid": "9d992ee0-3740-11f0-b09b-fd97b4a534c6",
+							"__smartColor": "#0099DB",
+							"iid": "918b8580-3740-11f0-aab0-7dd36b748aa3",
 							"width": 10,
 							"height": 10,
-							"defUid": 20,
+							"defUid": 4,
 							"px": [30,60],
 							"fieldInstances": [
-								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_bag_3", "__tile": null, "defUid": 21, "realEditorValues": [] },
-								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "movable", "__tile": null, "defUid": 22, "realEditorValues": [] }
+								{ "__identifier": "block", "__type": "LocalEnum.block", "__value": "block_bag_1", "__tile": null, "defUid": 12, "realEditorValues": [] },
+								{ "__identifier": "block_state", "__type": "LocalEnum.block_state", "__value": "movable", "__tile": null, "defUid": 18, "realEditorValues": [] }
 							],
 							"__worldX": 30,
 							"__worldY": -30

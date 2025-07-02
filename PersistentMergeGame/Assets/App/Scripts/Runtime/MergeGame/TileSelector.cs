@@ -58,6 +58,7 @@ public class TileSelector : IInitializable, IDisposable
             hitCount = Physics2D.Raycast(result.WorldPosition, Vector2.zero,
                 new ContactFilter2D { useLayerMask = true, layerMask = tileMask },
                 hits);
+            Debug.Log($"OnPressed: hitCount={hitCount}, position={result.WorldPosition}");
             if (hitCount > 0)
             {
                 _router.PublishAsync(new TileSelectedCommand { Tile = hits.First().transform.gameObject });

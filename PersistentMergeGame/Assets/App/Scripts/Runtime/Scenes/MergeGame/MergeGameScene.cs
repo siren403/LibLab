@@ -21,10 +21,6 @@ namespace App.Scenes.MergeGame
                 routing.MapComponentInHierarchy<MergeGamePresenter>()
                     .AsImplementedInterfaces()
                     .AsSelf();
-
-                Debug.Log(Debug.isDebugBuild);
-
-                routing.Map<MergeGameEventLogger>();
             });
             builder.RegisterComponentInHierarchy<FocusFrame>();
             builder.RegisterComponentInHierarchy<CanvasGroup>();

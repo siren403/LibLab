@@ -32,13 +32,15 @@ namespace MergeGame.Core
 
             builder.RegisterCommand<GetBoardSizeCommand, GetBoardSizeHandler, BoardSize>();
             builder.RegisterCommand<GetBoardCellsCommand, GetBoardCellsHandler, BoardCell[]>();
-            builder.RegisterCommand<IsMovableCellCommand, IsMovableCellHandler, IsMovableCellResult>();
+            builder.RegisterCommand<CheckMovableCellCommand, CheckMovableCellHandler, CheckMovableCellResult>();
             builder.RegisterCommand<MergeBlockCommand, MergeBlockHandler, MergeBlockResult>();
             builder.RegisterCommand<
                 NeighborCellsToMovableCommand,
                 NeighborCellsToMovableHandler,
                 NeighborCellsToMovableResult
             >();
+            builder.RegisterCommand<MoveBlockCommand, MoveBlockHandler, bool>();
+            builder.RegisterCommand<CheckEmptyCellCommand, CheckEmptyCellHandler, bool>();
 
             #endregion
         }
@@ -76,10 +78,10 @@ namespace MergeGame.Core
             return mediator.ExecuteAsync<GetBoardCellsCommand, BoardCell[]>(command, ct);
         }
 
-        public static UniTask<IsMovableCellResult> ExecuteIsMovableCell(this IMediator mediator,
-            IsMovableCellCommand command, CancellationToken ct = default)
+        public static UniTask<CheckMovableCellResult> ExecuteCheckMovableCell(this IMediator mediator,
+            CheckMovableCellCommand command, CancellationToken ct = default)
         {
-            return mediator.ExecuteAsync<IsMovableCellCommand, IsMovableCellResult>(command, ct);
+            return mediator.ExecuteAsync<CheckMovableCellCommand, CheckMovableCellResult>(command, ct);
         }
 
         public static UniTask<MergeBlockResult> ExecuteMergeBlock(this IMediator mediator,
@@ -92,6 +94,18 @@ namespace MergeGame.Core
             this IMediator mediator, NeighborCellsToMovableCommand command, CancellationToken ct = default)
         {
             return mediator.ExecuteAsync<NeighborCellsToMovableCommand, NeighborCellsToMovableResult>(command, ct);
+        }
+
+        public static UniTask<bool> ExecuteMoveBlock(this IMediator mediator,
+            MoveBlockCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<MoveBlockCommand, bool>(command, ct);
+        }
+
+        public static UniTask<bool> ExecuteCheckEmptyCell(this IMediator mediator,
+            CheckEmptyCellCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<CheckEmptyCellCommand, bool>(command, ct);
         }
 
         #endregion

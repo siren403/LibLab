@@ -111,6 +111,34 @@ namespace MergeGame.Core.Internal.Entities
             ));
         }
 
+        public MoveResult MoveBlock(Position from, Position to)
+        {
+            // 같은 위치 안됨
+            if (from == to)
+            {
+                return MoveResult.Error;
+            }
+
+            var fromCell = GetCell(from);
+            var toCell = GetCell(to);
+
+            // fromCell은 Movable 상태여야 하고
+            if (fromCell.State != BoardCellState.Movable)
+            {
+                return MoveResult.Error;
+            }
+
+            if (toCell.HasBlock)
+            {
+                return MoveResult.Error;
+            }
+
+            var fromBlockId = fromCell.RemoveBlock();
+            return toCell.PlaceBlock(fromBlockId, BoardCellState.Movable)
+                ? new MoveResult(true, from, to)
+                : MoveResult.Error;
+        }
+
         public IEnumerable<BoardCell> GetNeighborCells(Position position)
         {
             int x = position.X;

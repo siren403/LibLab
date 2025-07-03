@@ -5,7 +5,7 @@ using MergeGame.Core.ValueObjects;
 
 namespace MergeGame.Core.Application.Commands.Board
 {
-    public readonly struct IsMovableCellResult
+    public readonly struct CheckMovableCellResult
     {
         public bool IsMovable { get; init; }
         public BlockId BlockId { get; init; }

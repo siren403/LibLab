@@ -37,6 +37,11 @@ namespace MergeGame.Core.Internal.Entities
 
         public bool PlaceBlock(BlockId blockId, BoardCellState state)
         {
+            if (!blockId.IsValid)
+            {
+                return false;
+            }
+
             if (HasBlock)
             {
                 return false;
@@ -47,15 +52,12 @@ namespace MergeGame.Core.Internal.Entities
             return true;
         }
 
-        public void RemoveBlock()
+        public BlockId RemoveBlock()
         {
-            if (!HasBlock)
-            {
-                return;
-            }
-
+            var wasId = BlockId ?? Core.ValueObjects.BlockId.Invalid;
             BlockId = null;
             State = BoardCellState.Untouchable;
+            return wasId;
         }
 
         public bool HasBlock => BlockId.HasValue;

@@ -43,13 +43,13 @@ namespace MergeGame.Api
             return CreateGameResponse.Ok(sessionId, width, height, boardCells);
         }
 
-        public async UniTask<(bool ok, long blockId)> IsMovableCell(Ulid sessionId, Vector2Int position,
+        public async UniTask<(bool ok, long blockId)> CheckMovableCell(Ulid sessionId, Vector2Int position,
             CancellationToken ct = default)
         {
             try
             {
-                var result = await _mediator.ExecuteIsMovableCell(
-                    new IsMovableCellCommand()
+                var result = await _mediator.ExecuteCheckMovableCell(
+                    new CheckMovableCellCommand()
                     {
                         SessionId = sessionId, Position = new Position(position.x, position.y)
                     },
@@ -63,6 +63,14 @@ namespace MergeGame.Api
             }
         }
 
+        /// <summary>
+        /// TODO: MoveBlock으로 이름 변경 후 로직 변경
+        /// ToCell이 비어있으면 MoveBlock, 아니면 MergeBlock으로 처리
+        /// </summary>
+        /// <param name="sessionId"></param>
+        /// <param name="request"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         public async UniTask<MergeBlockResponse> MergeBlock(Ulid sessionId, MergeBlockRequest request,
             CancellationToken ct = default)
         {

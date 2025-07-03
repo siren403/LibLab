@@ -12,16 +12,16 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.Board
 {
-    internal class IsMovableCellHandler : ICommandHandler<IsMovableCellCommand, IsMovableCellResult>
+    internal class CheckMovableCellHandler : ICommandHandler<CheckMovableCellCommand, CheckMovableCellResult>
     {
         private readonly GameManager _manager;
 
-        public IsMovableCellHandler(GameManager manager)
+        public CheckMovableCellHandler(GameManager manager)
         {
             _manager = manager;
         }
 
-        public UniTask<IsMovableCellResult> ExecuteAsync(IsMovableCellCommand command, CancellationToken ct)
+        public UniTask<CheckMovableCellResult> ExecuteAsync(CheckMovableCellCommand command, CancellationToken ct)
         {
             (bool isSuccess, Entities.GameSession session, _) = _manager.GetSession(command.SessionId);
             if (!isSuccess)
@@ -34,10 +34,10 @@ namespace MergeGame.Core.Internal.Handlers.Board
 
             if (cell.TryGetBlockId(out var blockId) && cell.State == BoardCellState.Movable)
             {
-                return UniTask.FromResult(new IsMovableCellResult() { BlockId = blockId, IsMovable = true });
+                return UniTask.FromResult(new CheckMovableCellResult() { BlockId = blockId, IsMovable = true });
             }
 
-            return UniTask.FromResult(new IsMovableCellResult()
+            return UniTask.FromResult(new CheckMovableCellResult()
             {
                 BlockId = BlockId.Invalid,
                 IsMovable = false

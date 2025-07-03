@@ -112,17 +112,17 @@ namespace App.Scenes.MergeGame
                 }
 
                 _focusFrame.Show(tile.transform.position);
-                var result = await _controller.IsMovableCell(sessionId, cell, ctx.CancellationToken);
+                var result = await _controller.CheckMovableCell(sessionId, cell, ctx.CancellationToken);
                 if (result.ok)
                 {
                     selectedCell = cell;
                     _logger.ZLogInformation(
-                        $"{nameof(_controller.IsMovableCell)}({result}, {nameof(selectedCell)}: {selectedCell.Value})");
+                        $"{nameof(_controller.CheckMovableCell)}({result}, {nameof(selectedCell)}: {selectedCell.Value})");
                 }
                 else
                 {
                     _logger.ZLogInformation(
-                        $"{nameof(_controller.IsMovableCell)}({result})");
+                        $"{nameof(_controller.CheckMovableCell)}({result})");
                 }
             }, CommandOrdering.Drop).AddTo(ref _disposable);
 
@@ -146,7 +146,7 @@ namespace App.Scenes.MergeGame
                     return;
                 }
 
-                bool mergeSuccess = false;
+                bool success = false;
 
                 if (cmd.TryGetTarget(out var target)
                     && tileLookup.TryGetValue(target, out var lookup)
@@ -169,9 +169,9 @@ namespace App.Scenes.MergeGame
                             ), ctx.CancellationToken);
                         _logger.ZLogInformation(
                             $"{nameof(_controller.MergeBlock)}({nameof(from)}: {from}, {nameof(to)}: {to}, {nameof(spawned)}: {spawned})");
-                        mergeSuccess = ok;
+                        success = ok;
 
-                        if (mergeSuccess)
+                        if (success)
                         {
                             // 합성 연출
                             _ = _router.PublishAsync(
@@ -200,7 +200,7 @@ namespace App.Scenes.MergeGame
                     }
                 }
 
-                if (mergeSuccess)
+                if (success)
                 {
                     return;
                 }

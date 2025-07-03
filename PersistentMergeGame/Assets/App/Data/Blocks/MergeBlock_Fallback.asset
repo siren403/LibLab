@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378a2ac0495f4236ae6dcf87451eedea, type: 3}
-  m_Name: StartingBoardLayout
+  m_Script: {fileID: 11500000, guid: 15bba62b2ade48a7b857bf4a781b9695, type: 3}
+  m_Name: MergeBlock_Fallback
   m_EditorClassIdentifier: 
-  json: {fileID: 4900000, guid: 359130ce5c1454d4995c3a3fa5822753, type: 3}
-  scalePerUnit: 10
+  <Prefab>k__BackingField: {fileID: 4944448500175953087, guid: 4c9ff584a0674674fbe90bb14e91c3d2, type: 3}
+  <Id>k__BackingField: -1

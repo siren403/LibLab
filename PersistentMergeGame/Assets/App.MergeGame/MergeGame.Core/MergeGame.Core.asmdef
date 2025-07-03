@@ -14,7 +14,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "Microsoft.Extensions.Logging.Abstractions.dll",
-        "Ulid.dll"
+        "Ulid.dll",
+        "ZLogger.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

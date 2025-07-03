@@ -40,6 +40,13 @@ namespace MergeGame.Infrastructure.Data
                         "block_bag_1" => 0,
                         "block_bag_2" => 1,
                         "block_bag_3" => 2,
+
+                        "block_bread_1" => 3,
+                        "block_bread_2" => 4,
+                        "block_bread_3" => 5,
+                        "block_bread_4" => 6,
+                        "block_bread_5" => 7,
+
                         "block_untouchable_1" => 10000,
                         "block_untouchable_2" => 10001,
                         "block_untouchable_3" => 10002,

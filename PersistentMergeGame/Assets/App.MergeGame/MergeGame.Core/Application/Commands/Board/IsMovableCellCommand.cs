@@ -7,7 +7,7 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Application.Commands.Board
 {
-    public readonly struct IsMovableCellCommand : ICommand<bool>
+    public readonly struct IsMovableCellCommand : ICommand<IsMovableCellResult>
     {
         public Ulid SessionId { get; init; }
         public Position Position { get; init; }

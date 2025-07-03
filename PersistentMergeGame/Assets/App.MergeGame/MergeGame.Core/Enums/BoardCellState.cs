@@ -1,6 +1,6 @@
 ﻿namespace MergeGame.Core.Enums
 {
-    public enum BoardCellState
+    public enum BoardCellState : short
     {
         Untouchable, // 선택 불가능한 블록
         Mergeable, // 병합 가능한 블록

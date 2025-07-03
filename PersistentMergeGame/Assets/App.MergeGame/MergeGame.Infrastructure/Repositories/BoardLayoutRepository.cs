@@ -14,7 +14,7 @@ namespace MergeGame.Infrastructure.Repositories
     {
         public async UniTask<BoardLayout> GetStartingLayout(CancellationToken ct = default)
         {
-            var asset = await Addressables.LoadAssetAsync<BoardLayoutAsset>("Data/StartingBoardLayout").Task;
+            var asset = await Addressables.LoadAssetAsync<BoardLayoutAsset>("BoardLayout/Starting_2").Task;
             return asset.ToBoardLayout(1);
         }
     }

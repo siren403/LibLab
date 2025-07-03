@@ -21,8 +21,13 @@ MonoBehaviour:
     m_SerializedLabels:
     - /
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c67a3d3e2e002744ba5a6edcb503232
+    m_Address: BoardLayout/Starting_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d81c2eee33314f74d93148f53953aa5c
-    m_Address: Data/StartingBoardLayout
+    m_Address: BoardLayout/Starting
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

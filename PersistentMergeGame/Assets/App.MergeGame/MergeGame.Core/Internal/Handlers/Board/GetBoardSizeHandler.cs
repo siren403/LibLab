@@ -23,7 +23,7 @@ namespace MergeGame.Core.Internal.Handlers.Board
         {
             var sessionId = command.SessionId;
             var result = _manager.GetSession(sessionId);
-            if (result is Failure<Entities.GameSession> failure)
+            if (result is Error<Entities.GameSession> failure)
             {
                 return UniTask.FromResult(BoardSize.Zero);
             }

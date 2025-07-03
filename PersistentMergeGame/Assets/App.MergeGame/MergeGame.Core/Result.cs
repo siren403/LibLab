@@ -5,19 +5,19 @@ using System;
 
 namespace MergeGame.Core
 {
-    public record Result<T>(bool IsSuccess, T Value, string? Error)
+    public record Result<T>(bool IsSuccess, T Value, string? Message)
     {
         public void Deconstruct(out bool isSuccess, out T value, out string? error)
         {
             isSuccess = IsSuccess;
             value = Value;
-            error = Error;
+            error = Message;
         }
     }
 
-    public record Success<T>(T Value) : Result<T>(true, Value, null);
+    public record Ok<T>(T Value) : Result<T>(true, Value, null);
 
-    public record Failure<T>(string Error) : Result<T>(false, default!, Error)
+    public record Error<T>(string Message) : Result<T>(false, default!, Message)
     {
     }
 

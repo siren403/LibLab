@@ -29,11 +29,7 @@ namespace MergeGame.Core.Internal.Handlers.Board
             var board = _manager.GetBoard(session);
             var result = board.GetCells()
                 .Where(cell => cell.HasBlock)
-                .Select(cell => new BoardCell(
-                    cell.Position.AsPrimitive().x,
-                    cell.Position.AsPrimitive().y,
-                    cell.BlockId!.Value.AsPrimitive()
-                )).ToArray();
+                .Select(BoardCell.FromEntity).ToArray();
 
             return UniTask.FromResult(result);
         }

@@ -28,7 +28,8 @@ namespace App.Scenes.MergeGame
         private readonly Router _router;
         private readonly FocusFrame _focusFrame;
         private readonly CanvasGroup _fade;
-        private readonly IOnSpawnTile _onSpawnTile;
+        private readonly IOnTileSpawn _onTileSpawn;
+        private readonly IOnTileLock _onTileLock;
         private readonly ILogger<MergeGameEntryPoint> _logger;
         private DisposableBag _disposable;
 
@@ -37,14 +38,16 @@ namespace App.Scenes.MergeGame
             Router router,
             FocusFrame focusFrame,
             CanvasGroup fade,
-            IOnSpawnTile onSpawnTile,
+            IOnTileSpawn onTileSpawn,
+            IOnTileLock onTileLock,
             ILogger<MergeGameEntryPoint> logger)
         {
             _controller = controller;
             _router = router;
             _focusFrame = focusFrame;
             _fade = fade;
-            _onSpawnTile = onSpawnTile;
+            _onTileSpawn = onTileSpawn;
+            _onTileLock = onTileLock;
             _logger = logger;
         }
 
@@ -64,13 +67,19 @@ namespace App.Scenes.MergeGame
 
             #region Spawn Tiles
 
-            var tiles = new Dictionary<GameObject, (Vector2Int cell, Tile tile)>();
+            var tileLookup = new Dictionary<GameObject, (Vector2Int cell, Tile tile)>();
+            var tileLooked = new Dictionary<Vector2Int, bool>();
 
-            // TODO: to ICommandHandler<(pos, tile)[]>
-            _onSpawnTile.On.Subscribe(spawn =>
+            _onTileSpawn.On.Subscribe(spawn =>
             {
                 (Vector2Int cell, Tile tile) = spawn;
-                tiles[tile.gameObject] = spawn;
+                tileLookup[tile.gameObject] = spawn;
+            }).AddTo(ref _disposable);
+
+            _onTileLock.On.Subscribe(lockEvent =>
+            {
+                (Vector2Int cell, bool isLocked) = lockEvent;
+                tileLooked[cell] = isLocked;
             }).AddTo(ref _disposable);
 
             _ = _router.PublishAsync(
@@ -82,7 +91,10 @@ namespace App.Scenes.MergeGame
             foreach (IBoardCell cell in response.Cells)
             {
                 _ = _router.PublishAsync(
-                    new SpawnBlockCommand() { Position = new Vector2Int(cell.X, cell.Y), Id = cell.BlockId, },
+                    new SpawnBlockCommand()
+                    {
+                        Position = new Vector2Int(cell.X, cell.Y), Id = cell.BlockId, State = cell.CellState
+                    },
                     ct);
             }
 
@@ -91,21 +103,26 @@ namespace App.Scenes.MergeGame
 
             _router.SubscribeAwait<TileSelectedCommand>(async (cmd, ctx) =>
             {
-                if (!tiles.TryGetValue(cmd.Tile, out var lookup)) return;
+                if (!tileLookup.TryGetValue(cmd.Tile, out var lookup)) return;
                 (Vector2Int cell, Tile tile) = lookup;
 
+                if (tileLooked.GetValueOrDefault(cell, false))
+                {
+                    return;
+                }
+
                 _focusFrame.Show(tile.transform.position);
-                bool isMovable = await _controller.IsMovableCell(sessionId, cell, ctx.CancellationToken);
-                if (isMovable)
+                var result = await _controller.IsMovableCell(sessionId, cell, ctx.CancellationToken);
+                if (result.ok)
                 {
                     selectedCell = cell;
-                    _logger.ZLogTrace(
-                        $"{nameof(TileSelectedCommand)}({nameof(isMovable)}: {isMovable}, {nameof(selectedCell)}: {selectedCell.Value})");
+                    _logger.ZLogInformation(
+                        $"{nameof(_controller.IsMovableCell)}({result}, {nameof(selectedCell)}: {selectedCell.Value})");
                 }
                 else
                 {
-                    _logger.ZLogTrace(
-                        $"{nameof(TileSelectedCommand)}({nameof(isMovable)}: {isMovable})");
+                    _logger.ZLogInformation(
+                        $"{nameof(_controller.IsMovableCell)}({result})");
                 }
             }, CommandOrdering.Drop).AddTo(ref _disposable);
 
@@ -121,36 +138,81 @@ namespace App.Scenes.MergeGame
                     ctx.CancellationToken);
             }).AddTo(ref _disposable);
 
-            _router.Subscribe<TileReleasedCommand>((cmd, ctx) =>
+            _router.SubscribeAwait<TileReleasedCommand>(async (cmd, ctx) =>
+            {
+                if (!selectedCell.HasValue)
                 {
                     _focusFrame.Restore();
+                    return;
+                }
 
-                    if (!selectedCell.HasValue) return;
+                bool mergeSuccess = false;
 
-                    bool mergeSuccess = false;
+                if (cmd.TryGetTarget(out var target)
+                    && tileLookup.TryGetValue(target, out var lookup)
+                    && !tileLooked.GetValueOrDefault(lookup.cell, false))
+                {
+                    (Vector2Int cell, Tile tile) = lookup;
 
-                    if (cmd.TryGetTarget(out var target) && tiles.TryGetValue(target, out var lookup))
+                    if (cell != selectedCell.Value)
                     {
-                        (Vector2Int cell, Tile tile) = lookup;
-                        if (cell != selectedCell.Value)
+                        (bool ok,
+                            IBoardCell from,
+                            IBoardCell to,
+                            IBoardCell spawned,
+                            IReadOnlyList<IBoardCell> updatedCells) = await _controller.MergeBlock(
+                            sessionId,
+                            new MergeBlockRequest
+                            (
+                                FromPosition: selectedCell.Value,
+                                ToPosition: cell
+                            ), ctx.CancellationToken);
+                        _logger.ZLogInformation(
+                            $"{nameof(_controller.MergeBlock)}({nameof(from)}: {from}, {nameof(to)}: {to}, {nameof(spawned)}: {spawned})");
+                        mergeSuccess = ok;
+
+                        if (mergeSuccess)
                         {
-                            // TODO: try to merge
-                            _logger.ZLogCritical($"TODO: Try to merge {selectedCell.Value} with {cell}");
+                            // 합성 연출
+                            _ = _router.PublishAsync(
+                                new CombineBlockCommand()
+                                {
+                                    FromPosition = new Vector2Int(from.X, from.Y),
+                                    ToPosition = new Vector2Int(to.X, to.Y),
+                                }, ctx.CancellationToken);
+
+                            _ = _router.PublishAsync(
+                                new SpawnBlockCommand()
+                                {
+                                    Position = new Vector2Int(spawned.X, spawned.Y), Id = spawned.BlockId,
+                                }, ctx.CancellationToken);
+
+                            foreach (IBoardCell updatedCell in updatedCells)
+                            {
+                                _ = _router.PublishAsync(
+                                    new UpdateBlockStateCommand()
+                                    {
+                                        Position = new Vector2Int(updatedCell.X, updatedCell.Y),
+                                        State = updatedCell.CellState
+                                    }, ctx.CancellationToken);
+                            }
                         }
                     }
+                }
 
-                    if (mergeSuccess)
-                    {
-                        return;
-                    }
+                if (mergeSuccess)
+                {
+                    return;
+                }
 
-                    _router.PublishAsync(new ReturnBlockPositionCommand() { Position = selectedCell.Value },
-                        ctx.CancellationToken);
+                _focusFrame.Restore();
 
-                    _logger.ZLogTrace($"{nameof(TileReleasedCommand)}({nameof(selectedCell)}: {selectedCell})");
-                    selectedCell = null;
-                })
-                .AddTo(ref _disposable);
+                _ = _router.PublishAsync(new ReturnBlockPositionCommand() { Position = selectedCell.Value },
+                    ctx.CancellationToken);
+
+                _logger.ZLogTrace($"{nameof(TileReleasedCommand)}({nameof(selectedCell)}: {selectedCell})");
+                selectedCell = null;
+            }, CommandOrdering.Drop).AddTo(ref _disposable);
 
             await UniTask.NextFrame(ct);
 

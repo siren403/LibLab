@@ -4,6 +4,7 @@ using App.MergeGame;
 using App.MergeGame.Data;
 using App.Scenes.MergeGame.Commands;
 using Com.LuisPedroFonseca.ProCamera2D;
+using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using R3;
@@ -14,21 +15,26 @@ using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace App.Scenes.MergeGame
 {
-    public interface IOnSpawnTile
+    public interface IOnTileSpawn
     {
         Observable<(Vector2Int cell, Tile tile)> On { get; }
     }
 
+    public interface IOnTileLock
+    {
+        Observable<(Vector2Int cell, bool isLocked)> On { get; }
+    }
+
     [Routes]
-    public partial class MergeGamePresenter : MonoBehaviour, IOnSpawnTile
+    public partial class MergeGamePresenter : MonoBehaviour, IOnTileSpawn, IOnTileLock
     {
         [SerializeField] private Camera targetCamera = null!;
         [SerializeField] private Tile tilePrefab = null!;
         [SerializeField] private List<BlockData> blockData = new();
+        [SerializeField] private BlockData fallbackBlockData = null!;
         [SerializeField] private Vector2 origin = new(0.5f, 0.5f);
         [SerializeField] private ProCamera2DContentFitter cameraContentFitter = null!;
         [SerializeField] private float contentMargin = 0.1f;
-        [SerializeField] private InputAction inputPointer = null!;
 
         private TilePositionCalculator _positionCalculator;
 
@@ -39,25 +45,17 @@ namespace App.Scenes.MergeGame
 
         #region Events
 
-        private readonly Subject<(Vector2Int cell, Tile tile)> _onSpawnTile = new();
+        private readonly Subject<(Vector2Int cell, Tile tile)> _onTileSpawn = new();
+        private readonly Subject<(Vector2Int cell, bool isLocked)> _onTileLock = new();
 
-        Observable<(Vector2Int cell, Tile tile)> IOnSpawnTile.On => _onSpawnTile;
+        Observable<(Vector2Int cell, Tile tile)> IOnTileSpawn.On => _onTileSpawn;
+        Observable<(Vector2Int cell, bool isLocked)> IOnTileLock.On => _onTileLock;
 
         #endregion
 
         private void Awake()
         {
             _blockData = blockData.ToDictionary(data => data.Id, data => data);
-        }
-
-        private void OnEnable()
-        {
-            inputPointer.Enable();
-        }
-
-        private void OnDisable()
-        {
-            inputPointer.Disable();
         }
 
         [Route]
@@ -89,19 +87,35 @@ namespace App.Scenes.MergeGame
         [Route]
         private void On(SpawnBlockCommand command)
         {
-            var position = _positionCalculator.GetTilePosition(command.Position);
-            if (!(_blockData?.TryGetValue(command.Id, out BlockData data) ?? false))
+            if (_combineMotionHandle.IsPlaying())
             {
-                return;
+                UniTask.WaitWhile(() => _combineMotionHandle.IsPlaying())
+                    .ContinueWith(InstantiateBlock);
+            }
+            else
+            {
+                InstantiateBlock();
             }
 
-            Block block = Instantiate(
-                data.Prefab,
-                position,
-                Quaternion.identity,
-                transform
-            );
-            _blocks[command.Position] = block;
+            return;
+
+            void InstantiateBlock()
+            {
+                var position = _positionCalculator.GetTilePosition(command.Position);
+                if (!(_blockData?.TryGetValue(command.Id, out BlockData data) ?? false))
+                {
+                    data = fallbackBlockData;
+                }
+
+                Block block = Instantiate(
+                    data.Prefab,
+                    position,
+                    Quaternion.identity,
+                    transform
+                );
+                block.State = command.State;
+                _blocks[command.Position] = block;
+            }
         }
 
         [Route]
@@ -112,22 +126,8 @@ namespace App.Scenes.MergeGame
                 return;
             }
 
-            // var inputPoint = GetPointPosition();
-            // var worldPoint = targetCamera.ScreenToWorldPoint(inputPoint);
             block.transform.position = command.WorldPosition;
             block.OnMovePosition();
-
-            return;
-
-            Vector2 GetPointPosition()
-            {
-                if (Touch.activeTouches.Count > 0)
-                {
-                    return Touch.activeTouches.First().screenPosition;
-                }
-
-                return Mouse.current.position.ReadValue();
-            }
         }
 
         private MotionHandle _returnBlockHandle = MotionHandle.None;
@@ -162,7 +162,72 @@ namespace App.Scenes.MergeGame
             _tiles[position] = tile;
             tile.transform.position = calculator.GetTilePosition(position);
             tile.OnChangedPosition(position);
-            _onSpawnTile.OnNext((position, tile));
+            _onTileSpawn.OnNext((position, tile));
+        }
+
+        private MotionHandle _combineMotionHandle = MotionHandle.None;
+
+        [Route]
+        private void On(CombineBlockCommand command)
+        {
+            DestroyBlock(command.FromPosition, command.ToPosition, Vector2.left);
+            DestroyBlock(command.ToPosition, command.ToPosition, Vector2.right);
+
+            return;
+
+            void DestroyBlock(Vector2Int cell, Vector2Int spawned, Vector2 direction, float startDistance = 1f)
+            {
+                if (!_blocks.Remove(cell, out var block))
+                {
+                    return;
+                }
+
+                if (!_tiles.TryGetValue(spawned, out var tile))
+                {
+                    Destroy(block.gameObject);
+                    return;
+                }
+
+                block.OnMovePosition();
+                block.Color = Color.white;
+
+                var to = tile.transform.position;
+                var from = to + (Vector3)direction * startDistance;
+
+                _onTileLock.OnNext((cell, true));
+                var handle = LSequence.Create()
+                    .Append(
+                        LMotion.Create(block.transform.position, from, 0.2f)
+                            .WithEase(Ease.OutQuint)
+                            .BindToPosition(block.transform)
+                    )
+                    .Append(
+                        LMotion.Create(from, to, 0.2f)
+                            .WithEase(Ease.OutQuint)
+                            .BindToPosition(block.transform)
+                    )
+                    .Run();
+
+                UniTask.WaitWhile(() => handle.IsPlaying(), cancellationToken: destroyCancellationToken)
+                    .ContinueWith(() =>
+                    {
+                        Destroy(block.gameObject);
+                        _onTileLock.OnNext((cell, false));
+                    });
+
+                _combineMotionHandle = handle.AddTo(this);
+            }
+        }
+
+        [Route]
+        private void On(UpdateBlockStateCommand command)
+        {
+            if (!_blocks.TryGetValue(command.Position, out var block))
+            {
+                return;
+            }
+
+            block.State = command.State;
         }
     }
 }

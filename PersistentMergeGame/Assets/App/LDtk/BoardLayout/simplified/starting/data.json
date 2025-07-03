@@ -6,7 +6,12 @@
 	"width": 70,
 	"height": 90,
 	"bgColor": "#696A79",
-	"neighbourLevels": [],
+	"neighbourLevels": [
+		{
+			"levelIid": "15c98320-3740-11f0-8487-c9c104135b3c",
+			"dir": "e"
+		}
+	],
 	"customFields" : {},
 	"layers": [],
 	"entities": {
@@ -856,22 +861,6 @@
 				}
 			}
 		],
-		"movable_bag_2": [
-			{
-				"id": "movable_bag_2",
-				"iid": "d3ecf5c0-3740-11f0-acbf-1da9b075cfaa",
-				"layer": "entities",
-				"x": 30,
-				"y": 40,
-				"width": 10,
-				"height": 10,
-				"color": 2943221,
-				"customFields": {
-					"block": "block_bag_2",
-					"block_state": "movable"
-				}
-			}
-		],
 		"movable_bag_1": [
 			{
 				"id": "movable_bag_1",
@@ -899,6 +888,22 @@
 				"customFields": {
 					"block": "block_bag_1",
 					"block_state": "movable"
+				}
+			}
+		],
+		"mergeable_bag_2": [
+			{
+				"id": "mergeable_bag_2",
+				"iid": "ad9ac940-3740-11f0-8487-e36797df4b11",
+				"layer": "entities",
+				"x": 30,
+				"y": 40,
+				"width": 10,
+				"height": 10,
+				"color": 7507940,
+				"customFields": {
+					"block": "block_bag_2",
+					"block_state": "mergeable"
 				}
 			}
 		]

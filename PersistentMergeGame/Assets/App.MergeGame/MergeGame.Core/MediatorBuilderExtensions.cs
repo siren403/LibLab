@@ -32,7 +32,13 @@ namespace MergeGame.Core
 
             builder.RegisterCommand<GetBoardSizeCommand, GetBoardSizeHandler, BoardSize>();
             builder.RegisterCommand<GetBoardCellsCommand, GetBoardCellsHandler, BoardCell[]>();
-            builder.RegisterCommand<IsMovableCellCommand, IsMovableCellHandler, bool>();
+            builder.RegisterCommand<IsMovableCellCommand, IsMovableCellHandler, IsMovableCellResult>();
+            builder.RegisterCommand<MergeBlockCommand, MergeBlockHandler, MergeBlockResult>();
+            builder.RegisterCommand<
+                NeighborCellsToMovableCommand,
+                NeighborCellsToMovableHandler,
+                NeighborCellsToMovableResult
+            >();
 
             #endregion
         }
@@ -70,10 +76,22 @@ namespace MergeGame.Core
             return mediator.ExecuteAsync<GetBoardCellsCommand, BoardCell[]>(command, ct);
         }
 
-        public static UniTask<bool> ExecuteIsMovableCell(this IMediator mediator,
+        public static UniTask<IsMovableCellResult> ExecuteIsMovableCell(this IMediator mediator,
             IsMovableCellCommand command, CancellationToken ct = default)
         {
-            return mediator.ExecuteAsync<IsMovableCellCommand, bool>(command, ct);
+            return mediator.ExecuteAsync<IsMovableCellCommand, IsMovableCellResult>(command, ct);
+        }
+
+        public static UniTask<MergeBlockResult> ExecuteMergeBlock(this IMediator mediator,
+            MergeBlockCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<MergeBlockCommand, MergeBlockResult>(command, ct);
+        }
+
+        public static UniTask<NeighborCellsToMovableResult> ExecuteNeighborCellsToMovable(
+            this IMediator mediator, NeighborCellsToMovableCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<NeighborCellsToMovableCommand, NeighborCellsToMovableResult>(command, ct);
         }
 
         #endregion

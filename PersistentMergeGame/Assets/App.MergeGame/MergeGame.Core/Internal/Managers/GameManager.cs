@@ -27,10 +27,10 @@ namespace MergeGame.Core.Internal.Managers
         {
             if (_activeSessions.TryGetValue(sessionId, out var session))
             {
-                return new Success<GameSession>(session);
+                return new Ok<GameSession>(session);
             }
 
-            return new Failure<GameSession>($"Session with ID {sessionId} not found.");
+            return new Error<GameSession>($"Session with ID {sessionId} not found.");
         }
 
         public Board GetBoard(GameSession session)

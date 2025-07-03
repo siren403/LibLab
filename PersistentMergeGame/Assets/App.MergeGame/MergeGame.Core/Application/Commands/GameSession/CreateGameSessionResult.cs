@@ -8,6 +8,6 @@ namespace MergeGame.Core.Application.Commands.GameSession
     public record CreateGameSessionResult(
         bool IsSuccess,
         Ulid Value,
-        string? Error = null
-    ) : Result<Ulid>(IsSuccess, Value, Error);
+        string? Message = null
+    ) : Result<Ulid>(IsSuccess, Value, Message);
 }

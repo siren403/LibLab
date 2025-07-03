@@ -10,5 +10,6 @@ namespace App.Scenes.MergeGame.Commands
     {
         public long Id { get; init; }
         public Vector2Int Position { get; init; }
+        public short State { get; init; }
     }
 }

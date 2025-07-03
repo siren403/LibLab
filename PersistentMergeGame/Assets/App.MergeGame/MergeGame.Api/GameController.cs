@@ -43,13 +43,51 @@ namespace MergeGame.Api
             return CreateGameResponse.Ok(sessionId, width, height, boardCells);
         }
 
-        public async UniTask<bool> IsMovableCell(Ulid sessionId, Vector2Int position, CancellationToken ct = default)
+        public async UniTask<(bool ok, long blockId)> IsMovableCell(Ulid sessionId, Vector2Int position,
+            CancellationToken ct = default)
         {
-            bool isMovable = await _mediator.ExecuteIsMovableCell(
-                new IsMovableCellCommand() { SessionId = sessionId, Position = new Position(position.x, position.y) },
-                ct);
+            try
+            {
+                var result = await _mediator.ExecuteIsMovableCell(
+                    new IsMovableCellCommand()
+                    {
+                        SessionId = sessionId, Position = new Position(position.x, position.y)
+                    },
+                    ct);
 
-            return isMovable;
+                return (result.IsMovable, result.BlockId);
+            }
+            catch
+            {
+                return (false, BlockId.Invalid);
+            }
+        }
+
+        public async UniTask<MergeBlockResponse> MergeBlock(Ulid sessionId, MergeBlockRequest request,
+            CancellationToken ct = default)
+        {
+            try
+            {
+                (IBoardCell from, IBoardCell to, IBoardCell spawned) = await _mediator.ExecuteMergeBlock(
+                    new MergeBlockCommand()
+                    {
+                        SessionId = sessionId,
+                        FromPosition = new Position(request.FromPosition.x, request.FromPosition.y),
+                        ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
+                    }, ct);
+
+                var toMovables = await _mediator.ExecuteNeighborCellsToMovable(
+                    new NeighborCellsToMovableCommand()
+                    {
+                        SessionId = sessionId, Position = new Position(request.ToPosition.x, request.ToPosition.y)
+                    }, ct);
+
+                return new MergeBlockResponse(true, from, to, spawned, toMovables.UpdatedCells);
+            }
+            catch
+            {
+                return MergeBlockResponse.Error;
+            }
         }
     }
 }

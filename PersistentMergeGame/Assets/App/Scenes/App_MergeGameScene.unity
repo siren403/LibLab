@@ -178,26 +178,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b18e59266368a584cb6a485564ac6715, type: 2}
   - {fileID: 11400000, guid: 819e06482b5e8b8418cb085070fe693e, type: 2}
   - {fileID: 11400000, guid: 2ce22a78bb68c3c4c92522012e043bab, type: 2}
+  fallbackBlockData: {fileID: 11400000, guid: 0e71345b24824bd43b04d5c17c6c76fa, type: 2}
   origin: {x: 0.5, y: 0.5}
   cameraContentFitter: {fileID: 1202166499}
   contentMargin: 1
-  inputPointer:
-    m_Name: Input Pointer
-    m_Type: 0
-    m_ExpectedControlType: Vector2
-    m_Id: 2cb34671-7264-438f-9bc5-af3db20237a0
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 5384516c-a794-4deb-af39-761e98b6bdf4
-      m_Path: <Mouse>/position
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input Pointer
-      m_Flags: 0
-    m_Flags: 0
 --- !u!1 &869421072
 GameObject:
   m_ObjectHideFlags: 0

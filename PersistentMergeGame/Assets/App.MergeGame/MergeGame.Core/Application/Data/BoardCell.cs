@@ -5,7 +5,8 @@ namespace MergeGame.Core.Application.Data
     public record BoardCell(
         int X,
         int Y,
-        long BlockId
+        long BlockId,
+        short CellState
     ) : IBoardCell
     {
         internal static BoardCell FromEntity(MergeGame.Core.Internal.Entities.BoardCell entity)
@@ -13,7 +14,8 @@ namespace MergeGame.Core.Application.Data
             return new BoardCell(
                 entity.Position.AsPrimitive().x,
                 entity.Position.AsPrimitive().y,
-                entity.BlockId?.AsPrimitive() ?? -1
+                entity.BlockId?.AsPrimitive() ?? ValueObjects.BlockId.Invalid,
+                (short)entity.State
             );
         }
     }

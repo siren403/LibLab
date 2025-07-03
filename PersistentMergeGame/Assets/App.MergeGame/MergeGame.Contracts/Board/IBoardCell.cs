@@ -5,5 +5,6 @@
         int X { get; }
         int Y { get; }
         long BlockId { get; }
+        short CellState { get; }
     }
 }

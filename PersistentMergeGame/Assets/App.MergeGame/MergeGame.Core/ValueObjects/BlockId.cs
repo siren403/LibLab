@@ -8,5 +8,8 @@ namespace MergeGame.Core.ValueObjects
     [UnitOf(typeof(long), UnitGenerateOptions.ImplicitOperator)]
     public readonly partial struct BlockId
     {
+        public static BlockId Invalid => new(-1);
+
+        public bool IsValid => value >= 0;
     }
 }

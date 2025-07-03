@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 4139310863723033416}
-  oddColor: {r: 1, g: 1, b: 1, a: 1}
-  evenColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  oddColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 0.7647059}
+  evenColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0.7176471}
   box: {fileID: 5417628607390858851}
 --- !u!61 &5417628607390858851
 BoxCollider2D:

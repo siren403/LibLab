@@ -3,5 +3,8 @@
 
 namespace MergeGame.Api
 {
-    public record Response(int StatusCode);
+    public record Response(int StatusCode)
+    {
+        public bool IsOk => StatusCode == 0;
+    }
 }

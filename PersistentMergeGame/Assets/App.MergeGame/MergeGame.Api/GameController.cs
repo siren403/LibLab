@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using MergeGame.Api.Extensions;
 using MergeGame.Contracts.Board;
 using MergeGame.Api.Game;
 using MergeGame.Core;
@@ -21,7 +23,8 @@ namespace MergeGame.Api
             _mediator = mediator;
         }
 
-        public async UniTask<CreateGameResponse> CreateGame(CreateGameRequest request, CancellationToken ct = default)
+        public async UniTask<CreateGameResponse> CreateGame(CreateGameRequest request,
+            CancellationToken ct = default)
         {
             (bool isSuccess, Ulid sessionId, _) = await _mediator.ExecuteCreateStartingGameSession(
                 new CreateStartingGameSessionCommand(),
@@ -33,11 +36,17 @@ namespace MergeGame.Api
             }
 
             (int width, int height) = await _mediator.ExecuteGetBoardSize(
-                new GetBoardSizeCommand() { SessionId = sessionId }, ct
+                new GetBoardSizeCommand()
+                {
+                    SessionId = sessionId
+                }, ct
             );
 
             IBoardCell[] boardCells = await _mediator.ExecuteGetBoardCells(
-                new GetBoardCellsCommand() { SessionId = sessionId }, ct
+                new GetBoardCellsCommand()
+                {
+                    SessionId = sessionId
+                }, ct
             );
 
             return CreateGameResponse.Ok(sessionId, width, height, boardCells);
@@ -97,5 +106,76 @@ namespace MergeGame.Api
                 return MergeBlockResponse.Error;
             }
         }
+
+        public async UniTask<MoveBlockResponse> MoveBlock(Ulid sessionId, MoveBlockRequest request,
+            CancellationToken ct = default)
+        {
+            try
+            {
+                bool emptyCell = await _mediator.ExecuteCheckEmptyCell(new CheckEmptyCellCommand()
+                {
+                    SessionId = sessionId, Position = request.ToPosition.ToValue()
+                }, ct);
+
+                if (emptyCell)
+                {
+                    bool ok = await _mediator.ExecuteMoveBlock(new MoveBlockCommand()
+                    {
+                        SessionId = sessionId,
+                        FromPosition = request.FromPosition.ToValue(),
+                        ToPosition = request.ToPosition.ToValue()
+                    }, ct);
+
+                    if (ok)
+                    {
+                        return new MovedResponse(0, request.ToPosition);
+                    }
+                }
+                else
+                {
+                    (IBoardCell from, IBoardCell to, IBoardCell spawned) = await _mediator.ExecuteMergeBlock(
+                        new MergeBlockCommand()
+                        {
+                            SessionId = sessionId,
+                            FromPosition = new Position(request.FromPosition.x, request.FromPosition.y),
+                            ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
+                        }, ct);
+
+                    var toMovables = await _mediator.ExecuteNeighborCellsToMovable(
+                        new NeighborCellsToMovableCommand()
+                        {
+                            SessionId = sessionId,
+                            Position = new Position(request.ToPosition.x, request.ToPosition.y)
+                        }, ct);
+
+                    return new MergedResponse(0, from, to, spawned, toMovables.UpdatedCells);
+                }
+
+                return MoveBlockResponse.Error;
+            }
+            catch
+            {
+                return MoveBlockResponse.Error;
+            }
+        }
     }
+
+    public record MoveBlockRequest(Vector2Int FromPosition, Vector2Int ToPosition);
+
+    public record MoveBlockResponse(int StatusCode) : Response(StatusCode)
+    {
+        public static readonly MoveBlockResponse Error = new(-1);
+        public static readonly MoveBlockResponse Ok = new(0);
+    }
+
+    public record MovedResponse(int StatusCode, Vector2Int ToCell) : MoveBlockResponse(StatusCode);
+
+    public record MergedResponse(
+        int StatusCode,
+        IBoardCell FromCell,
+        IBoardCell ToCell,
+        IBoardCell SpawnedCell,
+        IReadOnlyList<IBoardCell> UpdatedCells
+    ) : MoveBlockResponse(StatusCode);
+
 }

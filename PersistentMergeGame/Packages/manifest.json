@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "com.aaron.scene-launcher": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/SceneLauncher",
-    "com.aaron.scene-launcher.vcontainer": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/SceneLauncher.VContainer",
-    "com.aaron.vextensions.mediator": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/Mediator",
-    "com.aaron.vextensions.mediator.abstractions": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/Mediator.Abstractions",
-    "com.aaron.vextensions.scene-navigation": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/SceneNavigation",
-    "com.aaron.vextensions.zlogger": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/ZLogger",
+    "com.aaron.scene-launcher": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher",
+    "com.aaron.scene-launcher.vcontainer": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher.VContainer",
+    "com.aaron.vextensions.mediator": "file:../../LibLab.Unity/Assets/Lib/VExtensions/Mediator",
+    "com.aaron.vextensions.mediator.abstractions": "file:../../LibLab.Unity/Assets/Lib/VExtensions/Mediator.Abstractions",
+    "com.aaron.vextensions.scene-navigation": "file:../../LibLab.Unity/Assets/Lib/VExtensions/SceneNavigation",
+    "com.aaron.vextensions.zlogger": "file:../../LibLab.Unity/Assets/Lib/VExtensions/ZLogger",
     "com.annulusgames.lit-motion": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion#v2.0.1",
     "com.annulusgames.lit-motion.animation": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion.Animation#v2.0.1",
     "com.cysharp.csprojmodifier": "https://github.com/Cysharp/CsprojModifier.git?path=src/CsprojModifier/Assets/CsprojModifier#1.3.0",

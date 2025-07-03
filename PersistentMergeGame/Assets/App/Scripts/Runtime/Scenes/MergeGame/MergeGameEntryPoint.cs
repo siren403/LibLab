@@ -83,7 +83,10 @@ namespace App.Scenes.MergeGame
             }).AddTo(ref _disposable);
 
             _ = _router.PublishAsync(
-                new SpawnTilesCommand() { Width = response.Width, Height = response.Height },
+                new SpawnTilesCommand()
+                {
+                    Width = response.Width, Height = response.Height
+                },
                 ct);
 
             #endregion
@@ -115,6 +118,17 @@ namespace App.Scenes.MergeGame
                 var result = await _controller.CheckMovableCell(sessionId, cell, ctx.CancellationToken);
                 if (result.ok)
                 {
+                    // if (selectedCell.HasValue && selectedCell.Value != cell)
+                    // {
+                    //     await _router.PublishAsync(new TileReleasedCommand()
+                    //     {
+                    //         Target = tile.gameObject
+                    //     }, ctx.CancellationToken);
+                    // }
+                    // else
+                    // {
+                    //     selectedCell = cell;
+                    // }
                     selectedCell = cell;
                     _logger.ZLogInformation(
                         $"{nameof(_controller.CheckMovableCell)}({result}, {nameof(selectedCell)}: {selectedCell.Value})");
@@ -131,7 +145,7 @@ namespace App.Scenes.MergeGame
                 if (!selectedCell.HasValue) return;
                 _focusFrame.Hide();
                 _router.PublishAsync(
-                    new MoveBlockPositionCommand()
+                    new DragBlockCommand()
                     {
                         CellPosition = selectedCell.Value, WorldPosition = cmd.WorldPosition
                     },
@@ -146,72 +160,95 @@ namespace App.Scenes.MergeGame
                     return;
                 }
 
-                bool success = false;
-
-                if (cmd.TryGetTarget(out var target)
-                    && tileLookup.TryGetValue(target, out var lookup)
-                    && !tileLooked.GetValueOrDefault(lookup.cell, false))
+                if (!cmd.TryGetTarget(out var go))
                 {
-                    (Vector2Int cell, Tile tile) = lookup;
-
-                    if (cell != selectedCell.Value)
-                    {
-                        (bool ok,
-                            IBoardCell from,
-                            IBoardCell to,
-                            IBoardCell spawned,
-                            IReadOnlyList<IBoardCell> updatedCells) = await _controller.MergeBlock(
-                            sessionId,
-                            new MergeBlockRequest
-                            (
-                                FromPosition: selectedCell.Value,
-                                ToPosition: cell
-                            ), ctx.CancellationToken);
-                        _logger.ZLogInformation(
-                            $"{nameof(_controller.MergeBlock)}({nameof(from)}: {from}, {nameof(to)}: {to}, {nameof(spawned)}: {spawned})");
-                        success = ok;
-
-                        if (success)
-                        {
-                            // 합성 연출
-                            _ = _router.PublishAsync(
-                                new CombineBlockCommand()
-                                {
-                                    FromPosition = new Vector2Int(from.X, from.Y),
-                                    ToPosition = new Vector2Int(to.X, to.Y),
-                                }, ctx.CancellationToken);
-
-                            _ = _router.PublishAsync(
-                                new SpawnBlockCommand()
-                                {
-                                    Position = new Vector2Int(spawned.X, spawned.Y), Id = spawned.BlockId,
-                                }, ctx.CancellationToken);
-
-                            foreach (IBoardCell updatedCell in updatedCells)
-                            {
-                                _ = _router.PublishAsync(
-                                    new UpdateBlockStateCommand()
-                                    {
-                                        Position = new Vector2Int(updatedCell.X, updatedCell.Y),
-                                        State = updatedCell.CellState
-                                    }, ctx.CancellationToken);
-                            }
-                        }
-                    }
-                }
-
-                if (success)
-                {
+                    Fail(selectedCell.Value);
                     return;
                 }
 
-                _focusFrame.Restore();
+                if (!tileLookup.TryGetValue(go, out var lookup))
+                {
+                    Fail(selectedCell.Value);
+                    return;
+                }
 
-                _ = _router.PublishAsync(new ReturnBlockPositionCommand() { Position = selectedCell.Value },
-                    ctx.CancellationToken);
+                (Vector2Int cell, _) = lookup;
 
-                _logger.ZLogTrace($"{nameof(TileReleasedCommand)}({nameof(selectedCell)}: {selectedCell})");
-                selectedCell = null;
+                if (tileLooked.GetValueOrDefault(cell, false))
+                {
+                    Fail(selectedCell.Value);
+                    return;
+                }
+
+                if (cell == selectedCell.Value)
+                {
+                    Fail(selectedCell.Value);
+                    return;
+                }
+
+                var result = await _controller.MoveBlock(
+                    sessionId,
+                    new MoveBlockRequest(selectedCell.Value, cell),
+                    ctx.CancellationToken
+                );
+
+                var tileSelectedCell = selectedCell.Value;
+
+                switch (result)
+                {
+                    case MovedResponse (_, var movedCell) {IsOk: true}:
+                        _ = _router.PublishAsync(
+                            new MoveBlockCommand()
+                            {
+                                FromCell = tileSelectedCell, ToCell = movedCell
+                            }, ctx.CancellationToken);
+                        break;
+                    case MergedResponse {IsOk: true} merged:
+                        (_, IBoardCell fromCell, IBoardCell mergedCell, IBoardCell spawnedCell,
+                            IReadOnlyList<IBoardCell> updatedCells) = merged;
+                        _ = _router.PublishAsync(
+                            new CombineBlockCommand()
+                            {
+                                FromPosition = new Vector2Int(fromCell.X, fromCell.Y),
+                                ToPosition = new Vector2Int(mergedCell.X, mergedCell.Y),
+                            }, ctx.CancellationToken);
+
+                        _ = _router.PublishAsync(
+                            new SpawnBlockCommand()
+                            {
+                                Position = new Vector2Int(spawnedCell.X, spawnedCell.Y), Id = spawnedCell.BlockId,
+                            }, ctx.CancellationToken);
+
+                        foreach (IBoardCell updatedCell in updatedCells)
+                        {
+                            _ = _router.PublishAsync(
+                                new UpdateBlockStateCommand()
+                                {
+                                    Cell = new Vector2Int(updatedCell.X, updatedCell.Y),
+                                    State = updatedCell.CellState
+                                }, ctx.CancellationToken);
+                        }
+                        break;
+                    default:
+                        Fail(tileSelectedCell);
+                        break;
+                }
+
+                return;
+
+                void Fail(Vector2Int returnPosition)
+                {
+                    _focusFrame.Restore();
+
+                    _ = _router.PublishAsync(new ReturnBlockPositionCommand()
+                        {
+                            Position = returnPosition
+                        },
+                        ctx.CancellationToken);
+
+                    selectedCell = null;
+                    _logger.ZLogTrace($"{nameof(TileReleasedCommand)}({nameof(returnPosition)}: {returnPosition})");
+                }
             }, CommandOrdering.Drop).AddTo(ref _disposable);
 
             await UniTask.NextFrame(ct);

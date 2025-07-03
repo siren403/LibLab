@@ -102,7 +102,7 @@ namespace MergeGame.Core.Internal.Entities
 
             // TODO: 다음 블록 ID 생성 로직을 추가해야 함
             // 나중에는 머지 가능한 블록 ID인지 검증 부분이 필요함
-            BlockId newBlockId = fromBlockId + 1;
+            BlockId newBlockId = Math.Clamp(fromBlockId + 1, 0, 8);
             toCell.PlaceBlock(newBlockId, BoardCellState.Movable);
 
             return new Ok<MergeResult>(new MergeResult(

@@ -6,9 +6,10 @@ using VitalRouter;
 
 namespace App.Scenes.MergeGame.Commands
 {
-    public readonly struct MoveBlockPositionCommand : ICommand
+    public readonly struct DragBlockCommand : ICommand
     {
         public Vector2Int CellPosition { get; init; }
         public Vector3 WorldPosition { get; init; }
     }
+
 }

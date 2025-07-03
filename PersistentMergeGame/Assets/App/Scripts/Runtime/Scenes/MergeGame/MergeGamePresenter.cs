@@ -87,10 +87,12 @@ namespace App.Scenes.MergeGame
         [Route]
         private void On(SpawnBlockCommand command)
         {
-            if (_combineMotionHandle.IsPlaying())
+            if (_combineMotionHandles.TryGetValue(command.Position, out var handle))
             {
-                UniTask.WaitWhile(() => _combineMotionHandle.IsPlaying())
-                    .ContinueWith(InstantiateBlock);
+                _ = UniTask.WaitWhile(handle,
+                    state => state.IsPlaying(),
+                    cancellationToken: destroyCancellationToken
+                ).ContinueWith(InstantiateBlock);
             }
             else
             {
@@ -101,6 +103,7 @@ namespace App.Scenes.MergeGame
 
             void InstantiateBlock()
             {
+                _combineMotionHandles.Remove(command.Position);
                 var position = _positionCalculator.GetTilePosition(command.Position);
                 if (!(_blockData?.TryGetValue(command.Id, out BlockData data) ?? false))
                 {
@@ -115,11 +118,16 @@ namespace App.Scenes.MergeGame
                 );
                 block.State = command.State;
                 _blocks[command.Position] = block;
+
+                LMotion.Create(Vector3.zero, Vector3.one, 0.15f)
+                    .WithEase(Ease.OutBack)
+                    .BindToLocalScale(block.transform)
+                    .AddTo(this);
             }
         }
 
         [Route]
-        private void On(MoveBlockPositionCommand command)
+        private void On(DragBlockCommand command)
         {
             if (!_blocks.TryGetValue(command.CellPosition, out var block))
             {
@@ -127,7 +135,7 @@ namespace App.Scenes.MergeGame
             }
 
             block.transform.position = command.WorldPosition;
-            block.OnMovePosition();
+            block.OnDragPosition();
         }
 
         private MotionHandle _returnBlockHandle = MotionHandle.None;
@@ -165,13 +173,16 @@ namespace App.Scenes.MergeGame
             _onTileSpawn.OnNext((position, tile));
         }
 
-        private MotionHandle _combineMotionHandle = MotionHandle.None;
+        private readonly Dictionary<Vector2Int, MotionHandle> _combineMotionHandles = new();
 
         [Route]
         private void On(CombineBlockCommand command)
         {
-            DestroyBlock(command.FromPosition, command.ToPosition, Vector2.left);
-            DestroyBlock(command.ToPosition, command.ToPosition, Vector2.right);
+            var dir = (Vector2)command.ToPosition - command.FromPosition;
+            dir.Normalize();
+
+            DestroyBlock(command.FromPosition, command.ToPosition, dir);
+            DestroyBlock(command.ToPosition, command.ToPosition, -dir);
 
             return;
 
@@ -188,7 +199,7 @@ namespace App.Scenes.MergeGame
                     return;
                 }
 
-                block.OnMovePosition();
+                block.OnDragPosition();
                 block.Color = Color.white;
 
                 var to = tile.transform.position;
@@ -208,26 +219,51 @@ namespace App.Scenes.MergeGame
                     )
                     .Run();
 
-                UniTask.WaitWhile(() => handle.IsPlaying(), cancellationToken: destroyCancellationToken)
+                _ = UniTask.WaitWhile(handle, static state => state.IsPlaying(),
+                        cancellationToken: destroyCancellationToken)
                     .ContinueWith(() =>
                     {
                         Destroy(block.gameObject);
                         _onTileLock.OnNext((cell, false));
                     });
 
-                _combineMotionHandle = handle.AddTo(this);
+                _combineMotionHandles[spawned] = handle.AddTo(this);
             }
         }
 
         [Route]
         private void On(UpdateBlockStateCommand command)
         {
-            if (!_blocks.TryGetValue(command.Position, out var block))
+            if (!_blocks.TryGetValue(command.Cell, out var block))
             {
                 return;
             }
 
             block.State = command.State;
+        }
+
+        [Route]
+        private void On(MoveBlockCommand command)
+        {
+            if (!_blocks.TryGetValue(command.FromCell, out var block))
+            {
+                return;
+            }
+
+            if (!_tiles.TryGetValue(command.ToCell, out var toTile))
+            {
+                return;
+            }
+
+            _blocks.Remove(command.FromCell);
+            _blocks[command.ToCell] = block;
+            block.OnReturnPosition();
+
+            var toPosition = toTile.transform.position;
+            _ = LMotion.Create(block.transform.position, toPosition, 0.2f)
+                .WithEase(Ease.OutQuint)
+                .BindToPosition(block.transform)
+                .AddTo(this);
         }
     }
 }

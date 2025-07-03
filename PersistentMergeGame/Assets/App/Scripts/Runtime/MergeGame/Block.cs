@@ -28,7 +28,7 @@ namespace App.MergeGame
             }
         }
 
-        public void OnMovePosition()
+        public void OnDragPosition()
         {
             sprite.sortingOrder = 1;
         }

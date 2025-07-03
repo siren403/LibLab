@@ -8,6 +8,6 @@ namespace App.Scenes.MergeGame.Commands;
 
 public readonly struct UpdateBlockStateCommand : ICommand
 {
-    public Vector2Int Position { get; init; }
+    public Vector2Int Cell { get; init; }
     public short State { get; init; }
 }

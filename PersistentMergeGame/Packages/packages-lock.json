@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.aaron.scene-launcher": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/SceneLauncher",
+      "version": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -9,7 +9,7 @@
       }
     },
     "com.aaron.scene-launcher.vcontainer": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/SceneLauncher.VContainer",
+      "version": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher.VContainer",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -19,19 +19,19 @@
       }
     },
     "com.aaron.vextensions.mediator": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/Mediator",
+      "version": "file:../../LibLab.Unity/Assets/Lib/VExtensions/Mediator",
       "depth": 0,
       "source": "local",
       "dependencies": {}
     },
     "com.aaron.vextensions.mediator.abstractions": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/Mediator.Abstractions",
+      "version": "file:../../LibLab.Unity/Assets/Lib/VExtensions/Mediator.Abstractions",
       "depth": 0,
       "source": "local",
       "dependencies": {}
     },
     "com.aaron.vextensions.scene-navigation": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/SceneNavigation",
+      "version": "file:../../LibLab.Unity/Assets/Lib/VExtensions/SceneNavigation",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -41,7 +41,7 @@
       }
     },
     "com.aaron.vextensions.zlogger": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/LibLab.Unity/Assets/Lib/VExtensions/ZLogger",
+      "version": "file:../../LibLab.Unity/Assets/Lib/VExtensions/ZLogger",
       "depth": 0,
       "source": "local",
       "dependencies": {}

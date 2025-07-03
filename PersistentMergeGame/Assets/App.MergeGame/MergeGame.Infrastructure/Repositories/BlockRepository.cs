@@ -29,7 +29,7 @@ namespace MergeGame.Infrastructure.Repositories
                 return cached;
             }
 
-            var resp = await _client.From<Models.Block>()
+            var resp = await _client.From<Block>()
                 .Where(x => x.Id == id)
                 .Single(cancellationToken);
 

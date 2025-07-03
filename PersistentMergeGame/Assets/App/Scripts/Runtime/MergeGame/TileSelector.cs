@@ -53,7 +53,10 @@ public class TileSelector : IInitializable, IDisposable
         int hitCount = 0;
         var hits = new RaycastHit2D[1];
         int tileMask = LayerMask.GetMask("Tile");
-        _handler.OnPressed.Subscribe(result =>
+
+        var input = _handler.GetObservables();
+
+        input.onPressed.Subscribe(result =>
         {
             hitCount = Physics2D.Raycast(result.WorldPosition, Vector2.zero,
                 new ContactFilter2D { useLayerMask = true, layerMask = tileMask },
@@ -65,8 +68,7 @@ public class TileSelector : IInitializable, IDisposable
             }
         }).AddTo(ref _disposable);
 
-
-        _handler.OnDragging.Subscribe(result =>
+        input.onMoved.Subscribe(result =>
         {
             if (hitCount > 0)
             {
@@ -77,7 +79,7 @@ public class TileSelector : IInitializable, IDisposable
             }
         }).AddTo(ref _disposable);
 
-        _handler.OnReleased.Subscribe(result =>
+        input.onReleased.Subscribe(result =>
         {
             if (hitCount == 0) return;
 

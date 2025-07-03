@@ -16,100 +16,26 @@ namespace MergeGame.Api
     {
         [SerializeField] private Camera targetCamera = null!;
 
+        // WebGL(Mobile)에서는 EnhancedTouch 동작하지 않음.
+        // private EnhancedTouchProvider? _enhancedTouchProvider;
 
+        // WebGL(PC)
         private MouseInputProvider? _mouseProvider;
-        private TouchInputProvider? _touchProvider;
 
-        private IInputProvider Provider
+        // WebGL(Mobile)
+        private InputTouchesProvider? _inputTouchesProvider;
+
+        private readonly Subject<Result> _onPressed = new();
+        private readonly Subject<Result> _onReleased = new();
+        private readonly Subject<Result> _onMoved = new();
+
+        public (Observable<Result> onPressed, Observable<Result> onReleased, Observable<Result> onMoved)
+            GetObservables()
         {
-            get
-            {
-                if (TouchInputProvider.IsActivated)
-                {
-                    return _touchProvider ??= new TouchInputProvider(gameObject, targetCamera);
-                }
-
-                return _mouseProvider ??= new MouseInputProvider(gameObject, targetCamera);
-            }
-        }
-
-        public Observable<Result> OnPressed => Provider.OnPressed;
-
-        public Observable<Result> OnReleased => Provider.OnReleased;
-
-        public Observable<Result> OnDragging => Provider.OnDragging;
-
-        private void Awake()
-        {
-            // var hasTouch = this.UpdateAsObservable()
-            //     .Where(_ => Touch.activeTouches.Any())
-            //     .Select(_ => Touch.activeTouches.First());
-            //
-            // var onPressed = hasTouch
-            //     .Select(t => (t.phase, t.screenPosition))
-            //     .DistinctUntilChanged()
-            //     .Where(t => t.phase == TouchPhase.Began)
-            //     .Select(t => t.screenPosition);
-            //
-            // var onReleased = hasTouch
-            //     .Select(t => (t.phase, t.screenPosition))
-            //     .DistinctUntilChanged()
-            //     .Where(t => t.phase == TouchPhase.Ended)
-            //     .Select(t => t.screenPosition);
-            //
-            // var onDragging = hasTouch
-            //     .Select(t => (t.phase, t.screenPosition))
-            //     .DistinctUntilChanged()
-            //     .Where(t => t.phase == TouchPhase.Moved)
-            //     .Select(t => t.screenPosition);
-            //
-            //
-            // onPressed.Subscribe(screen => { Debug.Log($"[Touch] OnPressed: {screen}"); }).AddTo(this);
-            //
-            // onReleased.Subscribe(screen => { Debug.Log($"[Touch] OnReleased: {screen}"); }).AddTo(this);
-            //
-            // onDragging.Subscribe(screen => { Debug.Log($"[Touch] OnDragging: {screen}"); }).AddTo(this);
-        }
-
-        private interface IInputProvider
-        {
-            Observable<Result> OnPressed { get; }
-            Observable<Result> OnReleased { get; }
-            Observable<Result> OnDragging { get; }
-        }
-
-        private class TouchInputProvider : IInputProvider
-        {
-            public static bool IsActivated => Touch.activeTouches.Any();
-
-            public Observable<Result> OnPressed { get; }
-            public Observable<Result> OnReleased { get; }
-            public Observable<Result> OnDragging { get; }
-
-            public TouchInputProvider(GameObject source, Camera targetCamera)
-            {
-                var hasTouch = source.UpdateAsObservable()
-                    .Where(_ => IsActivated)
-                    .Select(_ => Touch.activeTouches.First());
-
-                OnPressed = hasTouch
-                    .Select(t => (t.phase, t.screenPosition))
-                    .DistinctUntilChanged()
-                    .Where(t => t.phase == TouchPhase.Began)
-                    .Select(t => ScreenToResult(t.screenPosition, targetCamera));
-
-                OnReleased = hasTouch
-                    .Select(t => (t.phase, t.screenPosition))
-                    .DistinctUntilChanged()
-                    .Where(t => t.phase == TouchPhase.Ended)
-                    .Select(t => ScreenToResult(t.screenPosition, targetCamera));
-
-                OnDragging = hasTouch
-                    .Select(t => (t.phase, t.screenPosition))
-                    .DistinctUntilChanged()
-                    .Where(t => t.phase == TouchPhase.Moved)
-                    .Select(t => ScreenToResult(t.screenPosition, targetCamera));
-            }
+            _mouseProvider ??= new MouseInputProvider(this).AddTo(this);
+            // _enhancedTouchProvider ??= new EnhancedTouchProvider(this).AddTo(this);
+            _inputTouchesProvider ??= new InputTouchesProvider(this).AddTo(this);
+            return (_onPressed, _onReleased, _onMoved);
         }
 
         static Result ScreenToResult(Vector2 screenPosition, Camera camera)
@@ -118,48 +44,169 @@ namespace MergeGame.Api
             return new Result { ScreenPosition = screenPosition, WorldPosition = worldPosition };
         }
 
-        private class MouseInputProvider : IInputProvider
+
+        private class InputTouchesProvider : IDisposable
         {
-            public Observable<Result> OnPressed { get; }
-            public Observable<Result> OnReleased { get; }
-            public Observable<Result> OnDragging { get; }
+            private DisposableBag _disposable;
 
-            public MouseInputProvider(GameObject source, Camera targetCamera)
+            public InputTouchesProvider(InputPointerHandler handler)
             {
-                var hasMouse = source.UpdateAsObservable()
-                    .Where(_ => Mouse.current.enabled)
-                    .Select(_ => Mouse.current);
+                var onTouch = handler.UpdateAsObservable()
+                    .Where(static _ => Input.touches.Length > 0)
+                    .Select(static _ => Input.touches[0]);
 
-                OnPressed = hasMouse.Where(mouse => mouse.leftButton.wasPressedThisFrame)
-                    .Select(mouse =>
-                    {
-                        var screenPosition = mouse.position.ReadValue();
-                        return ScreenToResult(screenPosition, targetCamera);
-                    });
-                OnReleased = hasMouse.Where(mouse => mouse.leftButton.wasReleasedThisFrame)
-                    .Select(mouse =>
-                    {
-                        var screenPosition = mouse.position.ReadValue();
-                        return ScreenToResult(screenPosition, targetCamera);
-                    });
-
-                OnDragging = hasMouse.CombineLatest(
-                        hasMouse.Select(mouse => mouse.leftButton),
-                        (mouse, ctrl) => (mouse, ctrl))
-                    .Where(input => input.ctrl.isPressed)
-                    .Select(input =>
-                    {
-                        var screenPosition = input.mouse.position.ReadValue();
-                        return ScreenToResult(screenPosition, targetCamera);
-                    })
+                var onChangedTouch = onTouch
+                    .Select(touch => (touch.phase, touch.position))
                     .DistinctUntilChanged();
+
+                var onPressed = onChangedTouch
+                    .Where(touch => touch.phase == UnityEngine.TouchPhase.Began);
+
+                var onReleased = onChangedTouch
+                    .Where(touch => touch.phase is UnityEngine.TouchPhase.Ended or UnityEngine.TouchPhase.Canceled);
+
+                var onMoved = onChangedTouch
+                    .Where(touch => touch.phase == UnityEngine.TouchPhase.Moved);
+
+                var onPressedState = (subject: handler._onPressed, camera: handler.targetCamera);
+                var onReleasedState = (subject: handler._onReleased, camera: handler.targetCamera);
+                var onMovedState = (subject: handler._onMoved, camera: handler.targetCamera);
+
+                onPressed.Subscribe(onPressedState, static (touch, state) =>
+                {
+                    (Subject<Result> pressed, Camera camera) = state;
+                    pressed.OnNext(ScreenToResult(touch.position, camera));
+                }).AddTo(ref _disposable);
+
+                onReleased.Subscribe(onReleasedState, static (touch, state) =>
+                {
+                    (Subject<Result> released, Camera camera) = state;
+                    released.OnNext(ScreenToResult(touch.position, camera));
+                }).AddTo(ref _disposable);
+
+                onMoved.Subscribe(onMovedState, static (touch, state) =>
+                {
+                    (Subject<Result> moved, Camera camera) = state;
+                    moved.OnNext(ScreenToResult(touch.position, camera));
+                }).AddTo(ref _disposable);
+            }
+
+            public void Dispose()
+            {
+                _disposable.Dispose();
+            }
+        }
+
+        private class EnhancedTouchProvider : IDisposable
+        {
+            private DisposableBag _disposable;
+
+            public EnhancedTouchProvider(InputPointerHandler handler)
+            {
+                var onTouch = handler.UpdateAsObservable()
+                    .Where(static _ => Touch.activeTouches.Count > 0)
+                    .Select(static _ => Touch.activeTouches[0]);
+
+                var onChangedTouch = onTouch
+                    .Select(touch => (touch.phase, touch.screenPosition))
+                    .DistinctUntilChanged();
+
+                var onPressed = onChangedTouch
+                    .Where(touch => touch.phase == TouchPhase.Began);
+
+                var onReleased = onChangedTouch
+                    .Where(touch => touch.phase is TouchPhase.Ended or TouchPhase.Canceled);
+
+                var onMoved = onChangedTouch
+                    .Where(touch => touch.phase == TouchPhase.Moved);
+
+                var onPressedState = (subject: handler._onPressed, camera: handler.targetCamera);
+                var onReleasedState = (subject: handler._onReleased, camera: handler.targetCamera);
+                var onMovedState = (subject: handler._onMoved, camera: handler.targetCamera);
+
+                onPressed.Subscribe(onPressedState, static (touch, state) =>
+                {
+                    (Subject<Result> pressed, Camera camera) = state;
+                    pressed.OnNext(ScreenToResult(touch.screenPosition, camera));
+                }).AddTo(ref _disposable);
+
+                onReleased.Subscribe(onReleasedState, static (touch, state) =>
+                {
+                    (Subject<Result> released, Camera camera) = state;
+                    released.OnNext(ScreenToResult(touch.screenPosition, camera));
+                }).AddTo(ref _disposable);
+
+                onMoved.Subscribe(onMovedState, static (touch, state) =>
+                {
+                    (Subject<Result> moved, Camera camera) = state;
+                    moved.OnNext(ScreenToResult(touch.screenPosition, camera));
+                }).AddTo(ref _disposable);
+            }
+
+            public void Dispose()
+            {
+                _disposable.Dispose();
+            }
+        }
+
+
+        private class MouseInputProvider : IDisposable
+        {
+            private DisposableBag _disposable;
+
+            public MouseInputProvider(InputPointerHandler handler)
+            {
+                var onMouse = handler.UpdateAsObservable()
+                    .Where(static _ => Mouse.current.enabled)
+                    .Select(static _ => Mouse.current);
+
+                var onMouseButton =
+                    onMouse.Select(mouse => (button: mouse.leftButton, position: mouse.position.ReadValue()));
+
+                var onPressed = onMouseButton
+                    .Where(mouse => mouse.button.wasPressedThisFrame);
+
+                var onReleased = onMouseButton
+                    .Where(mouse => mouse.button.wasReleasedThisFrame);
+
+                var onMoved = onMouseButton
+                    .Where(mouse => mouse.button.isPressed)
+                    .DistinctUntilChangedBy(mouse => (mouse.position, Mouse.current.leftButton.isPressed))
+                    .Skip(1);
+
+                var onPressedState = (subject: handler._onPressed, camera: handler.targetCamera);
+                var onReleasedState = (subject: handler._onReleased, camera: handler.targetCamera);
+                var onMovedState = (subject: handler._onMoved, camera: handler.targetCamera);
+
+                onPressed.Subscribe(onPressedState, static (mouse, state) =>
+                {
+                    (Subject<Result> pressed, Camera camera) = state;
+                    pressed.OnNext(ScreenToResult(mouse.position, camera));
+                }).AddTo(ref _disposable);
+
+                onReleased.Subscribe(onReleasedState, static (mouse, state) =>
+                {
+                    (Subject<Result> released, Camera camera) = state;
+                    released.OnNext(ScreenToResult(mouse.position, camera));
+                }).AddTo(ref _disposable);
+
+                onMoved.Subscribe(onMovedState, static (mouse, state) =>
+                {
+                    (Subject<Result> moved, Camera camera) = state;
+                    moved.OnNext(ScreenToResult(mouse.position, camera));
+                }).AddTo(ref _disposable);
+            }
+
+            public void Dispose()
+            {
+                _disposable.Dispose();
             }
         }
 
         public readonly struct Result
         {
-            public readonly Vector2 ScreenPosition { get; init; }
-            public readonly Vector3 WorldPosition { get; init; }
+            public Vector2 ScreenPosition { get; init; }
+            public Vector3 WorldPosition { get; init; }
         }
     }
 }

@@ -1,5 +1,7 @@
+.idea/
 !*.rsp
 ServerData/
+Assets/Packages/
 
 WebGL Builds/Merge Game/**
 !WebGL Builds/Merge Game/.gitkeep

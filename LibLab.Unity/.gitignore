@@ -1,5 +1,9 @@
+.vscode/
 !*.rsp
+# Addressable
 ServerData/
+# Nuget packages
+Assets/Packages/
 
 # Created by https://www.toptal.com/developers/gitignore/api/Unity,rider
 # Edit at https://www.toptal.com/developers/gitignore?templates=Unity,rider

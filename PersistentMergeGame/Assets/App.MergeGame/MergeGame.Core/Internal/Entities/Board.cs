@@ -2,10 +2,11 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MergeGame.Common;
 using MergeGame.Core.Enums;
+using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.Internal.ValueObjects;
 using MergeGame.Core.ValueObjects;
 
@@ -13,7 +14,7 @@ namespace MergeGame.Core.Internal.Entities
 {
     internal class Board
     {
-        public Ulid Id { get; init; }
+        public Ulid Id { get; }
         public int Width => Cells.GetLength(0);
         public int Height => Cells.GetLength(1);
         private BoardCell[,] Cells { get; }
@@ -59,64 +60,45 @@ namespace MergeGame.Core.Internal.Entities
             return Cells.Cast<BoardCell>();
         }
 
-        public Result<MergeResult> MergeBlock(Position from, Position to)
+        public Result<MergeBlockData> MergeBlock(Position from, Position to, IMergeRuleRepository repository)
         {
-            // 같은 위치 안됨
-            if (from == to)
-            {
-                return new Error<MergeResult>($"Cannot merge a cell with itself at position {from}.");
-            }
-
             var fromCell = GetCell(from);
             var toCell = GetCell(to);
 
-            // fromCell, toCell 둘 다 비어있으면 안됨
-            if (!fromCell.TryGetBlockId(out var fromBlockId) || !toCell.TryGetBlockId(out var toBlockId))
+            var canMerge = fromCell.CanMergeTo(toCell);
+
+            if (canMerge is Error (_, var message))
             {
-                return new Error<MergeResult>($"Cannot merge empty cells at positions {from} and {to}.");
+                return Result<MergeBlockData>.Error(message);
             }
 
-            // fromCell, toCell 둘 다 같은 블록 ID여야 함
-            if (fromBlockId != toBlockId)
+            var fromBlockId = fromCell.BlockId!.Value;
+            var mergeRuleResult = repository.FindMergeRule(fromBlockId);
+
+            switch (mergeRuleResult)
             {
-                return new Error<MergeResult>(
-                    $"Cannot merge cells with different block IDs: {fromBlockId} and {toBlockId} at positions {from} and {to}.");
+                case Error<MergeRule>(_, var errorMessage):
+                    return Result<MergeBlockData>.Error(errorMessage);
+                case Ok<MergeRule>(var (_, _, nextBlockId)):
+                    fromCell.RemoveBlock();
+                    toCell.RemoveBlock();
+                    toCell.PlaceBlock(nextBlockId, BoardCellState.Movable);
+                    return new Ok<MergeBlockData>(new MergeBlockData(
+                        fromCell,
+                        toCell
+                    ));
+                default:
+                    return Result<MergeBlockData>.Error(
+                        $"Unexpected result type from repository: {mergeRuleResult.GetType()}");
             }
-
-            // fromCell은 Movable 상태여야 하고
-            if (fromCell.State != BoardCellState.Movable)
-            {
-                return new Error<MergeResult>(
-                    $"Cannot merge from cell at {from} because it is not in a movable state. Current state: {fromCell.State}.");
-            }
-
-            // toCell은 Untouchable 상태면 안됨
-            if (toCell.State == BoardCellState.Untouchable)
-            {
-                return new Error<MergeResult>(
-                    $"Cannot merge to cell at {to} because it is in an untouchable state. Current state: {toCell.State}.");
-            }
-
-            fromCell.RemoveBlock();
-            toCell.RemoveBlock();
-
-            // TODO: 다음 블록 ID 생성 로직을 추가해야 함
-            // 나중에는 머지 가능한 블록 ID인지 검증 부분이 필요함
-            BlockId newBlockId = Math.Clamp(fromBlockId + 1, 0, 8);
-            toCell.PlaceBlock(newBlockId, BoardCellState.Movable);
-
-            return new Ok<MergeResult>(new MergeResult(
-                fromCell,
-                toCell
-            ));
         }
 
-        public MoveResult MoveBlock(Position from, Position to)
+        public Result<MoveBlockData> MoveBlock(Position from, Position to)
         {
             // 같은 위치 안됨
             if (from == to)
             {
-                return MoveResult.Error;
+                return Result<MoveBlockData>.Error($"Cannot move block to the same position: {from}");
             }
 
             var fromCell = GetCell(from);
@@ -125,18 +107,19 @@ namespace MergeGame.Core.Internal.Entities
             // fromCell은 Movable 상태여야 하고
             if (fromCell.State != BoardCellState.Movable)
             {
-                return MoveResult.Error;
+                return Result<MoveBlockData>.Error(
+                    $"Cannot move block from {from} because it is not movable. State: {fromCell.State}");
             }
 
             if (toCell.HasBlock)
             {
-                return MoveResult.Error;
+                return Result<MoveBlockData>.Error($"Cannot move block to {to} because it already has a block.");
             }
 
             var fromBlockId = fromCell.RemoveBlock();
             return toCell.PlaceBlock(fromBlockId, BoardCellState.Movable)
-                ? new MoveResult(true, from, to)
-                : MoveResult.Error;
+                ? Result<MoveBlockData>.Ok(new MoveBlockData() { FromPosition = from, ToPosition = to })
+                : Result<MoveBlockData>.Error($"Cannot place block at {to}. State: {toCell.State}");
         }
 
         public IEnumerable<BoardCell> GetNeighborCells(Position position)

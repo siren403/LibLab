@@ -11,7 +11,8 @@
         "VExtensions.Mediator.Abstractions",
         "MergeGame.Contracts",
         "R3.Unity",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "MergeGame.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,5 @@
-using System;
-using MergeGame.Core.Internal.Extensions;
-using MergeGame.Core.Enums;
+using MergeGame.Common;
+using MergeGame.Core.Internal.Entities;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -11,16 +10,19 @@ namespace MergeGame.Core.Tests
         [Test]
         public void CreateSession()
         {
-            var sessionManager = TestUtil.GetGameManager();
+            var sessionManager = TestUtil.GetGameManager(out _);
             var session = sessionManager.CreateGameSession(5, 5);
             Assert.IsNotNull(session);
 
             var result = sessionManager.GetSession(session.Id);
-            Assert.IsTrue(result.IsSuccess);
-            Assert.IsNotNull(result.Value);
+            Assert.IsTrue(result is Ok<GameSession>);
+            if (result is Ok<GameSession>(var resultSession))
+            {
+                Assert.IsNotNull(resultSession);
 
-            Assert.AreSame(session, result.Value);
-            Debug.Log(result.Value);
+                Assert.AreSame(session, resultSession);
+                Debug.Log(resultSession);
+            }
         }
     }
 }

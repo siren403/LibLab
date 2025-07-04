@@ -47,6 +47,8 @@ namespace MergeGame.Infrastructure.Data
                         "block_bread_4" => 6,
                         "block_bread_5" => 7,
 
+                        "undefined" => 10,
+
                         "block_untouchable_1" => 10000,
                         "block_untouchable_2" => 10001,
                         "block_untouchable_3" => 10002,

@@ -3,6 +3,8 @@
 
 using App.MergeGame;
 using MergeGame.Api;
+using MergeGame.Api.Extensions;
+using MergeGame.Api.Inputs;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

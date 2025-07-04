@@ -6,7 +6,8 @@
         "VContainer",
         "UniTask",
         "Unity.Addressables",
-        "Unity.ResourceManager"
+        "Unity.ResourceManager",
+        "MergeGame.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

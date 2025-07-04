@@ -1,19 +1,12 @@
 ﻿using Cysharp.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using R3;
 using SceneLauncher;
-using UnityEngine;
-using UnityEngine.UI;
 using VContainer;
 using VContainer.Unity;
-using VExtensions.SceneNavigation;
-using VExtensions.SceneNavigation.Commands;
 using VExtensions.ZLogger;
 using VitalRouter.VContainer;
 using ZLogger.Unity;
 using VExtensions.SceneNavigation.Extensions;
-using VitalRouter;
-using VitalRouter.R3;
 
 namespace App.Scenes
 {

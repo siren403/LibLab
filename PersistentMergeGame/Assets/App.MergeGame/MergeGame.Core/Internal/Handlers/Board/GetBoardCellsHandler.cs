@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Data;
+using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Managers;
 using VExtensions.Mediator.Abstractions;
 
@@ -20,13 +21,7 @@ namespace MergeGame.Core.Internal.Handlers.Board
 
         public UniTask<BoardCell[]> ExecuteAsync(GetBoardCellsCommand command, CancellationToken ct)
         {
-            (bool isSuccess, Entities.GameSession session, string? error) = _manager.GetSession(command.SessionId);
-            if (!isSuccess)
-            {
-                return UniTask.FromResult(Array.Empty<BoardCell>());
-            }
-
-            var board = _manager.GetBoard(session);
+            var board = _manager.GetBoardOrThrow(command.SessionId);
             var result = board.GetCells()
                 .Where(cell => cell.HasBlock)
                 .Select(BoardCell.FromEntity).ToArray();

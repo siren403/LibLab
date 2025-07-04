@@ -3,6 +3,7 @@ using System.Threading;
 using MergeGame.Core.Internal.Extensions;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.GameSession;
+using MergeGame.Common;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.ValueObjects;
@@ -10,8 +11,7 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.GameSession
 {
-    internal class CreateStartingGameSessionHandler
-        : ICommandHandler<CreateStartingGameSessionCommand, CreateGameSessionResult>
+    internal class CreateStartingGameSessionHandler : ICommandHandler<CreateStartingGameSessionCommand, Result<Ulid>>
     {
         private readonly GameManager _manager;
         private readonly IBoardLayoutRepository _repository;
@@ -22,7 +22,7 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
             _repository = repository;
         }
 
-        public async UniTask<CreateGameSessionResult> ExecuteAsync(CreateStartingGameSessionCommand command,
+        public async UniTask<Result<Ulid>> ExecuteAsync(CreateStartingGameSessionCommand command,
             CancellationToken ct)
         {
             var layout = await _repository.GetStartingLayout(ct);
@@ -39,7 +39,7 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
                 }
             }
 
-            return new CreateGameSessionResult(true, session.Id);
+            return Result<Ulid>.Ok(session.Id);
         }
     }
 }

@@ -1,15 +1,17 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.GameSession;
+using MergeGame.Common;
 using MergeGame.Core.Internal.Managers;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.GameSession
 {
-    internal class CreateGameSessionHandler : ICommandHandler<CreateGameSessionCommand, CreateGameSessionResult>
+    internal class CreateGameSessionHandler : ICommandHandler<CreateGameSessionCommand, Result<Ulid>>
     {
         private readonly GameManager _manager;
 
@@ -18,14 +20,14 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
             _manager = manager;
         }
 
-        public UniTask<CreateGameSessionResult> ExecuteAsync(CreateGameSessionCommand command,
+        public UniTask<Result<Ulid>> ExecuteAsync(CreateGameSessionCommand command,
             CancellationToken ct)
         {
             int width = command.Width;
             int height = command.Height;
             var session = _manager.CreateGameSession(width, height);
-            var result = new CreateGameSessionResult(true, session.Id);
-            return UniTask.FromResult(result);
+            var result = Result<Ulid>.Ok(session.Id);
+            return UniTask.FromResult<Result<Ulid>>(result);
         }
     }
 }

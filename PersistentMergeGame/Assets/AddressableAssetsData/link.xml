@@ -13,7 +13,7 @@
     <type fullname="LitMotion.Animation.Components.TransformScaleAnimation" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="MergeGame.Api, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-    <type fullname="MergeGame.Api.InputPointerHandler" preserve="all" />
+    <type fullname="MergeGame.Api.Inputs.InputPointerHandler" preserve="all" />
   </assembly>
   <assembly fullname="MergeGame.Infrastructure, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="MergeGame.Infrastructure.Data.BoardLayoutAsset" preserve="all" />

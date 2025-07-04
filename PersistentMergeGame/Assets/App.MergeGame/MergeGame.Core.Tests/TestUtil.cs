@@ -18,9 +18,9 @@ namespace MergeGame.Core.Tests
             return bld.Build();
         }
 
-        public static GameManager GetGameManager()
+        public static GameManager GetGameManager(out IObjectResolver resolver)
         {
-            var resolver = Build();
+            resolver = Build();
             return resolver.Resolve<GameManager>();
         }
 

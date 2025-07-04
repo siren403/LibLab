@@ -6,6 +6,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Enums;
+using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.ValueObjects;
 using VExtensions.Mediator.Abstractions;
@@ -23,13 +24,7 @@ namespace MergeGame.Core.Internal.Handlers.Board
 
         public UniTask<CheckMovableCellResult> ExecuteAsync(CheckMovableCellCommand command, CancellationToken ct)
         {
-            (bool isSuccess, Entities.GameSession session, _) = _manager.GetSession(command.SessionId);
-            if (!isSuccess)
-            {
-                throw new InvalidOperationException($"Session with ID {command.SessionId} not found.");
-            }
-
-            var board = _manager.GetBoard(session);
+            var board = _manager.GetBoardOrThrow(command.SessionId);
             var cell = board.GetCell(command.Position);
 
             if (cell.TryGetBlockId(out var blockId) && cell.State == BoardCellState.Movable)
@@ -37,11 +32,7 @@ namespace MergeGame.Core.Internal.Handlers.Board
                 return UniTask.FromResult(new CheckMovableCellResult() { BlockId = blockId, IsMovable = true });
             }
 
-            return UniTask.FromResult(new CheckMovableCellResult()
-            {
-                BlockId = BlockId.Invalid,
-                IsMovable = false
-            });
+            return UniTask.FromResult(new CheckMovableCellResult() { BlockId = BlockId.Invalid, IsMovable = false });
         }
     }
 }

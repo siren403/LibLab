@@ -2,12 +2,15 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using MergeGame.Common;
 using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Extensions;
+using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.Internal.ValueObjects;
 using NUnit.Framework;
 using UnityEngine;
+using VContainer;
 
 namespace MergeGame.Core.Tests
 {
@@ -17,7 +20,7 @@ namespace MergeGame.Core.Tests
         [TestCase(5, 5)]
         public void PlaceBlock(int width, int height)
         {
-            var manager = TestUtil.GetGameManager();
+            var manager = TestUtil.GetGameManager(out _);
             (_, Board board) = TestUtil.CreateBoard(manager, width, height);
 
             var pos1 = board.CreatePosition(0, 0);
@@ -37,7 +40,7 @@ namespace MergeGame.Core.Tests
         [Test]
         public void MergeBlock()
         {
-            var manager = TestUtil.GetGameManager();
+            var manager = TestUtil.GetGameManager(out var container);
             (_, Board board) = TestUtil.CreateBoard(manager, 5, 5);
 
             var pos1 = board.CreatePosition(0, 0);
@@ -48,13 +51,14 @@ namespace MergeGame.Core.Tests
             placeResult = board.PlaceBlock(pos2, 0, BoardCellState.Movable);
             Assert.IsTrue(placeResult, "Failed to place block at position (0, 1).");
 
+            var repository = container.Resolve<IMergeRuleRepository>();
+            var mergeResult = board.MergeBlock(pos1, pos2, repository);
+            Assert.IsTrue(mergeResult is Ok<MergeBlockData>);
 
-            var mergeResult = board.MergeBlock(pos1, pos2);
-
-            Assert.IsTrue(mergeResult.IsSuccess, mergeResult.Message);
-            Assert.IsTrue(mergeResult is Ok<MergeResult>, "Expected a successful merge result.");
-
-            Debug.Log($"{mergeResult.Value}");
+            if (mergeResult is Ok<MergeBlockData> (var result))
+            {
+                Debug.Log($"{result}");
+            }
         }
     }
 }

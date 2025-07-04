@@ -4,6 +4,7 @@
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Internal.Repositories;
+using MergeGame.Infrastructure.Extensions;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;

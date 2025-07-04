@@ -6,7 +6,8 @@
         "VitalRouter",
         "UniTask",
         "VContainer",
-        "MergeGame.Contracts"
+        "MergeGame.Contracts",
+        "MergeGame.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

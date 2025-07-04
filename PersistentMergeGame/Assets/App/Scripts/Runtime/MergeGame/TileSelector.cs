@@ -3,8 +3,7 @@
 
 using System;
 using System.Linq;
-using MergeGame.Api;
-using Microsoft.Extensions.Logging;
+using MergeGame.Api.Inputs;
 using R3;
 using UnityEngine;
 using VContainer.Unity;

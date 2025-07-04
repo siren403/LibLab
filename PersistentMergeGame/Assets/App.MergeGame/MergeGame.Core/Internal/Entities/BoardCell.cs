@@ -1,4 +1,5 @@
 ﻿using System;
+using MergeGame.Common;
 using MergeGame.Core.Enums;
 using MergeGame.Core.ValueObjects;
 
@@ -9,11 +10,6 @@ namespace MergeGame.Core.Internal.Entities
     /// </summary>
     internal class BoardCell
     {
-        public Ulid BoardId { get; private init; }
-        public Position Position { get; private init; }
-        public BlockId? BlockId { get; private set; }
-        public BoardCellState State { get; private set; }
-
         public static BoardCell CreateEmptyCell(Ulid boardId, Position position)
         {
             return new BoardCell()
@@ -21,6 +17,11 @@ namespace MergeGame.Core.Internal.Entities
                 BoardId = boardId, Position = position, BlockId = null, State = BoardCellState.Untouchable,
             };
         }
+
+        public Ulid BoardId { get; private init; }
+        public Position Position { get; private init; }
+        public BlockId? BlockId { get; private set; }
+        public BoardCellState State { get; private set; }
 
         public bool ChangeMovable()
         {
@@ -72,6 +73,38 @@ namespace MergeGame.Core.Internal.Entities
 
             blockId = default;
             return false;
+        }
+
+        public Result CanMergeTo(BoardCell target)
+        {
+            if (State != BoardCellState.Movable)
+            {
+                return Result.Error($"{nameof(BoardCell)} is not movable. State: {State}");
+            }
+
+            if (target.State == BoardCellState.Untouchable)
+            {
+                return Result.Error($"{nameof(BoardCell)} is untouchable. State: {target.State}");
+            }
+
+            if (Position == target.Position)
+            {
+                return Result.Error($"{nameof(BoardCell)} cannot merge with itself. Position: {Position}");
+            }
+
+            if (!TryGetBlockId(out var blockId) || !target.TryGetBlockId(out var targetBlockId))
+            {
+                return Result.Error($"{nameof(BoardCell)} does not have a valid BlockId. " +
+                                    $"BlockId: {BlockId}, TargetBlockId: {target.BlockId}");
+            }
+
+            if (blockId != targetBlockId)
+            {
+                return Result.Error($"{nameof(BoardCell)} cannot merge with different BlockIds. " +
+                                    $"BlockId: {blockId}, TargetBlockId: {targetBlockId}");
+            }
+
+            return Result.Ok();
         }
 
         public override string ToString()

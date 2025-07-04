@@ -9,9 +9,10 @@ using App.Scenes.MergeGame.Commands;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
-using MergeGame.Api;
-using MergeGame.Api.Extensions;
 using MergeGame.Api.Game;
+using MergeGame.Api.Game.CreateGame;
+using MergeGame.Api.Game.MoveBlock;
+using MergeGame.Common;
 using MergeGame.Contracts.Board;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -58,11 +59,10 @@ namespace App.Scenes.MergeGame
 
         public async UniTask StartAsync(CancellationToken ct)
         {
-            var response = await _controller.CreateGame(new CreateGameRequest(), ct);
-            if (response.Error())
+            var result = await _controller.CreateGame(ct);
+            if (result is not Ok<CreateGameResponse> (var response))
             {
-                throw new InvalidOperationException(
-                    $"Failed to create game session: {response}");
+                throw new InvalidOperationException($"Failed to create game session");
             }
 
             #region Spawn Tiles
@@ -83,10 +83,7 @@ namespace App.Scenes.MergeGame
             }).AddTo(ref _disposable);
 
             _ = _router.PublishAsync(
-                new SpawnTilesCommand()
-                {
-                    Width = response.Width, Height = response.Height
-                },
+                new SpawnTilesCommand() { Width = response.Width, Height = response.Height },
                 ct);
 
             #endregion
@@ -115,8 +112,8 @@ namespace App.Scenes.MergeGame
                 }
 
                 _focusFrame.Show(tile.transform.position);
-                var result = await _controller.CheckMovableCell(sessionId, cell, ctx.CancellationToken);
-                if (result.ok)
+                var movableResult = await _controller.CheckMovableCell(sessionId, cell, ctx.CancellationToken);
+                if (movableResult.ok)
                 {
                     // if (selectedCell.HasValue && selectedCell.Value != cell)
                     // {
@@ -131,12 +128,12 @@ namespace App.Scenes.MergeGame
                     // }
                     selectedCell = cell;
                     _logger.ZLogInformation(
-                        $"{nameof(_controller.CheckMovableCell)}({result}, {nameof(selectedCell)}: {selectedCell.Value})");
+                        $"{nameof(_controller.CheckMovableCell)}({movableResult}, {nameof(selectedCell)}: {selectedCell.Value})");
                 }
                 else
                 {
                     _logger.ZLogInformation(
-                        $"{nameof(_controller.CheckMovableCell)}({result})");
+                        $"{nameof(_controller.CheckMovableCell)}({movableResult})");
                 }
             }, CommandOrdering.Drop).AddTo(ref _disposable);
 
@@ -145,10 +142,7 @@ namespace App.Scenes.MergeGame
                 if (!selectedCell.HasValue) return;
                 _focusFrame.Hide();
                 _router.PublishAsync(
-                    new DragBlockCommand()
-                    {
-                        CellPosition = selectedCell.Value, WorldPosition = cmd.WorldPosition
-                    },
+                    new DragBlockCommand() { CellPosition = selectedCell.Value, WorldPosition = cmd.WorldPosition },
                     ctx.CancellationToken);
             }).AddTo(ref _disposable);
 
@@ -196,15 +190,13 @@ namespace App.Scenes.MergeGame
 
                 switch (result)
                 {
-                    case MovedResponse (_, var movedCell) {IsOk: true}:
+                    case MovedResult (var movedCell) { IsOk: true }:
                         _ = _router.PublishAsync(
-                            new MoveBlockCommand()
-                            {
-                                FromCell = tileSelectedCell, ToCell = movedCell
-                            }, ctx.CancellationToken);
+                            new MoveBlockCommand() { FromCell = tileSelectedCell, ToCell = movedCell },
+                            ctx.CancellationToken);
                         break;
-                    case MergedResponse {IsOk: true} merged:
-                        (_, IBoardCell fromCell, IBoardCell mergedCell, IBoardCell spawnedCell,
+                    case MergedResult(var merged) { IsOk: true }:
+                        (IBoardCell fromCell, IBoardCell mergedCell, IBoardCell spawnedCell,
                             IReadOnlyList<IBoardCell> updatedCells) = merged;
                         _ = _router.PublishAsync(
                             new CombineBlockCommand()
@@ -228,6 +220,7 @@ namespace App.Scenes.MergeGame
                                     State = updatedCell.CellState
                                 }, ctx.CancellationToken);
                         }
+
                         break;
                     default:
                         Fail(tileSelectedCell);
@@ -240,10 +233,7 @@ namespace App.Scenes.MergeGame
                 {
                     _focusFrame.Restore();
 
-                    _ = _router.PublishAsync(new ReturnBlockPositionCommand()
-                        {
-                            Position = returnPosition
-                        },
+                    _ = _router.PublishAsync(new ReturnBlockPositionCommand() { Position = returnPosition },
                         ctx.CancellationToken);
 
                     selectedCell = null;

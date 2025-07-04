@@ -2,6 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using MergeGame.Common;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Managers;
 
@@ -11,9 +12,9 @@ internal static class GameManagerExtensions
 {
     public static GameSession GetSessionOrThrow(this GameManager manager, Ulid sessionId)
     {
-        (bool isSuccess, GameSession session, _) = manager.GetSession(sessionId);
+        var result = manager.GetSession(sessionId);
 
-        if (!isSuccess)
+        if (result is not Ok<GameSession> (var session))
         {
             throw new InvalidOperationException($"Session with ID {sessionId} not found.");
         }

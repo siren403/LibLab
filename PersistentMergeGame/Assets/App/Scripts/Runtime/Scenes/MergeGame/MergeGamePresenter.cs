@@ -156,7 +156,8 @@ namespace App.Scenes.MergeGame
             var toPosition = tile.transform.position;
 
             _returnBlockHandle.TryComplete();
-            _returnBlockHandle = LMotion.Create(fromPosition, toPosition, 0.05f)
+            _returnBlockHandle = LMotion.Create(fromPosition, toPosition, 0.2f)
+                .WithEase(Ease.OutQuint)
                 .WithOnComplete(() => { block.OnReturnPosition(); })
                 .BindToPosition(block.transform);
         }

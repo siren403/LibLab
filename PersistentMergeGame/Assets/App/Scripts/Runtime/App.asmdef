@@ -2,6 +2,7 @@
     "name": "App",
     "rootNamespace": "",
     "references": [
+        "GUID:ee347d01761fd6942ab48f96ec87b985",
         "GUID:1f971c43b5ae43c44998913965a69bf8",
         "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
         "GUID:77aea589fe3f34fa883d9f7e26eee12e",

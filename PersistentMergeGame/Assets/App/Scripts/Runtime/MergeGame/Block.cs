@@ -1,4 +1,5 @@
-using R3;
+using App.MergeGame.Motion;
+using LitMotion;
 using UnityEngine;
 
 namespace App.MergeGame
@@ -6,25 +7,37 @@ namespace App.MergeGame
     public class Block : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer sprite = null!;
+        [SerializeField] private BlockStateColorMotion stateColorMotion = null!;
 
         public Color Color
         {
             set => sprite.color = value;
         }
 
+        private MotionHandle _stateColorMotionHandle;
+
         public short State
         {
             set
             {
-                switch (value)
+                var toColor = value switch
                 {
-                    case 1:
-                        Color = new Color(.5f, .5f, .5f, 1f);
-                        break;
-                    case 2:
-                        Color = Color.white;
-                        break;
+                    1 => new Color(0.5f, 0.5f, 0.5f, 1f), // Gray
+                    2 => Color.white, // White
+                    _ => sprite.color
+                };
+
+                var fromColor = sprite.color;
+
+                if (_stateColorMotionHandle.IsPlaying())
+                {
+                    _stateColorMotionHandle.TryCancel();
                 }
+
+                _stateColorMotionHandle = LMotion.Create(fromColor, toColor, stateColorMotion.Duration)
+                    .WithEase(stateColorMotion.Ease)
+                    .Bind(color => Color = color)
+                    .AddTo(this);
             }
         }
 

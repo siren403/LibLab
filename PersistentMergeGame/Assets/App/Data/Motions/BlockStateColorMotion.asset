@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a189bb168d8d90478a09ea08c2f3d72, type: 3}
-  m_Name: DefaultObject
+  m_Script: {fileID: 11500000, guid: a57c11cb5b0a4a5aa9f2f484b050549d, type: 3}
+  m_Name: BlockStateColorMotion
   m_EditorClassIdentifier: 
-  m_AddressableAssetSettingsGuid: 98cac4e0138971948a041f8d34763289
+  <Ease>k__BackingField: 17
+  <Duration>k__BackingField: 0.15

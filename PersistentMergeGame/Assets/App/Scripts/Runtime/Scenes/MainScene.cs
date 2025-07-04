@@ -1,10 +1,19 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Cysharp.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using R3;
+using SceneLauncher;
+using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 using VContainer.Unity;
+using VExtensions.SceneNavigation;
+using VExtensions.SceneNavigation.Commands;
 using VExtensions.ZLogger;
 using VitalRouter.VContainer;
 using ZLogger.Unity;
 using VExtensions.SceneNavigation.Extensions;
+using VitalRouter;
+using VitalRouter.R3;
 
 namespace App.Scenes
 {
@@ -25,6 +34,14 @@ namespace App.Scenes
             });
             builder.RegisterVitalRouter(routing => { });
             builder.RegisterNavigator(navigation => { navigation.StartupRootOnlyMainScene(); });
+
+
+            builder.RegisterComponentInHierarchy<BootstrapCover>();
+            builder.RegisterBuildCallback(container =>
+            {
+                var cover = container.Resolve<BootstrapCover>();
+                StartupLauncher.LaunchedTask.ContinueWith(ctx => { cover.Hide(); });
+            });
         }
     }
 }

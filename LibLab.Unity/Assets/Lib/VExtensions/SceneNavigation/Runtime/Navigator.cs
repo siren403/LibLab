@@ -62,10 +62,7 @@ namespace VExtensions.SceneNavigation
             }
 
             _logger.LogInformation("Initialized");
-            _ = _router.PublishAsync(new InitializedCommand()
-            {
-                Keys = initialized.Result.Keys.ToArray()
-            });
+            _ = _router.PublishAsync(new InitializedCommand() { Keys = initialized.Result.Keys.ToArray() });
 
             _initialized = true;
 
@@ -166,10 +163,7 @@ namespace VExtensions.SceneNavigation
                 return;
             }
 
-            _ = _router.PublishAsync(new PreUnloadRouteCommand()
-            {
-                Path = path
-            });
+            _ = _router.PublishAsync(new PreUnloadRouteCommand() { Path = path });
 
             GetLoadedScenes(_loadedScenesCache);
 
@@ -205,10 +199,7 @@ namespace VExtensions.SceneNavigation
                 return;
             }
 
-            _ = _router.PublishAsync(new PreLoadRouteCommand()
-            {
-                Path = path
-            });
+            _ = _router.PublishAsync(new PreLoadRouteCommand() { Path = path });
 
             GetLoadedScenes(_loadedScenesCache);
 
@@ -251,6 +242,7 @@ namespace VExtensions.SceneNavigation
 
             _loadingSceneHandles.Clear();
             _logger.ZLogInformation($"Loaded {path}");
+            _ = _router.PublishAsync(new PostLoadRouteCommand() { Path = path });
         }
 
         private void GetLoadedScenes(in HashSet<string> cache)

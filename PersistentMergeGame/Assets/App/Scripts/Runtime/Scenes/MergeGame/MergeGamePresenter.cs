@@ -28,7 +28,6 @@ namespace App.Scenes.MergeGame
     [Routes]
     public partial class MergeGamePresenter : MonoBehaviour, IOnTileSpawn, IOnTileLock
     {
-        [SerializeField] private Camera targetCamera = null!;
         [SerializeField] private Tile tilePrefab = null!;
         [SerializeField] private List<BlockData> blockData = new();
         [SerializeField] private BlockData fallbackBlockData = null!;

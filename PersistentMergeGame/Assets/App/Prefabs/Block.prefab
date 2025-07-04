@@ -101,3 +101,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 2950254543648033661}
+  stateColorMotion: {fileID: 11400000, guid: 9504ab083c4a0324f8dc8d54e4b4aa78, type: 2}

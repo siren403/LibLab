@@ -1,11 +1,4 @@
 .idea/
-!*.rsp
-ServerData/
-Assets/Packages/
-
-WebGL Builds/Merge Game/**
-!WebGL Builds/Merge Game/.gitkeep
-connectwebgl.zip
 
 # Created by https://www.toptal.com/developers/gitignore/api/Unity,rider
 # Edit at https://www.toptal.com/developers/gitignore?templates=Unity,rider
@@ -164,3 +157,14 @@ sysinfo.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/Unity,rider
 
+!Assets/**/*.unitypackage
+
+!*.rsp
+ServerData/
+Assets/Packages/
+Assets/Addressables_Temp
+Assets/Addressables_Temp.meta
+
+WebGL Builds/Merge Game/**
+!WebGL Builds/Merge Game/.gitkeep
+connectwebgl.zip

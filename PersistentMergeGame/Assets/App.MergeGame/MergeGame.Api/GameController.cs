@@ -36,17 +36,11 @@ namespace MergeGame.Api
             }
 
             (int width, int height) = await _mediator.ExecuteGetBoardSize(
-                new GetBoardSizeCommand()
-                {
-                    SessionId = sessionId
-                }, ct
+                new GetBoardSizeCommand() { SessionId = sessionId }, ct
             );
 
             IBoardCell[] boardCells = await _mediator.ExecuteGetBoardCells(
-                new GetBoardCellsCommand()
-                {
-                    SessionId = sessionId
-                }, ct
+                new GetBoardCellsCommand() { SessionId = sessionId }, ct
             );
 
             return CreateGameResponse.Ok(sessionId, width, height, boardCells);
@@ -72,59 +66,26 @@ namespace MergeGame.Api
             }
         }
 
-        /// <summary>
-        /// TODO: MoveBlock으로 이름 변경 후 로직 변경
-        /// ToCell이 비어있으면 MoveBlock, 아니면 MergeBlock으로 처리
-        /// </summary>
-        /// <param name="sessionId"></param>
-        /// <param name="request"></param>
-        /// <param name="ct"></param>
-        /// <returns></returns>
-        public async UniTask<MergeBlockResponse> MergeBlock(Ulid sessionId, MergeBlockRequest request,
-            CancellationToken ct = default)
+        public async UniTask<MoveBlockResponse> MoveBlock(
+            Ulid sessionId,
+            MoveBlockRequest request,
+            CancellationToken ct = default
+        )
         {
             try
             {
-                (IBoardCell from, IBoardCell to, IBoardCell spawned) = await _mediator.ExecuteMergeBlock(
-                    new MergeBlockCommand()
-                    {
-                        SessionId = sessionId,
-                        FromPosition = new Position(request.FromPosition.x, request.FromPosition.y),
-                        ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
-                    }, ct);
-
-                var toMovables = await _mediator.ExecuteNeighborCellsToMovable(
-                    new NeighborCellsToMovableCommand()
-                    {
-                        SessionId = sessionId, Position = new Position(request.ToPosition.x, request.ToPosition.y)
-                    }, ct);
-
-                return new MergeBlockResponse(true, from, to, spawned, toMovables.UpdatedCells);
-            }
-            catch
-            {
-                return MergeBlockResponse.Error;
-            }
-        }
-
-        public async UniTask<MoveBlockResponse> MoveBlock(Ulid sessionId, MoveBlockRequest request,
-            CancellationToken ct = default)
-        {
-            try
-            {
-                bool emptyCell = await _mediator.ExecuteCheckEmptyCell(new CheckEmptyCellCommand()
-                {
-                    SessionId = sessionId, Position = request.ToPosition.ToValue()
-                }, ct);
+                bool emptyCell = await _mediator.ExecuteCheckEmptyCell(
+                    new CheckEmptyCellCommand() { SessionId = sessionId, Position = request.ToPosition.ToValue() }, ct);
 
                 if (emptyCell)
                 {
-                    bool ok = await _mediator.ExecuteMoveBlock(new MoveBlockCommand()
-                    {
-                        SessionId = sessionId,
-                        FromPosition = request.FromPosition.ToValue(),
-                        ToPosition = request.ToPosition.ToValue()
-                    }, ct);
+                    bool ok = await _mediator.ExecuteMoveBlock(
+                        new MoveBlockCommand()
+                        {
+                            SessionId = sessionId,
+                            FromPosition = request.FromPosition.ToValue(),
+                            ToPosition = request.ToPosition.ToValue()
+                        }, ct);
 
                     if (ok)
                     {
@@ -177,5 +138,4 @@ namespace MergeGame.Api
         IBoardCell SpawnedCell,
         IReadOnlyList<IBoardCell> UpdatedCells
     ) : MoveBlockResponse(StatusCode);
-
 }

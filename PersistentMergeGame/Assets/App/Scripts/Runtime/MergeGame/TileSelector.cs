@@ -41,6 +41,7 @@ public class TileSelector : IInitializable, IDisposable
     private readonly InputPointerHandler _handler;
     private readonly Router _router;
     private DisposableBag _disposable;
+    private Vector3 _tilePositionOffset;
 
     public TileSelector(InputPointerHandler handler, Router router)
     {
@@ -64,6 +65,8 @@ public class TileSelector : IInitializable, IDisposable
             Debug.Log($"OnPressed: hitCount={hitCount}, position={result.WorldPosition}");
             if (hitCount > 0)
             {
+                var hit = hits.First();
+                _tilePositionOffset = hit.transform.position - result.WorldPosition;
                 _router.PublishAsync(new TileSelectedCommand { Tile = hits.First().transform.gameObject });
             }
         }).AddTo(ref _disposable);
@@ -74,7 +77,7 @@ public class TileSelector : IInitializable, IDisposable
             {
                 _router.PublishAsync(new TileDraggingCommand()
                 {
-                    Tile = hits.First().transform.gameObject, WorldPosition = result.WorldPosition
+                    Tile = hits.First().transform.gameObject, WorldPosition = result.WorldPosition + _tilePositionOffset
                 });
             }
         }).AddTo(ref _disposable);

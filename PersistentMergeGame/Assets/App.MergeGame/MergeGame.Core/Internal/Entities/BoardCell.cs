@@ -1,5 +1,5 @@
 ﻿using System;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Enums;
 using MergeGame.Core.ValueObjects;
 
@@ -79,29 +79,33 @@ namespace MergeGame.Core.Internal.Entities
         {
             if (State != BoardCellState.Movable)
             {
-                return Result.Error($"{nameof(BoardCell)} is not movable. State: {State}");
+                return Result.Fail(ErrorCode.CannotMergeBlock, $"{nameof(BoardCell)} is not movable. State: {State}");
             }
 
             if (target.State == BoardCellState.Untouchable)
             {
-                return Result.Error($"{nameof(BoardCell)} is untouchable. State: {target.State}");
+                return Result.Fail(ErrorCode.CannotMergeBlock,
+                    $"{nameof(BoardCell)} is untouchable. State: {target.State}");
             }
 
             if (Position == target.Position)
             {
-                return Result.Error($"{nameof(BoardCell)} cannot merge with itself. Position: {Position}");
+                return Result.Fail(ErrorCode.CannotMergeBlock,
+                    $"{nameof(BoardCell)} cannot merge with itself. Position: {Position}");
             }
 
             if (!TryGetBlockId(out var blockId) || !target.TryGetBlockId(out var targetBlockId))
             {
-                return Result.Error($"{nameof(BoardCell)} does not have a valid BlockId. " +
-                                    $"BlockId: {BlockId}, TargetBlockId: {target.BlockId}");
+                return Result.Fail(ErrorCode.CannotMergeBlock,
+                    $"{nameof(BoardCell)} does not have a valid BlockId. " +
+                    $"BlockId: {BlockId}, TargetBlockId: {target.BlockId}");
             }
 
             if (blockId != targetBlockId)
             {
-                return Result.Error($"{nameof(BoardCell)} cannot merge with different BlockIds. " +
-                                    $"BlockId: {blockId}, TargetBlockId: {targetBlockId}");
+                return Result.Fail(ErrorCode.CannotMergeBlock,
+                    $"{nameof(BoardCell)} cannot merge with different BlockIds. " +
+                    $"BlockId: {blockId}, TargetBlockId: {targetBlockId}");
             }
 
             return Result.Ok();

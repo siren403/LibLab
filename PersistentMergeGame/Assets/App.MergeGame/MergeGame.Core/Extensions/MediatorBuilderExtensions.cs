@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Commands.GameSession;
 using MergeGame.Core.Application.Data;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Handlers.Board;
 using MergeGame.Core.Internal.Handlers.GameSession;
 using MergeGame.Core.ValueObjects;
@@ -34,14 +34,14 @@ namespace MergeGame.Core.Extensions
 
             builder.RegisterCommand<GetBoardSizeCommand, GetBoardSizeHandler, BoardSize>();
             builder.RegisterCommand<GetBoardCellsCommand, GetBoardCellsHandler, BoardCell[]>();
-            builder.RegisterCommand<CheckMovableCellCommand, CheckMovableCellHandler, CheckMovableCellResult>();
+            builder.RegisterCommand<CheckMovableCellCommand, CheckMovableCellHandler, Result<BlockId>>();
             builder.RegisterCommand<MergeBlockCommand, MergeBlockHandler, Result<MergeBlockData>>();
             builder.RegisterCommand<
                 NeighborCellsToMovableCommand,
                 NeighborCellsToMovableHandler,
                 NeighborCellsToMovableResult
             >();
-            builder.RegisterCommand<MoveBlockCommand, MoveBlockHandler, bool>();
+            builder.RegisterCommand<MoveBlockCommand, MoveBlockHandler, Result<bool>>();
             builder.RegisterCommand<CheckEmptyCellCommand, CheckEmptyCellHandler, bool>();
 
             #endregion
@@ -80,10 +80,10 @@ namespace MergeGame.Core.Extensions
             return mediator.ExecuteAsync<GetBoardCellsCommand, BoardCell[]>(command, ct);
         }
 
-        public static UniTask<CheckMovableCellResult> ExecuteCheckMovableCell(this IMediator mediator,
+        public static UniTask<Result<BlockId>> ExecuteCheckMovableCell(this IMediator mediator,
             CheckMovableCellCommand command, CancellationToken ct = default)
         {
-            return mediator.ExecuteAsync<CheckMovableCellCommand, CheckMovableCellResult>(command, ct);
+            return mediator.ExecuteAsync<CheckMovableCellCommand, Result<BlockId>>(command, ct);
         }
 
         public static UniTask<Result<MergeBlockData>> ExecuteMergeBlock(this IMediator mediator,
@@ -98,10 +98,10 @@ namespace MergeGame.Core.Extensions
             return mediator.ExecuteAsync<NeighborCellsToMovableCommand, NeighborCellsToMovableResult>(command, ct);
         }
 
-        public static UniTask<bool> ExecuteMoveBlock(this IMediator mediator,
+        public static UniTask<Result<bool>> ExecuteMoveBlock(this IMediator mediator,
             MoveBlockCommand command, CancellationToken ct = default)
         {
-            return mediator.ExecuteAsync<MoveBlockCommand, bool>(command, ct);
+            return mediator.ExecuteAsync<MoveBlockCommand, Result<bool>>(command, ct);
         }
 
         public static UniTask<bool> ExecuteCheckEmptyCell(this IMediator mediator,

@@ -1,4 +1,4 @@
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Entities;
 using NUnit.Framework;
 using UnityEngine;
@@ -15,14 +15,11 @@ namespace MergeGame.Core.Tests
             Assert.IsNotNull(session);
 
             var result = sessionManager.GetSession(session.Id);
-            Assert.IsTrue(result is Ok<GameSession>);
-            if (result is Ok<GameSession>(var resultSession))
-            {
-                Assert.IsNotNull(resultSession);
+            Assert.IsTrue(result.IsOk);
+            Assert.IsNotNull(result.Value);
 
-                Assert.AreSame(session, resultSession);
-                Debug.Log(resultSession);
-            }
+            Assert.AreSame(session, result.Value);
+            Debug.Log(result.Value);
         }
     }
 }

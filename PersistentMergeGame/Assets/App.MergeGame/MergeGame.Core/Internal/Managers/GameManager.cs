@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Entities;
 
 namespace MergeGame.Core.Internal.Managers
@@ -28,10 +28,10 @@ namespace MergeGame.Core.Internal.Managers
         {
             if (_activeSessions.TryGetValue(sessionId, out var session))
             {
-                return new Ok<GameSession>(session);
+                return Result<GameSession>.Ok(session);
             }
 
-            return Result<GameSession>.Error($"Session with ID {sessionId} not found.");
+            return Result<GameSession>.Fail($"Session with ID {sessionId} not found.");
         }
 
         public Board GetBoard(GameSession session)

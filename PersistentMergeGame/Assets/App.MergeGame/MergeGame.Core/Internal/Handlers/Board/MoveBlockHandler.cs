@@ -3,16 +3,15 @@
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Managers;
-using MergeGame.Core.Internal.ValueObjects;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.Board;
 
-internal class MoveBlockHandler : ICommandHandler<MoveBlockCommand, bool>
+internal class MoveBlockHandler : ICommandHandler<MoveBlockCommand, Result<bool>>
 {
     private readonly GameManager _manager;
 
@@ -21,10 +20,15 @@ internal class MoveBlockHandler : ICommandHandler<MoveBlockCommand, bool>
         _manager = manager;
     }
 
-    public UniTask<bool> ExecuteAsync(MoveBlockCommand command, CancellationToken ct)
+    public UniTask<Result<bool>> ExecuteAsync(MoveBlockCommand command, CancellationToken ct)
     {
         var board = _manager.GetBoardOrThrow(command.SessionId);
         var result = board.MoveBlock(command.FromPosition, command.ToPosition);
-        return UniTask.FromResult(result is Ok<MoveBlockData>);
+        if (result.IsError<bool>(out var fail))
+        {
+            return fail;
+        }
+
+        return Result<bool>.Ok(true);
     }
 }

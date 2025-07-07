@@ -3,6 +3,7 @@
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using MergeGame.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Managers;
@@ -21,9 +22,13 @@ internal class CheckEmptyCellHandler : ICommandHandler<CheckEmptyCellCommand, bo
 
     public UniTask<bool> ExecuteAsync(CheckEmptyCellCommand command, CancellationToken ct)
     {
-        var board = _manager.GetBoardOrThrow(command.SessionId);
-        var cell = board.GetCell(command.Position);
+        var result = _manager.GetBoardOrError(command.SessionId);
+        if (!result.IsOk(out Entities.Board board))
+        {
+            return UniTask.FromResult(false);
+        }
 
+        var cell = board.GetCell(command.Position);
         return UniTask.FromResult(!cell.HasBlock);
     }
 }

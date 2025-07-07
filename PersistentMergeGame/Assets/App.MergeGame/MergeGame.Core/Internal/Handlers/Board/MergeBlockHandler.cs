@@ -6,7 +6,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Data;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.Internal.Repositories;
@@ -25,25 +25,23 @@ namespace MergeGame.Core.Internal.Handlers.Board
             _repository = repository;
         }
 
-        public async UniTask<Result<MergeBlockData>> ExecuteAsync(MergeBlockCommand command, CancellationToken ct)
+        public UniTask<Result<MergeBlockData>> ExecuteAsync(MergeBlockCommand command, CancellationToken ct)
         {
             var board = _manager.GetBoardOrThrow(command.SessionId);
-            var mergeResult = board.MergeBlock(command.FromPosition, command.ToPosition, _repository);
+            var result = board.MergeBlock(command.FromPosition, command.ToPosition, _repository);
 
-            switch (mergeResult)
+            if (result.IsError<MergeBlockData>(out var fail))
             {
-                case Ok<ValueObjects.MergeBlockData> (var (fromCell, toCell)):
-                    var ok = Result<MergeBlockData>.Ok(new MergeBlockData(
-                        BoardCell.FromEntity(fromCell),
-                        BoardCell.FromEntity(fromCell) with { X = toCell.Position.X, Y = toCell.Position.Y },
-                        BoardCell.FromEntity(toCell)
-                    ));
-                    return ok;
-                case Error<ValueObjects.MergeBlockData>(_, var message):
-                    return Result<MergeBlockData>.Error(message);
+                return fail;
             }
 
-            return Result<MergeBlockData>.Error($"Merge failed: {command}");
+            (Entities.BoardCell fromCell, Entities.BoardCell toCell) = result.Value;
+
+            return Result<MergeBlockData>.Ok(new MergeBlockData(
+                BoardCell.FromEntity(fromCell),
+                BoardCell.FromEntity(fromCell) with { X = toCell.Position.X, Y = toCell.Position.Y },
+                BoardCell.FromEntity(toCell)
+            ));
         }
     }
 }

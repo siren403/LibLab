@@ -3,7 +3,7 @@ using System.Threading;
 using MergeGame.Core.Internal.Extensions;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.GameSession;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.ValueObjects;
@@ -34,7 +34,7 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
                 bool result = board.PlaceBlock(spec.Position, spec.BlockId, spec.State);
                 if (!result)
                 {
-                    throw new InvalidOperationException(
+                    return Result<Ulid>.Fail(
                         $"Failed to place block {spec.BlockId} at position {spec.Position} on the board {board.Id}.");
                 }
             }

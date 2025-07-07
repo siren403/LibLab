@@ -2,7 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.ValueObjects;
@@ -32,7 +32,7 @@ namespace MergeGame.Infrastructure.Internal.Repositories
                 return Result<MergeRule>.Ok(rule);
             }
 
-            return Result<MergeRule>.Error($"No merge rule found for source block ID: {sourceId}");
+            return Result<MergeRule>.Fail($"No merge rule found for source block ID: {sourceId}");
         }
     }
 }

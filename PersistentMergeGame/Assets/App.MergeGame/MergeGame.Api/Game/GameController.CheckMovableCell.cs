@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using MergeGame.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Extensions;
 using MergeGame.Core.ValueObjects;
@@ -13,27 +14,25 @@ namespace MergeGame.Api.Game
 {
     public partial class GameController
     {
-        public async UniTask<(bool ok, long blockId)> CheckMovableCell(
+        public async UniTask<Result<long>> CheckMovableCell(
             Ulid sessionId,
             Vector2Int position,
             CancellationToken ct = default
         )
         {
-            try
-            {
-                var result = await _mediator.ExecuteCheckMovableCell(
-                    new CheckMovableCellCommand()
-                    {
-                        SessionId = sessionId, Position = new Position(position.x, position.y)
-                    },
-                    ct);
+            var result = await _mediator.ExecuteCheckMovableCell(
+                new CheckMovableCellCommand()
+                {
+                    SessionId = sessionId, Position = new Position(position.x, position.y)
+                },
+                ct);
 
-                return (result.IsMovable, result.BlockId);
-            }
-            catch
+            if (result.IsError(out Result<long> fail))
             {
-                return (false, BlockId.Invalid);
+                return fail;
             }
+
+            return Result<long>.Ok(result.Value);
         }
     }
 }

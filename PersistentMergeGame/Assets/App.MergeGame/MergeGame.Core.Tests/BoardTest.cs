@@ -2,7 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Extensions;
@@ -53,12 +53,9 @@ namespace MergeGame.Core.Tests
 
             var repository = container.Resolve<IMergeRuleRepository>();
             var mergeResult = board.MergeBlock(pos1, pos2, repository);
-            Assert.IsTrue(mergeResult is Ok<MergeBlockData>);
+            Assert.IsTrue(mergeResult.IsOk);
 
-            if (mergeResult is Ok<MergeBlockData> (var result))
-            {
-                Debug.Log($"{result}");
-            }
+            Debug.Log($"{mergeResult.Value}");
         }
     }
 }

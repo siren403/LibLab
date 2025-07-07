@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Api.Game.CreateGame;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Contracts.Board;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Commands.GameSession;
@@ -21,10 +21,12 @@ namespace MergeGame.Api.Game
                 new CreateStartingGameSessionCommand(),
                 ct);
 
-            if (result is not Ok<Ulid> (var sessionId))
+            if (result.IsError<CreateGameResponse>(out var fail))
             {
-                return Result<CreateGameResponse>.Error("Failed to create game session.", result.StatusCode);
+                return fail;
             }
+
+            var sessionId = result.Value;
 
             (int width, int height) = await _mediator.ExecuteGetBoardSize(
                 new GetBoardSizeCommand() { SessionId = sessionId }, ct

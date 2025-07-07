@@ -12,7 +12,7 @@ using LitMotion.Extensions;
 using MergeGame.Api.Game;
 using MergeGame.Api.Game.CreateGame;
 using MergeGame.Api.Game.MoveBlock;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Contracts.Board;
 using Microsoft.Extensions.Logging;
 using R3;
@@ -60,10 +60,12 @@ namespace App.Scenes.MergeGame
         public async UniTask StartAsync(CancellationToken ct)
         {
             var result = await _controller.CreateGame(ct);
-            if (result is not Ok<CreateGameResponse> (var response))
+            if (result.IsError)
             {
                 throw new InvalidOperationException($"Failed to create game session");
             }
+
+            (Ulid sessionId, int width, int height, IBoardCell[] boardCells) = result.Value;
 
             #region Spawn Tiles
 
@@ -83,12 +85,12 @@ namespace App.Scenes.MergeGame
             }).AddTo(ref _disposable);
 
             _ = _router.PublishAsync(
-                new SpawnTilesCommand() { Width = response.Width, Height = response.Height },
+                new SpawnTilesCommand() { Width = width, Height = height },
                 ct);
 
             #endregion
 
-            foreach (IBoardCell cell in response.Cells)
+            foreach (IBoardCell cell in boardCells)
             {
                 _ = _router.PublishAsync(
                     new SpawnBlockCommand()
@@ -98,7 +100,6 @@ namespace App.Scenes.MergeGame
                     ct);
             }
 
-            var sessionId = response.SessionId;
             Vector2Int? selectedCell = null;
 
             _router.SubscribeAwait<TileSelectedCommand>(async (cmd, ctx) =>
@@ -113,7 +114,12 @@ namespace App.Scenes.MergeGame
 
                 _focusFrame.Show(tile.transform.position);
                 var movableResult = await _controller.CheckMovableCell(sessionId, cell, ctx.CancellationToken);
-                if (movableResult.ok)
+                if (movableResult.IsError)
+                {
+                    _logger.ZLogInformation(
+                        $"{nameof(_controller.CheckMovableCell)}({movableResult})");
+                }
+                else
                 {
                     // if (selectedCell.HasValue && selectedCell.Value != cell)
                     // {
@@ -129,11 +135,6 @@ namespace App.Scenes.MergeGame
                     selectedCell = cell;
                     _logger.ZLogInformation(
                         $"{nameof(_controller.CheckMovableCell)}({movableResult}, {nameof(selectedCell)}: {selectedCell.Value})");
-                }
-                else
-                {
-                    _logger.ZLogInformation(
-                        $"{nameof(_controller.CheckMovableCell)}({movableResult})");
                 }
             }, CommandOrdering.Drop).AddTo(ref _disposable);
 
@@ -180,24 +181,37 @@ namespace App.Scenes.MergeGame
                     return;
                 }
 
-                var result = await _controller.MoveBlock(
+                var moveBlockResult = await _controller.MoveBlock(
                     sessionId,
                     new MoveBlockRequest(selectedCell.Value, cell),
                     ctx.CancellationToken
                 );
 
+                if (moveBlockResult.IsError)
+                {
+                    try
+                    {
+                        _logger.ZLogDebug($"{nameof(_controller.MoveBlock)} failed: {moveBlockResult}");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
+
+                    Fail(selectedCell.Value);
+                    return;
+                }
+
                 var tileSelectedCell = selectedCell.Value;
 
-                switch (result)
+                switch (moveBlockResult.Value)
                 {
-                    case MovedResult (var movedCell) { IsOk: true }:
+                    case MovedResponse (var movedCell):
                         _ = _router.PublishAsync(
                             new MoveBlockCommand() { FromCell = tileSelectedCell, ToCell = movedCell },
                             ctx.CancellationToken);
                         break;
-                    case MergedResult(var merged) { IsOk: true }:
-                        (IBoardCell fromCell, IBoardCell mergedCell, IBoardCell spawnedCell,
-                            IReadOnlyList<IBoardCell> updatedCells) = merged;
+                    case MergedResponse(var fromCell, var mergedCell, var spawnedCell, var updatedCells):
                         _ = _router.PublishAsync(
                             new CombineBlockCommand()
                             {

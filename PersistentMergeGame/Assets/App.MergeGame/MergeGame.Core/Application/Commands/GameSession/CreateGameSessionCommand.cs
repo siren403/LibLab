@@ -2,7 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Application.Commands.GameSession

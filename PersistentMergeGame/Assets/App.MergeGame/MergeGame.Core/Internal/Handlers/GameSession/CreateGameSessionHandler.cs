@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.GameSession;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Managers;
 using VExtensions.Mediator.Abstractions;
 

@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using MergeGame.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Extensions;
@@ -13,7 +14,7 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.Board
 {
-    internal class CheckMovableCellHandler : ICommandHandler<CheckMovableCellCommand, CheckMovableCellResult>
+    internal class CheckMovableCellHandler : ICommandHandler<CheckMovableCellCommand, Result<BlockId>>
     {
         private readonly GameManager _manager;
 
@@ -22,17 +23,24 @@ namespace MergeGame.Core.Internal.Handlers.Board
             _manager = manager;
         }
 
-        public UniTask<CheckMovableCellResult> ExecuteAsync(CheckMovableCellCommand command, CancellationToken ct)
+        public UniTask<Result<BlockId>> ExecuteAsync(CheckMovableCellCommand command,
+            CancellationToken ct)
         {
-            var board = _manager.GetBoardOrThrow(command.SessionId);
+            var result = _manager.GetBoardOrError(command.SessionId);
+            if (result.IsError(out Result<BlockId> fail))
+            {
+                return fail;
+            }
+
+            var board = result.Value;
             var cell = board.GetCell(command.Position);
 
             if (cell.TryGetBlockId(out var blockId) && cell.State == BoardCellState.Movable)
             {
-                return UniTask.FromResult(new CheckMovableCellResult() { BlockId = blockId, IsMovable = true });
+                return Result<BlockId>.Ok(blockId);
             }
 
-            return UniTask.FromResult(new CheckMovableCellResult() { BlockId = BlockId.Invalid, IsMovable = false });
+            return Result<BlockId>.Fail(ErrorCode.CannotMovableCell);
         }
     }
 }

@@ -6,8 +6,9 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Api.Extensions;
 using MergeGame.Api.Game.MoveBlock;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
+using MergeGame.Core.Application.Data;
 using MergeGame.Core.Extensions;
 using MergeGame.Core.ValueObjects;
 
@@ -15,7 +16,7 @@ namespace MergeGame.Api.Game
 {
     public partial class GameController
     {
-        public async UniTask<MoveBlockResult> MoveBlock(
+        public async UniTask<Result<MoveBlockResponse>> MoveBlock(
             Ulid sessionId,
             MoveBlockRequest request,
             CancellationToken ct = default
@@ -26,7 +27,7 @@ namespace MergeGame.Api.Game
 
             if (emptyCell)
             {
-                bool ok = await _mediator.ExecuteMoveBlock(
+                Result<bool> ok = await _mediator.ExecuteMoveBlock(
                     new MoveBlockCommand()
                     {
                         SessionId = sessionId,
@@ -34,36 +35,33 @@ namespace MergeGame.Api.Game
                         ToPosition = request.ToPosition.ToValue()
                     }, ct);
 
-                if (ok)
-                {
-                    return new MovedResult(request.ToPosition);
-                }
+                return ok.IsError<MoveBlockResponse>(out var moveFail)
+                    ? moveFail
+                    : Result<MoveBlockResponse>.Ok(new MovedResponse(request.ToPosition));
             }
-            else
+
+            var mergeResult = await _mediator.ExecuteMergeBlock(
+                new MergeBlockCommand()
+                {
+                    SessionId = sessionId,
+                    FromPosition = new Position(request.FromPosition.x, request.FromPosition.y),
+                    ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
+                }, ct);
+
+            if (mergeResult.IsError<MoveBlockResponse>(out var fail))
             {
-                var mergeResult = await _mediator.ExecuteMergeBlock(
-                    new MergeBlockCommand()
-                    {
-                        SessionId = sessionId,
-                        FromPosition = new Position(request.FromPosition.x, request.FromPosition.y),
-                        ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
-                    }, ct);
-
-                if (mergeResult is not Ok<MergeBlockData> (var (fromCell, toCell, spawnedCell)))
-                {
-                    return MoveBlockResult.Error("Failed to move block.");
-                }
-
-                var toMovables = await _mediator.ExecuteNeighborCellsToMovable(
-                    new NeighborCellsToMovableCommand()
-                    {
-                        SessionId = sessionId, Position = new Position(request.ToPosition.x, request.ToPosition.y)
-                    }, ct);
-
-                return new MergedResult(new MergedResponse(fromCell, toCell, spawnedCell, toMovables.UpdatedCells));
+                return fail;
             }
 
-            return MoveBlockResult.Error("Failed to move block.");
+            var toMovables = await _mediator.ExecuteNeighborCellsToMovable(
+                new NeighborCellsToMovableCommand()
+                {
+                    SessionId = sessionId, Position = new Position(request.ToPosition.x, request.ToPosition.y)
+                }, ct);
+
+            (BoardCell fromCell, BoardCell toCell, BoardCell spawnedCell) = mergeResult.Value;
+            return Result<MoveBlockResponse>.Ok(new MergedResponse(fromCell, toCell, spawnedCell,
+                toMovables.UpdatedCells));
         }
     }
 }

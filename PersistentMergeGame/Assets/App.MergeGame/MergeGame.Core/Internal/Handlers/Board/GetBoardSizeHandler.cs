@@ -4,7 +4,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using MergeGame.Core.Application.Commands.Board;
-using MergeGame.Common;
+using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.ValueObjects;
 using VExtensions.Mediator.Abstractions;
@@ -25,12 +25,12 @@ namespace MergeGame.Core.Internal.Handlers.Board
             var sessionId = command.SessionId;
             var result = _manager.GetSession(sessionId);
 
-            if (result is not Ok<Entities.GameSession> (var session))
+            if (result.IsError)
             {
                 return UniTask.FromResult(BoardSize.Zero);
             }
 
-            var board = _manager.GetBoard(session);
+            var board = _manager.GetBoard(result.Value);
             return UniTask.FromResult(new BoardSize(board.Width, board.Height));
         }
     }

@@ -165,6 +165,9 @@ Assets/Packages/
 Assets/Addressables_Temp
 Assets/Addressables_Temp.meta
 
+Assets/AddressableAssetsData/link.xml
+Assets/AddressableAssetsData/link.xml.meta
+
 WebGL Builds/Merge Game/**
 !WebGL Builds/Merge Game/.gitkeep
 connectwebgl.zip

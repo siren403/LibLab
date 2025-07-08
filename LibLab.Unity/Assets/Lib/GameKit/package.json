@@ -1,0 +1,7 @@
+﻿{
+    "name": "com.aaron.gamekit",
+    "displayName": "GameKit",
+    "version": "1.0.0",
+    "description": "A package for managing game sessions in GameKit.",
+    "unity": "2021.3"
+}

@@ -2,13 +2,14 @@
     "name": "DefenseGame.Api",
     "rootNamespace": "",
     "references": [
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:63444033e94c4a738877f12380d0cdb0",
-        "GUID:38c0c0a4274540a6bbe9e7a3d97ccdca",
-        "GUID:b42f043ca9d08d64bb7219daecd8c292",
-        "GUID:d33e99d624f1c2b4582c736bc6558bfa",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:5c6837cde0fb42fda6ad0b274989967e"
+        "VContainer",
+        "DefenseGame.Core",
+        "DefenseGame.Infrastructure",
+        "VExtensions.Mediator",
+        "VExtensions.Mediator.Abstractions",
+        "UniTask",
+        "GameKit.Common",
+        "DefenseGame.Contracts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

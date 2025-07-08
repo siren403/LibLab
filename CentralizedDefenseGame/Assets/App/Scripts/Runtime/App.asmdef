@@ -14,7 +14,7 @@
         "VitalRouter",
         "VExtensions.SceneNavigation",
         "UniTask",
-        "DefenseGame.Common"
+        "GameKit.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

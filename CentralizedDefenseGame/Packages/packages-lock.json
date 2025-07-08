@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.aaron.gamekit": {
+      "version": "file:../../LibLab.Unity/Assets/Lib/GameKit",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.aaron.scene-launcher": {
       "version": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher",
       "depth": 0,

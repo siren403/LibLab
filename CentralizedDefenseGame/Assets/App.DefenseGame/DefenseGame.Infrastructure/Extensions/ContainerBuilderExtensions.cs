@@ -13,6 +13,7 @@ namespace DefenseGame.Infrastructure.Extensions
         {
             builder.Register<InMemoryUnitRepository>(Lifetime.Singleton).As<IUnitRepository>();
             builder.Register<InMemoryUnitSpecRepository>(Lifetime.Singleton).As<IUnitSpecRepository>();
+            builder.Register<InMemoryUnitDeckRepository>(Lifetime.Singleton).As<IUnitDeckRepository>();
         }
     }
 }

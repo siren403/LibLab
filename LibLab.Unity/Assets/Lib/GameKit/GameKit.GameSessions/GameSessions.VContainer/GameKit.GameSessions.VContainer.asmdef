@@ -5,7 +5,10 @@
         "GameKit.GameSessions.Core",
         "VContainer",
         "VExtensions.Mediator",
-        "GameKit.Common"
+        "GameKit.Common",
+        "VExtensions.Mediator.Abstractions",
+        "VitalRouter",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

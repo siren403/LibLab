@@ -1,7 +1,14 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
-using DefenseGame.Core.Features.GameSessions;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using DefenseGame.Core.Application.Commands;
+using DefenseGame.Core.Internal.Entities;
+using DefenseGame.Core.Internal.Handlers;
+using GameKit.Common.Results;
+using GameKit.GameSessions.VContainer;
 using VContainer;
 using VExtensions.Mediator.Abstractions;
 
@@ -11,7 +18,30 @@ namespace DefenseGame.Core.Extensions
     {
         public static void RegisterCore(this IContainerBuilder builder, IMediatorBuilder mediator)
         {
-            builder.RegisterGameSessions(mediator);
+            builder.RegisterGameSessions<GameState>();
+            mediator.RegisterCommand<
+                CreateGameSessionCommand,
+                CreateGameSessionHandler,
+                Result<CreateGameSessionData>
+            >();
+
+            mediator.RegisterCommand<NextPhaseCommand, NextPhaseHandler, Result>();
+        }
+    }
+
+    public static class MediatorExtensions
+    {
+        public static UniTask<Result<CreateGameSessionData>> ExecuteCreateGameSession(this IMediator mediator,
+            CreateGameSessionCommand command,
+            CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<CreateGameSessionCommand, Result<CreateGameSessionData>>(command, ct);
+        }
+
+        public static UniTask<Result> ExecuteNextPhase(this IMediator mediator, NextPhaseCommand command,
+            CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<NextPhaseCommand, Result>(command, ct);
         }
     }
 }

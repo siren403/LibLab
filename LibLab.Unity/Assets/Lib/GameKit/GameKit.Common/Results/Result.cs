@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GameKit.Common.Results
 {
-   public record Result
+    public record Result
     {
         private readonly List<Error>? _errors = null;
 
@@ -40,12 +40,21 @@ namespace GameKit.Common.Results
 
         protected Result(string code)
         {
-            _errors = new List<Error> { new Error { Code = code } };
+            _errors = new List<Error>
+            {
+                new Error
+                {
+                    Code = code
+                }
+            };
         }
 
         protected Result(Error error)
         {
-            _errors = new List<Error> { error };
+            _errors = new List<Error>
+            {
+                error
+            };
         }
 
         protected Result(List<Error> errors)
@@ -57,25 +66,22 @@ namespace GameKit.Common.Results
         {
         }
 
-        public static Result Ok()
-        {
-            return new Result();
-        }
+        public static readonly Result Ok = new();
 
-        public static Result Fail(string code)
-        {
-            return new Result(code);
-        }
+        public static readonly Result Failure = new("General.Failure");
 
         public static Result Fail(string code, string description)
         {
-            return new Result(new Error() { Code = code, Description = description });
+            return new Result(new Error()
+            {
+                Code = code, Description = description
+            });
         }
     }
 
     public record Result<T> : Result
     {
-        public static Result<T> Ok(T data)
+        public static new Result<T> Ok(T data)
         {
             return new Result<T>(data);
         }
@@ -88,6 +94,14 @@ namespace GameKit.Common.Results
         public static new Result<T> Fail(string code)
         {
             return new Result<T>(code);
+        }
+
+        public static new Result<T> Fail(string code, string description)
+        {
+            return new Result<T>(new Error()
+            {
+                Code = code, Description = description
+            });
         }
 
         public static implicit operator UniTask<Result<T>>(Result<T> result)
@@ -125,6 +139,11 @@ namespace GameKit.Common.Results
         protected Result(string code) : base(code)
         {
             _value = default;
+        }
+
+        protected Result(Error error) : base(error)
+        {
+
         }
 
         public override string ToString()

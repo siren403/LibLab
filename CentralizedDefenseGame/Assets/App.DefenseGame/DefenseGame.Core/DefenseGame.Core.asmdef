@@ -3,12 +3,14 @@
     "rootNamespace": "",
     "references": [
         "DefenseGame.Contracts",
-        "DefenseGame.Common",
         "VContainer",
         "Unity.Mathematics",
         "VExtensions.Mediator.Abstractions",
         "UniTask",
-        "VitalRouter"
+        "VitalRouter",
+        "GameKit.GameSessions.Core",
+        "GameKit.GameSessions.VContainer",
+        "GameKit.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

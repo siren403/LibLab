@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.aaron.gamekit": "file:../../LibLab.Unity/Assets/Lib/GameKit",
     "com.aaron.scene-launcher": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher",
     "com.aaron.scene-launcher.vcontainer": "file:../../LibLab.Unity/Assets/Lib/SceneLauncher.VContainer",
     "com.aaron.vextensions.mediator": "file:../../LibLab.Unity/Assets/Lib/VExtensions/Mediator",

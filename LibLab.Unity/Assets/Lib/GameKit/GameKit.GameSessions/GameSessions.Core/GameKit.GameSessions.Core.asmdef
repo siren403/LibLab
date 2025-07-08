@@ -1,0 +1,21 @@
+{
+    "name": "GameKit.GameSessions.Core",
+    "rootNamespace": "",
+    "references": [
+        "GameKit.Common",
+        "VExtensions.Mediator.Abstractions",
+        "UniTask",
+        "VitalRouter"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Ulid.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

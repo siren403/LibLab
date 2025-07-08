@@ -2,7 +2,9 @@
     "name": "DefenseGame.Infrastructure",
     "rootNamespace": "",
     "references": [
-        "DefenseGame.Core"
+        "VContainer",
+        "DefenseGame.Core",
+        "DefenseGame.Contracts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

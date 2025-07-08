@@ -1,0 +1,34 @@
+{
+    "name": "App",
+    "rootNamespace": "",
+    "references": [
+        "SceneLauncher",
+        "SceneLauncher.VContainer",
+        "VContainer",
+        "ALINE",
+        "Unity.Mathematics",
+        "DefenseGame.Api",
+        "DefenseGame.Contracts",
+        "VExtensions.ZLogger",
+        "ZLogger.Unity",
+        "VitalRouter",
+        "VExtensions.SceneNavigation",
+        "UniTask",
+        "DefenseGame.Common"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "ZLogger.dll",
+        "Microsoft.Extensions.Logging.dll",
+        "Microsoft.Extensions.Logging.Abstractions.dll",
+        "R3.dll",
+        "Ulid.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

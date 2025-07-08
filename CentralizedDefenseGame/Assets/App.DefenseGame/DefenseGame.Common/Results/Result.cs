@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 namespace DefenseGame.Common.Results
 {
-    public record Result
+   public record Result
     {
         private readonly List<Error>? _errors = null;
 
@@ -36,10 +36,16 @@ namespace DefenseGame.Common.Results
 
         public bool IsError => _errors is not null;
 
+        public bool IsOk => !IsError;
 
         protected Result(string code)
         {
             _errors = new List<Error> { new Error { Code = code } };
+        }
+
+        protected Result(Error error)
+        {
+            _errors = new List<Error> { error };
         }
 
         protected Result(List<Error> errors)
@@ -60,29 +66,35 @@ namespace DefenseGame.Common.Results
         {
             return new Result(code);
         }
+
+        public static Result Fail(string code, string description)
+        {
+            return new Result(new Error() { Code = code, Description = description });
+        }
     }
 
-    public abstract record Result<T> : Result
+    public record Result<T> : Result
     {
-        public static Ok<T> Ok(T data)
+        public static Result<T> Ok(T data)
         {
-            return new Ok<T>(data);
+            return new Result<T>(data);
         }
 
-        public static Fail<T> Fail(List<Error> errors)
+        public static Result<T> Fail(List<Error> errors)
         {
-            return new Fail<T>(errors);
+            return new Result<T>(errors);
         }
 
-        public static new Fail<T> Fail(string code)
+        public static new Result<T> Fail(string code)
         {
-            return new Fail<T>(code);
+            return new Result<T>(code);
         }
 
         public static implicit operator UniTask<Result<T>>(Result<T> result)
         {
             return UniTask.FromResult(result);
         }
+
 
         private readonly T? _value = default;
 
@@ -114,23 +126,12 @@ namespace DefenseGame.Common.Results
         {
             _value = default;
         }
-    }
 
-    public sealed record Ok<T> : Result<T>
-    {
-        internal Ok(T value) : base(value)
+        public override string ToString()
         {
-        }
-    }
-
-    public sealed record Fail<T> : Result<T>
-    {
-        internal Fail(List<Error> errors) : base(errors)
-        {
-        }
-
-        internal Fail(string code) : base(code)
-        {
+            return IsError
+                ? $"Result<{typeof(T).Name}>: {string.Join(", ", Errors)}"
+                : $"Result<{typeof(T).Name}>: {Value}";
         }
     }
 }

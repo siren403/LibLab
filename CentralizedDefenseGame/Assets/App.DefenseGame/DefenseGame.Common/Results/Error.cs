@@ -6,7 +6,15 @@ namespace DefenseGame.Common.Results
     public readonly struct Error
     {
         public string Code { get; init; }
+        public string Description { get; init; }
 
-        public static implicit operator Error(string code) => new() { Code = code };
+        public static implicit operator Error(string code) => new() { Code = code, Description = string.Empty };
+
+        public override string ToString()
+        {
+            return string.IsNullOrEmpty(Description)
+                ? $"Error: {Code}"
+                : $"Error: {Code}, Description: {Description}";
+        }
     }
 }

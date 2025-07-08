@@ -5,7 +5,7 @@ namespace DefenseGame.Common.Results
 {
     public static class ResultExtensions
     {
-        public static Fail<T> Pass<T>(this Result result)
+        public static Result<T> Pass<T>(this Result result)
         {
             if (!result.IsError)
             {
@@ -17,7 +17,7 @@ namespace DefenseGame.Common.Results
             return Result<T>.Fail(errors);
         }
 
-        public static bool IsErrorWithPass<T>(this Result result, out Fail<T> fail)
+        public static bool IsError<T>(this Result result, out Result<T> fail)
         {
             if (result.IsError)
             {
@@ -27,6 +27,18 @@ namespace DefenseGame.Common.Results
 
             fail = null!;
             return false;
+        }
+
+        public static bool IsOk<TValue>(this Result<TValue> result, out TValue value)
+        {
+            if (result.IsError)
+            {
+                value = default!;
+                return false;
+            }
+
+            value = result.Value;
+            return true;
         }
     }
 }

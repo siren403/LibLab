@@ -12,7 +12,7 @@
         "MergeGame.Contracts",
         "R3.Unity",
         "Unity.InputSystem",
-        "MergeGame.Common"
+        "GameKit.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

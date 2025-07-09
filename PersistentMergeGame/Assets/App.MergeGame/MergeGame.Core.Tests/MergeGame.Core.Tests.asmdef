@@ -6,7 +6,7 @@
         "UnityEditor.TestRunner",
         "VContainer",
         "MergeGame.Core",
-        "MergeGame.Common"
+        "GameKit.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -4,14 +4,14 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using GameKit.Common.Results;
 using MergeGame.Core.Application.Commands.GameSession;
-using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Managers;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.GameSession
 {
-    internal class CreateGameSessionHandler : ICommandHandler<CreateGameSessionCommand, Result<Ulid>>
+    internal class CreateGameSessionHandler : ICommandHandler<CreateGameSessionCommand, FastResult<Ulid>>
     {
         private readonly GameManager _manager;
 
@@ -20,14 +20,13 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
             _manager = manager;
         }
 
-        public UniTask<Result<Ulid>> ExecuteAsync(CreateGameSessionCommand command,
+        public UniTask<FastResult<Ulid>> ExecuteAsync(CreateGameSessionCommand command,
             CancellationToken ct)
         {
             int width = command.Width;
             int height = command.Height;
             var session = _manager.CreateGameSession(width, height);
-            var result = Result<Ulid>.Ok(session.Id);
-            return UniTask.FromResult<Result<Ulid>>(result);
+            return FastResult<Ulid>.Ok(session.Id);
         }
     }
 }

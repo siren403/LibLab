@@ -2,7 +2,6 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using App.MergeGame.Core.Internal.Enums;
 
 namespace MergeGame.Core.Internal.Entities
 {
@@ -12,7 +11,6 @@ namespace MergeGame.Core.Internal.Entities
         public Ulid BoardId { get; private init; }
         public DateTime CreatedAt { get; private init; }
         public DateTime? EndedAt { get; set; }
-        public GameState State { get; set; }
 
         public static GameSession CreateWaitingSession(Ulid sessionId, Ulid boardId)
         {
@@ -22,13 +20,12 @@ namespace MergeGame.Core.Internal.Entities
                 BoardId = boardId,
                 CreatedAt = DateTime.UtcNow,
                 EndedAt = null,
-                State = GameState.WaitingToStart
             };
         }
 
         public override string ToString()
         {
-            return $"{nameof(GameSession)}(Id: {Id}, {nameof(BoardId)}: {BoardId}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(EndedAt)}: {EndedAt}, {nameof(State)}: {State})";
+            return $"{nameof(GameSession)}(Id: {Id}, {nameof(BoardId)}: {BoardId}, {nameof(CreatedAt)}: {CreatedAt}, {nameof(EndedAt)}: {EndedAt})";
         }
     }
 }

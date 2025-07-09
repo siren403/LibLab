@@ -2,7 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using MergeGame.Common.Results;
+using GameKit.Common.Results;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Managers;
 
@@ -28,15 +28,15 @@ internal static class GameManagerExtensions
         return manager.GetBoard(session);
     }
 
-    public static Result<Board> GetBoardOrError(this GameManager manager, Ulid sessionId)
+    public static FastResult<Board> GetBoardOrError(this GameManager manager, Ulid sessionId)
     {
         var result = manager.GetSession(sessionId);
-        if (result.IsError(out Result<Board> sessionFail))
+        if (result.IsError(out FastResult<Board> sessionFail))
         {
             return sessionFail;
         }
 
         GameSession session = result.Value;
-        return Result<Board>.Ok(manager.GetBoard(session));
+        return FastResult<Board>.Ok(manager.GetBoard(session));
     }
 }

@@ -2,8 +2,8 @@
 using System.Threading;
 using MergeGame.Core.Internal.Extensions;
 using Cysharp.Threading.Tasks;
+using GameKit.Common.Results;
 using MergeGame.Core.Application.Commands.GameSession;
-using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.ValueObjects;
@@ -11,7 +11,8 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.GameSession
 {
-    internal class CreateStartingGameSessionHandler : ICommandHandler<CreateStartingGameSessionCommand, Result<Ulid>>
+    internal class CreateStartingGameSessionHandler
+        : ICommandHandler<CreateStartingGameSessionCommand, FastResult<Ulid>>
     {
         private readonly GameManager _manager;
         private readonly IBoardLayoutRepository _repository;
@@ -22,7 +23,7 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
             _repository = repository;
         }
 
-        public async UniTask<Result<Ulid>> ExecuteAsync(CreateStartingGameSessionCommand command,
+        public async UniTask<FastResult<Ulid>> ExecuteAsync(CreateStartingGameSessionCommand command,
             CancellationToken ct)
         {
             var layout = await _repository.GetStartingLayout(ct);
@@ -34,12 +35,12 @@ namespace MergeGame.Core.Internal.Handlers.GameSession
                 bool result = board.PlaceBlock(spec.Position, spec.BlockId, spec.State);
                 if (!result)
                 {
-                    return Result<Ulid>.Fail(
+                    return FastResult<Ulid>.Fail(
                         $"Failed to place block {spec.BlockId} at position {spec.Position} on the board {board.Id}.");
                 }
             }
 
-            return Result<Ulid>.Ok(session.Id);
+            return FastResult<Ulid>.Ok(session.Id);
         }
     }
 }

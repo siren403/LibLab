@@ -3,7 +3,7 @@
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using MergeGame.Common.Results;
+using GameKit.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Managers;
@@ -11,7 +11,7 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.Board;
 
-internal class CheckEmptyCellHandler : ICommandHandler<CheckEmptyCellCommand, bool>
+internal class CheckEmptyCellHandler : ICommandHandler<CheckEmptyCellCommand, FastResult<bool>>
 {
     private readonly GameManager _manager;
 
@@ -20,15 +20,17 @@ internal class CheckEmptyCellHandler : ICommandHandler<CheckEmptyCellCommand, bo
         _manager = manager;
     }
 
-    public UniTask<bool> ExecuteAsync(CheckEmptyCellCommand command, CancellationToken ct)
+    public UniTask<FastResult<bool>> ExecuteAsync(CheckEmptyCellCommand command, CancellationToken ct)
     {
         var result = _manager.GetBoardOrError(command.SessionId);
-        if (!result.IsOk(out Entities.Board board))
+
+        if (result.IsError(out FastResult<bool> fail))
         {
-            return UniTask.FromResult(false);
+            return fail;
         }
 
+        var board = result.Value;
         var cell = board.GetCell(command.Position);
-        return UniTask.FromResult(!cell.HasBlock);
+        return FastResult<bool>.Ok(!cell.HasBlock);
     }
 }

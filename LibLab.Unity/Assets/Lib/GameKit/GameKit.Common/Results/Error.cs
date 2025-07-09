@@ -19,8 +19,8 @@ namespace GameKit.Common.Results
         public override string ToString()
         {
             return string.IsNullOrEmpty(Description)
-                ? $"Error: {Code}"
-                : $"Error: {Code}, Description: {Description}";
+                ? $"Code: {Code}"
+                : $"Code: {Code}, Desc: {Description}";
         }
 
 

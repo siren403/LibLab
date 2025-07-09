@@ -2,13 +2,13 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using MergeGame.Common.Results;
+using GameKit.Common.Results;
 using MergeGame.Core.ValueObjects;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Application.Commands.Board
 {
-    public readonly struct CheckMovableCellCommand : ICommand<Result<BlockId>>
+    public readonly struct CheckMovableCellCommand : ICommand<FastResult<BlockId>>
     {
         public Ulid SessionId { get; init; }
         public Position Position { get; init; }

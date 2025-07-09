@@ -2,12 +2,13 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using GameKit.Common.Results;
 using MergeGame.Core.ValueObjects;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Application.Commands.Board
 {
-    public struct GetBoardSizeCommand : ICommand<BoardSize>
+    public struct GetBoardSizeCommand : ICommand<FastResult<BoardSize>>
     {
         public Ulid SessionId { get; init; }
     }

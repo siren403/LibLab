@@ -2,7 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
-using MergeGame.Common.Results;
+using GameKit.Common.Results;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.ValueObjects;
@@ -25,14 +25,11 @@ namespace MergeGame.Infrastructure.Internal.Repositories
             { 9, new MergeRule(9, 9, 10) }
         };
 
-        public Result<MergeRule> FindMergeRule(BlockId sourceId)
+        public FastResult<MergeRule> FindMergeRule(BlockId sourceId)
         {
-            if (_mergeRules.TryGetValue(sourceId, out var rule))
-            {
-                return Result<MergeRule>.Ok(rule);
-            }
-
-            return Result<MergeRule>.Fail($"No merge rule found for source block ID: {sourceId}");
+            return _mergeRules.TryGetValue(sourceId, out var rule)
+                ? FastResult<MergeRule>.Ok(rule)
+                : FastResult<MergeRule>.Fail($"No merge rule found for source block ID: {sourceId}");
         }
     }
 }

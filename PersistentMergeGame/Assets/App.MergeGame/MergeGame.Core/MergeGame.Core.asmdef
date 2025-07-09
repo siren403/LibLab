@@ -7,7 +7,9 @@
         "UniTask",
         "VContainer",
         "MergeGame.Contracts",
-        "MergeGame.Common"
+        "GameKit.Common",
+        "GameKit.GameSessions.Core",
+        "GameKit.GameSessions.VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

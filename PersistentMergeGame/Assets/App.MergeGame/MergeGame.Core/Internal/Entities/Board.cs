@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MergeGame.Common.Results;
+using GameKit.Common.Results;
 using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.Internal.ValueObjects;
@@ -60,14 +60,14 @@ namespace MergeGame.Core.Internal.Entities
             return Cells.Cast<BoardCell>();
         }
 
-        public Result<MergeBlockData> MergeBlock(Position from, Position to, IMergeRuleRepository repository)
+        public FastResult<MergeBlockData> MergeBlock(Position from, Position to, IMergeRuleRepository repository)
         {
             var fromCell = GetCell(from);
             var toCell = GetCell(to);
 
             var canMerge = fromCell.CanMergeTo(toCell);
 
-            if (canMerge.IsError<MergeBlockData>(out var canMergeFail))
+            if (canMerge.IsError(out FastResult<MergeBlockData> canMergeFail))
             {
                 return canMergeFail;
             }
@@ -75,7 +75,7 @@ namespace MergeGame.Core.Internal.Entities
             var fromBlockId = fromCell.BlockId!.Value;
             var mergeRuleResult = repository.FindMergeRule(fromBlockId);
 
-            if (mergeRuleResult.IsError<MergeBlockData>(out var mergeRuleFail))
+            if (mergeRuleResult.IsError(out FastResult<MergeBlockData> mergeRuleFail))
             {
                 return mergeRuleFail;
             }
@@ -86,18 +86,18 @@ namespace MergeGame.Core.Internal.Entities
             toCell.RemoveBlock();
             toCell.PlaceBlock(nextBlockId, BoardCellState.Movable);
 
-            return Result<MergeBlockData>.Ok(new MergeBlockData(
+            return FastResult<MergeBlockData>.Ok(new MergeBlockData(
                 fromCell,
                 toCell
             ));
         }
 
-        public Result<MoveBlockData> MoveBlock(Position from, Position to)
+        public FastResult<MoveBlockData> MoveBlock(Position from, Position to)
         {
             // 같은 위치 안됨
             if (from == to)
             {
-                return Result<MoveBlockData>.Fail($"Cannot move block to the same position: {from}");
+                return FastResult<MoveBlockData>.Fail($"Cannot move block to the same position: {from}");
             }
 
             var fromCell = GetCell(from);
@@ -106,19 +106,19 @@ namespace MergeGame.Core.Internal.Entities
             // fromCell은 Movable 상태여야 하고
             if (fromCell.State != BoardCellState.Movable)
             {
-                return Result<MoveBlockData>.Fail(
+                return FastResult<MoveBlockData>.Fail(
                     $"Cannot move block from {from} because it is not movable. State: {fromCell.State}");
             }
 
             if (toCell.HasBlock)
             {
-                return Result<MoveBlockData>.Fail($"Cannot move block to {to} because it already has a block.");
+                return FastResult<MoveBlockData>.Fail($"Cannot move block to {to} because it already has a block.");
             }
 
             var fromBlockId = fromCell.RemoveBlock();
             return toCell.PlaceBlock(fromBlockId, BoardCellState.Movable)
-                ? Result<MoveBlockData>.Ok(new MoveBlockData() { FromPosition = from, ToPosition = to })
-                : Result<MoveBlockData>.Fail($"Cannot place block at {to}. State: {toCell.State}");
+                ? FastResult<MoveBlockData>.Ok(new MoveBlockData() { FromPosition = from, ToPosition = to })
+                : FastResult<MoveBlockData>.Fail($"Cannot place block at {to}. State: {toCell.State}");
         }
 
         public IEnumerable<BoardCell> GetNeighborCells(Position position)

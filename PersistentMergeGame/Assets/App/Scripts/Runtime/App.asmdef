@@ -22,7 +22,7 @@
         "Unity.ResourceManager",
         "VExtensions.SceneNavigation",
         "Unity.InputSystem",
-        "MergeGame.Common"
+        "GameKit.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

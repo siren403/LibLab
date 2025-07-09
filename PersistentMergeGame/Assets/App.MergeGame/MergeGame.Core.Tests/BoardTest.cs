@@ -2,12 +2,10 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using MergeGame.Common.Results;
 using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Entities;
 using MergeGame.Core.Internal.Extensions;
 using MergeGame.Core.Internal.Repositories;
-using MergeGame.Core.Internal.ValueObjects;
 using NUnit.Framework;
 using UnityEngine;
 using VContainer;
@@ -53,7 +51,7 @@ namespace MergeGame.Core.Tests
 
             var repository = container.Resolve<IMergeRuleRepository>();
             var mergeResult = board.MergeBlock(pos1, pos2, repository);
-            Assert.IsTrue(mergeResult.IsOk);
+            Assert.IsFalse(mergeResult.IsError);
 
             Debug.Log($"{mergeResult.Value}");
         }

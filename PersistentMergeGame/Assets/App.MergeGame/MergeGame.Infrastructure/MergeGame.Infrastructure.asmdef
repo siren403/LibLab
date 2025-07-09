@@ -7,7 +7,7 @@
         "UniTask",
         "Unity.Addressables",
         "Unity.ResourceManager",
-        "MergeGame.Common"
+        "GameKit.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

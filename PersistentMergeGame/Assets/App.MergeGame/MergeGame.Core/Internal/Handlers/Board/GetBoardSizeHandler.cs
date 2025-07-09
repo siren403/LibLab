@@ -3,15 +3,15 @@
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using GameKit.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
-using MergeGame.Common.Results;
 using MergeGame.Core.Internal.Managers;
 using MergeGame.Core.ValueObjects;
 using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.Board
 {
-    internal class GetBoardSizeHandler : ICommandHandler<GetBoardSizeCommand, BoardSize>
+    internal class GetBoardSizeHandler : ICommandHandler<GetBoardSizeCommand, FastResult<BoardSize>>
     {
         private readonly GameManager _manager;
 
@@ -20,18 +20,18 @@ namespace MergeGame.Core.Internal.Handlers.Board
             _manager = manager;
         }
 
-        public UniTask<BoardSize> ExecuteAsync(GetBoardSizeCommand command, CancellationToken ct)
+        public UniTask<FastResult<BoardSize>> ExecuteAsync(GetBoardSizeCommand command, CancellationToken ct)
         {
             var sessionId = command.SessionId;
             var result = _manager.GetSession(sessionId);
 
-            if (result.IsError)
+            if (result.IsError(out FastResult<BoardSize> fail))
             {
-                return UniTask.FromResult(BoardSize.Zero);
+                return fail;
             }
 
             var board = _manager.GetBoard(result.Value);
-            return UniTask.FromResult(new BoardSize(board.Width, board.Height));
+            return FastResult<BoardSize>.Ok(new BoardSize(board.Width, board.Height));
         }
     }
 }

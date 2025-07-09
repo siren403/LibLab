@@ -1,10 +1,9 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using MergeGame.Common.Results;
+using GameKit.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Extensions;
@@ -14,7 +13,7 @@ using VExtensions.Mediator.Abstractions;
 
 namespace MergeGame.Core.Internal.Handlers.Board
 {
-    internal class CheckMovableCellHandler : ICommandHandler<CheckMovableCellCommand, Result<BlockId>>
+    internal class CheckMovableCellHandler : ICommandHandler<CheckMovableCellCommand, FastResult<BlockId>>
     {
         private readonly GameManager _manager;
 
@@ -23,11 +22,11 @@ namespace MergeGame.Core.Internal.Handlers.Board
             _manager = manager;
         }
 
-        public UniTask<Result<BlockId>> ExecuteAsync(CheckMovableCellCommand command,
+        public UniTask<FastResult<BlockId>> ExecuteAsync(CheckMovableCellCommand command,
             CancellationToken ct)
         {
             var result = _manager.GetBoardOrError(command.SessionId);
-            if (result.IsError(out Result<BlockId> fail))
+            if (result.IsError(out FastResult<BlockId> fail))
             {
                 return fail;
             }
@@ -37,10 +36,10 @@ namespace MergeGame.Core.Internal.Handlers.Board
 
             if (cell.TryGetBlockId(out var blockId) && cell.State == BoardCellState.Movable)
             {
-                return Result<BlockId>.Ok(blockId);
+                return FastResult<BlockId>.Ok(blockId);
             }
 
-            return Result<BlockId>.Fail(ErrorCode.CannotMovableCell);
+            return FastResult<BlockId>.Fail(ErrorCode.CannotMovableCell);
         }
     }
 }

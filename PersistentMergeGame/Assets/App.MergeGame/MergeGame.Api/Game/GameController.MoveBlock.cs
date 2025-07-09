@@ -4,30 +4,37 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using GameKit.Common.Results;
 using MergeGame.Api.Extensions;
 using MergeGame.Api.Game.MoveBlock;
-using MergeGame.Common.Results;
 using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Data;
 using MergeGame.Core.Extensions;
 using MergeGame.Core.ValueObjects;
+using Void = GameKit.Common.Results.Void;
 
 namespace MergeGame.Api.Game
 {
     public partial class GameController
     {
-        public async UniTask<Result<MoveBlockResponse>> MoveBlock(
+        public async UniTask<FastResult<MoveBlockResponse>> MoveBlock(
             Ulid sessionId,
             MoveBlockRequest request,
             CancellationToken ct = default
         )
         {
-            bool emptyCell = await _mediator.ExecuteCheckEmptyCell(
+            var emptyCellResult = await _mediator.ExecuteCheckEmptyCell(
                 new CheckEmptyCellCommand() { SessionId = sessionId, Position = request.ToPosition.ToValue() }, ct);
 
+            if (emptyCellResult.IsError(out FastResult<MoveBlockResponse> emptyCellFail))
+            {
+                return emptyCellFail;
+            }
+
+            bool emptyCell = emptyCellResult.Value;
             if (emptyCell)
             {
-                Result<bool> ok = await _mediator.ExecuteMoveBlock(
+                FastResult<Void> ok = await _mediator.ExecuteMoveBlock(
                     new MoveBlockCommand()
                     {
                         SessionId = sessionId,
@@ -35,9 +42,9 @@ namespace MergeGame.Api.Game
                         ToPosition = request.ToPosition.ToValue()
                     }, ct);
 
-                return ok.IsError<MoveBlockResponse>(out var moveFail)
+                return ok.IsError(out FastResult<MoveBlockResponse> moveFail)
                     ? moveFail
-                    : Result<MoveBlockResponse>.Ok(new MovedResponse(request.ToPosition));
+                    : FastResult<MoveBlockResponse>.Ok(new MovedResponse(request.ToPosition));
             }
 
             var mergeResult = await _mediator.ExecuteMergeBlock(
@@ -48,9 +55,9 @@ namespace MergeGame.Api.Game
                     ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
                 }, ct);
 
-            if (mergeResult.IsError<MoveBlockResponse>(out var fail))
+            if (mergeResult.IsError(out FastResult<MoveBlockResponse> mergeFail))
             {
-                return fail;
+                return mergeFail;
             }
 
             var toMovables = await _mediator.ExecuteNeighborCellsToMovable(
@@ -60,7 +67,7 @@ namespace MergeGame.Api.Game
                 }, ct);
 
             (BoardCell fromCell, BoardCell toCell, BoardCell spawnedCell) = mergeResult.Value;
-            return Result<MoveBlockResponse>.Ok(new MergedResponse(fromCell, toCell, spawnedCell,
+            return FastResult<MoveBlockResponse>.Ok(new MergedResponse(fromCell, toCell, spawnedCell,
                 toMovables.UpdatedCells));
         }
     }

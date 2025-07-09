@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.aaron.gamekit": {
+    "com.aaron.game-kit": {
       "version": "file:../../LibLab.Unity/Assets/Lib/GameKit",
       "depth": 0,
       "source": "local",

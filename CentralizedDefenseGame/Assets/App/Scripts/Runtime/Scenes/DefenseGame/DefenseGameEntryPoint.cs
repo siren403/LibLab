@@ -40,7 +40,7 @@ namespace App.Scenes.DefenseGame
             var createGameResult = await _controller.CreateGame(ct);
             if (createGameResult.IsError)
             {
-                _logger.ZLogError($"Failed to create game: {createGameResult.Errors}");
+                _logger.ZLogError($"Failed to create game: {createGameResult.GetErrors().ToArray()}");
                 return;
             }
 
@@ -65,6 +65,7 @@ namespace App.Scenes.DefenseGame
                 // 콜드 스타트 시 게임 데이터 준비 처리.
                 // 두 번째 부터는 게임 데이터가 준비되어 있어 바로 시작.
                 var selecting = await ctx.Begin(ct);
+
                 // 첫 시작 시 카드 셀렉팅 2번
                 // 덱에 있는 유닛 중 스폰되지 않은 유닛소환 카드 1~2개 포함
                 // 소환되어 있는 유닛의 스킬 획득 카드 셀렉팅
@@ -77,7 +78,7 @@ namespace App.Scenes.DefenseGame
 
             if (gameResult.IsError)
             {
-                _logger.ZLogError($"Game execution failed: {gameResult.Errors}");
+                _logger.ZLogError($"Game execution failed: {gameResult.GetErrors().ToArray()}");
                 return;
             }
             _logger.ZLogInformation($"Game execution completed successfully");

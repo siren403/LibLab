@@ -11,7 +11,7 @@ using VExtensions.Mediator.Abstractions;
 namespace GameKit.GameSessions.Core.Internal.Handlers
 {
     internal class CreateGameSessionHandler<TGameState>
-        : ICommandHandler<CreateGameSessionCommand<TGameState>, Result<CreateGameSessionData<TGameState>>>
+        : ICommandHandler<CreateGameSessionCommand<TGameState>, FastResult<CreateGameSessionData<TGameState>>>
         where TGameState : IGameState
     {
         private readonly GameSessionManager<TGameState> _sessionManager;
@@ -21,15 +21,15 @@ namespace GameKit.GameSessions.Core.Internal.Handlers
             _sessionManager = sessionManager;
         }
 
-        public UniTask<Result<CreateGameSessionData<TGameState>>> ExecuteAsync(
+        public UniTask<FastResult<CreateGameSessionData<TGameState>>> ExecuteAsync(
             CreateGameSessionCommand<TGameState> command,
             CancellationToken ct)
         {
             var session = _sessionManager.CreateGameSession(command.State);
-            return Result<CreateGameSessionData<TGameState>>.Ok(new CreateGameSessionData<TGameState>(
-                session.Id,
-                session.State
-            ));
+            return FastResult<CreateGameSessionData<TGameState>>.Ok(new CreateGameSessionData<TGameState>()
+            {
+                SessionId = session.Id, State = session.State
+            });
         }
     }
 }

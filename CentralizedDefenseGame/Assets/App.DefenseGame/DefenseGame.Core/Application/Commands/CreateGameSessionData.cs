@@ -7,5 +7,15 @@ using DefenseGame.Core.Internal.Entities;
 
 namespace DefenseGame.Core.Application.Commands
 {
-    public record CreateGameSessionData(Ulid SessionId, IGameStateView StateView);
+    public struct CreateGameSessionData
+    {
+        public Ulid SessionId { get; init; }
+        public IGameStateView StateView { get; init; }
+
+        public void Deconstruct(out Ulid sessionId, out IGameStateView stateView)
+        {
+            sessionId = SessionId;
+            stateView = StateView;
+        }
+    }
 }

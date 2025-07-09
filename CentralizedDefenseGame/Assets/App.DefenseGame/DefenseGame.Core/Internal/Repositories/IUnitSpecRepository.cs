@@ -3,12 +3,13 @@
 
 using DefenseGame.Core.Internal.Entities;
 using DefenseGame.Core.ValueObjects;
+using GameKit.Common.Results;
 
 namespace DefenseGame.Internal.Repositories
 {
     internal interface IUnitSpecRepository
     {
-        UnitSpec GetById(EntityId id);
-        UnitSpec GetByName(string name);
+        FastResult<UnitSpec> GetById(EntityId id);
+        FastResult<UnitSpec> GetByName(string name);
     }
 }

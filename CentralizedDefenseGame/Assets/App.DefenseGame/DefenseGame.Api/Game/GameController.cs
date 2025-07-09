@@ -3,13 +3,13 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DefenseGame.Contracts.Views;
 using DefenseGame.Core.Application.Commands;
 using DefenseGame.Core.Extensions;
 using GameKit.Common.Results;
 using VExtensions.Mediator.Abstractions;
+using Void = GameKit.Common.Results.Void;
 
 namespace DefenseGame.Api.Game
 {
@@ -22,47 +22,38 @@ namespace DefenseGame.Api.Game
             _mediator = mediator;
         }
 
-        public async UniTask<Result<CreateGameResponse>> CreateGame(CancellationToken ct = default)
+        public async UniTask<FastResult<CreateGameResponse>> CreateGame(CancellationToken ct = default)
         {
             float radius = 8;
             var result = await _mediator.ExecuteCreateGameSession(
-                new CreateGameSessionCommand()
-                {
-                    Radius = radius
-                },
+                new CreateGameSessionCommand() { Radius = radius },
                 ct);
 
-            if (result.IsError(out Result<CreateGameResponse> fail))
+            if (result.IsError(out FastResult<CreateGameResponse> fail))
             {
                 return fail;
             }
 
             (Ulid sessionId, IGameStateView stateView) = result.Value;
 
-            return Result<CreateGameResponse>.Ok(new CreateGameResponse(sessionId, stateView));
-        }
-
-        public UniTask<Result> NextPhase(Ulid sessionId, CancellationToken ct = default)
-        {
-            return _mediator.ExecuteNextPhase(new NextPhaseCommand()
+            return FastResult<CreateGameResponse>.Ok(new CreateGameResponse
             {
-                SessionId = sessionId
-            }, ct);
+                SessionId = sessionId, StateView = stateView
+            });
         }
 
-        public async UniTask<Result> RunGame(
+        public async UniTask<FastResult<Void>> RunGame(
             Func<GameContext, CancellationToken, UniTask> runner,
             CancellationToken ct = default
         )
         {
-
-            GameContext context = new GameContext();
+            GameContext context = new();
             do
             {
                 await runner(context, ct);
                 if (!context.IsStarted)
                 {
-                    return Result.Fail(
+                    return FastResult<Void>.Fail(
                         $"{nameof(RunGame)}.NotStarted",
                         "Game has not started yet."
                     );
@@ -71,13 +62,13 @@ namespace DefenseGame.Api.Game
 
             if (ct.IsCancellationRequested)
             {
-                return Result.Fail(
+                return FastResult<Void>.Fail(
                     $"{nameof(RunGame)}.Cancelled",
                     "Game was cancelled by user."
                 );
             }
 
-            return Result.Ok;
+            return FastResult.Ok;
         }
     }
 
@@ -101,7 +92,6 @@ namespace DefenseGame.Api.Game
         public CardSelectingExecutor(GameContext context)
         {
             _context = context;
-
         }
 
         public UniTask<BattleExecutor> Execute(CancellationToken ct)
@@ -129,5 +119,4 @@ namespace DefenseGame.Api.Game
             return UniTask.CompletedTask;
         }
     }
-
 }

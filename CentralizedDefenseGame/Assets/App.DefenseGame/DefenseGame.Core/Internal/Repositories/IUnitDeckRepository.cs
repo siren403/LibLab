@@ -4,12 +4,13 @@
 using System;
 using DefenseGame.Core.Internal.Entities;
 using GameKit.Common.Results;
+using Void = GameKit.Common.Results.Void;
 
 namespace DefenseGame.Internal.Repositories
 {
     internal interface IUnitDeckRepository
     {
-        Result AddDeck(UnitDeck deck);
-        Result<UnitDeck> GetDeck(Ulid deckId);
+        FastResult<Void> AddDeck(UnitDeck deck);
+        FastResult<UnitDeck> GetDeck(Ulid deckId);
     }
 }

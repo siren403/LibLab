@@ -5,5 +5,15 @@ using System;
 
 namespace GameKit.GameSessions.Core.Commands
 {
-    public record CreateGameSessionData<TGameState>(Ulid SessionId, TGameState State) where TGameState : IGameState;
+    public struct CreateGameSessionData<TGameState> where TGameState : IGameState
+    {
+        public Ulid SessionId { get; init; }
+        public TGameState State { get; init; }
+
+        public void Deconstruct(out Ulid sessionId, out TGameState state)
+        {
+            sessionId = SessionId;
+            state = State;
+        }
+    }
 }

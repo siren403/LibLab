@@ -22,26 +22,18 @@ namespace DefenseGame.Core.Extensions
             mediator.RegisterCommand<
                 CreateGameSessionCommand,
                 CreateGameSessionHandler,
-                Result<CreateGameSessionData>
+                FastResult<CreateGameSessionData>
             >();
-
-            mediator.RegisterCommand<NextPhaseCommand, NextPhaseHandler, Result>();
         }
     }
 
     public static class MediatorExtensions
     {
-        public static UniTask<Result<CreateGameSessionData>> ExecuteCreateGameSession(this IMediator mediator,
+        public static UniTask<FastResult<CreateGameSessionData>> ExecuteCreateGameSession(this IMediator mediator,
             CreateGameSessionCommand command,
             CancellationToken ct = default)
         {
-            return mediator.ExecuteAsync<CreateGameSessionCommand, Result<CreateGameSessionData>>(command, ct);
-        }
-
-        public static UniTask<Result> ExecuteNextPhase(this IMediator mediator, NextPhaseCommand command,
-            CancellationToken ct = default)
-        {
-            return mediator.ExecuteAsync<NextPhaseCommand, Result>(command, ct);
+            return mediator.ExecuteAsync<CreateGameSessionCommand, FastResult<CreateGameSessionData>>(command, ct);
         }
     }
 }

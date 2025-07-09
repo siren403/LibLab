@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using DefenseGame.Core.Internal.Entities;
 using DefenseGame.Internal.Repositories;
 using GameKit.Common.Results;
+using Void = GameKit.Common.Results.Void;
 
 namespace DefenseGame.Infrastructure.Internal.Repositories.InMemory
 {
@@ -13,24 +14,24 @@ namespace DefenseGame.Infrastructure.Internal.Repositories.InMemory
     {
         private readonly Dictionary<Ulid, UnitDeck> _decks = new();
 
-        public Result AddDeck(UnitDeck deck)
+        public FastResult<Void> AddDeck(UnitDeck deck)
         {
             return _decks.TryAdd(deck.Id, deck)
-                ? Result.Ok
-                : Result.Fail($"{nameof(UnitDeck)}.AlreadyExists", $"Deck with ID {deck.Id} already exists.");
+                ? FastResult.Ok
+                : FastResult.Fail($"{nameof(UnitDeck)}.AlreadyExists", $"Deck with ID {deck.Id} already exists.");
         }
 
-        public Result<UnitDeck> GetDeck(Ulid deckId)
+        public FastResult<UnitDeck> GetDeck(Ulid deckId)
         {
-            return Result<UnitDeck>.Ok(UnitDeck.Create(
+            return FastResult<UnitDeck>.Ok(UnitDeck.Create(
                 deckId,
                 "soldier",
                 "archer",
                 "knight"
             ));
             return _decks.TryGetValue(deckId, out var deck)
-                ? Result<UnitDeck>.Ok(deck)
-                : Result<UnitDeck>.Fail($"{nameof(UnitDeck)}.NotFound", $"Deck with ID {deckId} not found.");
+                ? FastResult<UnitDeck>.Ok(deck)
+                : FastResult<UnitDeck>.Fail($"{nameof(UnitDeck)}.NotFound", $"Deck with ID {deckId} not found.");
         }
     }
 }

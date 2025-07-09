@@ -17,12 +17,11 @@ namespace GameKit.GameSessions.Core.Internal
             return session;
         }
 
-        public Result<GameSession<TGameState>> GetSession(Ulid sessionId)
+        public FastResult<GameSession<TGameState>> GetSession(Ulid sessionId)
         {
             return _activeSessions.TryGetValue(sessionId, out var session)
-                ? Result<GameSession<TGameState>>.Ok(session)
-                : Result<GameSession<TGameState>>.Fail($"Session with ID {sessionId} not found.");
-
+                ? FastResult<GameSession<TGameState>>.Ok(session)
+                : FastResult<GameSession<TGameState>>.Fail($"Session with ID {sessionId} not found.");
         }
     }
 

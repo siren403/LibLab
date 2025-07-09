@@ -4,6 +4,7 @@
 using DefenseGame.Contracts.Enums;
 using DefenseGame.Contracts.ValueObjects;
 using DefenseGame.Contracts.Views;
+using GameKit.Common.Results;
 using GameKit.GameSessions.Core;
 using R3;
 using Result = GameKit.Common.Results.Result;
@@ -14,7 +15,6 @@ namespace DefenseGame.Core.Internal.Entities
     {
         internal GameState()
         {
-
         }
 
         public DefenseZone DefenseZone { get; init; }
@@ -25,26 +25,26 @@ namespace DefenseGame.Core.Internal.Entities
         private readonly ReactiveProperty<GamePhase> _phase = new(GamePhase.None);
         private readonly Subject<R3.Unit> _onSelectingCards = new();
 
-        public Result NextPhase()
+        public FastResult<Void> NextPhase()
         {
             switch (_phase.Value)
             {
                 case GamePhase.None:
                     _phase.Value = GamePhase.Ready;
-                    return Result.Ok;
+                    return FastResult.Ok;
                 case GamePhase.Ready:
                     _phase.Value = GamePhase.SelectingCards;
                     _onSelectingCards.OnNext(R3.Unit.Default);
-                    return Result.Ok;
+                    return FastResult.Ok;
                 case GamePhase.SelectingCards:
                     _phase.Value = GamePhase.Battle;
-                    return Result.Ok;
+                    return FastResult.Ok;
                 case GamePhase.Battle:
                     // Handle battle phase logic here
-                    return Result.Ok;
+                    return FastResult.Ok;
             }
 
-            return Result.Fail(
+            return FastResult<Void>.Fail(
                 $"{nameof(GameState)}.FailedNextPhase",
                 $"Cannot transition from phase {_phase.Value} to the next phase."
             );

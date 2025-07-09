@@ -25,13 +25,13 @@ namespace GameKit.GameSessions.VContainer
                 mediator.RegisterCommand<
                     CreateGameSessionCommand<TGameState>,
                     CreateGameSessionHandler<TGameState>,
-                    Result<CreateGameSessionData<TGameState>>
+                    FastResult<CreateGameSessionData<TGameState>>
                 >();
 
                 mediator.RegisterCommand<
                     GetGameStateCommand<TGameState>,
                     GetGameStateHandler<TGameState>,
-                    Result<TGameState>
+                    FastResult<TGameState>
                 >();
             });
         }
@@ -39,7 +39,7 @@ namespace GameKit.GameSessions.VContainer
 
     public static class MediatorExtensions
     {
-        public static UniTask<Result<CreateGameSessionData<TGameState>>> ExecuteCreateGameSession<TGameState>(
+        public static UniTask<FastResult<CreateGameSessionData<TGameState>>> ExecuteCreateGameSession<TGameState>(
             this IMediator mediator,
             CreateGameSessionCommand<TGameState> command,
             CancellationToken ct = default)
@@ -47,17 +47,17 @@ namespace GameKit.GameSessions.VContainer
         {
             return mediator.ExecuteAsync<
                 CreateGameSessionCommand<TGameState>,
-                Result<CreateGameSessionData<TGameState>>
+                FastResult<CreateGameSessionData<TGameState>>
             >(command, ct);
         }
 
-        public static UniTask<Result<TGameState>> ExecuteGetGameState<TGameState>(
+        public static UniTask<FastResult<TGameState>> ExecuteGetGameState<TGameState>(
             this IMediator mediator,
             GetGameStateCommand<TGameState> command,
             CancellationToken ct = default)
             where TGameState : IGameState
         {
-            return mediator.ExecuteAsync<GetGameStateCommand<TGameState>, Result<TGameState>>(command, ct);
+            return mediator.ExecuteAsync<GetGameStateCommand<TGameState>, FastResult<TGameState>>(command, ct);
         }
     }
 }

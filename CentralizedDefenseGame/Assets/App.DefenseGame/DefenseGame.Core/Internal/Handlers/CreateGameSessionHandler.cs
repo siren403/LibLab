@@ -14,36 +14,33 @@ using VExtensions.Mediator.Abstractions;
 
 namespace DefenseGame.Core.Internal.Handlers
 {
-    internal class
-        CreateGameSessionHandler : ICommandHandler<CreateGameSessionCommand, Result<CreateGameSessionData>>
+    internal class CreateGameSessionHandler
+        : ICommandHandler<CreateGameSessionCommand, FastResult<CreateGameSessionData>>
     {
         private readonly IMediator _mediator;
 
         public CreateGameSessionHandler(IMediator mediator)
         {
             _mediator = mediator;
-
         }
 
-        public async UniTask<Result<CreateGameSessionData>> ExecuteAsync(CreateGameSessionCommand command,
+        public async UniTask<FastResult<CreateGameSessionData>> ExecuteAsync(CreateGameSessionCommand command,
             CancellationToken ct)
         {
-            var result = await _mediator.ExecuteCreateGameSession(new CreateGameSessionCommand<GameState>()
-            {
-                State = new GameState()
+            var result = await _mediator.ExecuteCreateGameSession(
+                new CreateGameSessionCommand<GameState>()
                 {
-                    DefenseZone = DefenseZone.FromRadius(command.Radius)
-                }
-            }, ct);
+                    State = new GameState() { DefenseZone = DefenseZone.FromRadius(command.Radius) }
+                }, ct);
 
-            if (result.IsError(out Result<CreateGameSessionData> fail))
+            if (result.IsError(out FastResult<CreateGameSessionData> fail))
             {
                 return fail;
             }
 
             (Ulid sessionId, GameState state) = result.Value;
-            return Result<CreateGameSessionData>.Ok(
-                new CreateGameSessionData(sessionId, state)
+            return FastResult<CreateGameSessionData>.Ok(
+                new CreateGameSessionData() { SessionId = sessionId, StateView = state }
             );
         }
     }

@@ -3,11 +3,13 @@
 
 using System;
 using DefenseGame.Core.Internal.Entities;
+using GameKit.Common.Results;
+using Void = GameKit.Common.Results.Void;
 
 namespace DefenseGame.Internal.Repositories
 {
     internal interface IUnitRepository
     {
-        void AddUnit(Ulid sessionId, Unit unit);
+        FastResult<Void> AddUnit(Ulid sessionId, Unit unit);
     }
 }

@@ -7,7 +7,7 @@ using VExtensions.Mediator.Abstractions;
 namespace GameKit.GameSessions.Core.Commands
 {
     public struct CreateGameSessionCommand<TGameState>
-        : ICommand<Result<CreateGameSessionData<TGameState>>> where TGameState : IGameState
+        : ICommand<FastResult<CreateGameSessionData<TGameState>>> where TGameState : IGameState
     {
         public TGameState State { get; init; }
     }

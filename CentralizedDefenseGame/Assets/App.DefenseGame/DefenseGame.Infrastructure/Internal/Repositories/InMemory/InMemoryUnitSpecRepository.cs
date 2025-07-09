@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DefenseGame.Core.Internal.Entities;
 using DefenseGame.Core.ValueObjects;
 using DefenseGame.Internal.Repositories;
+using GameKit.Common.Results;
 
 namespace DefenseGame.Infrastructure.Internal.Repositories.InMemory
 {
@@ -30,14 +31,30 @@ namespace DefenseGame.Infrastructure.Internal.Repositories.InMemory
             }
         }
 
-        public UnitSpec GetById(EntityId id)
+        public FastResult<UnitSpec> GetById(EntityId id)
         {
-            throw new System.NotImplementedException();
+            if (_entitiesById.TryGetValue(id, out var spec))
+            {
+                return FastResult<UnitSpec>.Ok(spec);
+            }
+
+            return FastResult<UnitSpec>.Fail(
+                $"{nameof(UnitSpec)}.NotFound",
+                $"UnitSpec with ID {id} not found."
+            );
         }
 
-        public UnitSpec GetByName(string name)
+        public FastResult<UnitSpec> GetByName(string name)
         {
-            throw new System.NotImplementedException();
+            if (_entitiesByName.TryGetValue(name, out var spec))
+            {
+                return FastResult<UnitSpec>.Ok(spec);
+            }
+
+            return FastResult<UnitSpec>.Fail(
+                $"{nameof(UnitSpec)}.NotFound",
+                $"UnitSpec with name '{name}' not found."
+            );
         }
     }
 }

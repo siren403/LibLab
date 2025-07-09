@@ -6,7 +6,7 @@ using VExtensions.Mediator.Abstractions;
 
 namespace DefenseGame.Core.Application.Commands
 {
-    public struct CreateGameSessionCommand : ICommand<Result<CreateGameSessionData>>
+    public struct CreateGameSessionCommand : ICommand<FastResult<CreateGameSessionData>>
     {
         public float Radius { get; init; }
     }

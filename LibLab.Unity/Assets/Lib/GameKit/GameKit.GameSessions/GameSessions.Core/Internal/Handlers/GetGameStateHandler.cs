@@ -10,7 +10,7 @@ using VExtensions.Mediator.Abstractions;
 namespace GameKit.GameSessions.Core.Internal.Handlers
 {
     internal class GetGameStateHandler<TGameState>
-        : ICommandHandler<GetGameStateCommand<TGameState>, Result<TGameState>>
+        : ICommandHandler<GetGameStateCommand<TGameState>, FastResult<TGameState>>
         where TGameState : IGameState
     {
         private readonly GameSessionManager<TGameState> _manager;
@@ -20,17 +20,16 @@ namespace GameKit.GameSessions.Core.Internal.Handlers
             _manager = manager;
         }
 
-        public UniTask<Result<TGameState>> ExecuteAsync(
+        public UniTask<FastResult<TGameState>> ExecuteAsync(
             GetGameStateCommand<TGameState> command,
             CancellationToken ct
         )
         {
             var result = _manager.GetSession(command.SessionId);
 
-            return result.IsError(out Result<TGameState> fail)
+            return result.IsError(out FastResult<TGameState> fail)
                 ? fail
-                : Result<TGameState>.Ok(result.Value.State);
-
+                : FastResult<TGameState>.Ok(result.Value.State);
         }
     }
 }

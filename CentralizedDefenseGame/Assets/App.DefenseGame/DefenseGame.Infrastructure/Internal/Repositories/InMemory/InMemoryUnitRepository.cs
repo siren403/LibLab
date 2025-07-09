@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using DefenseGame.Core.Internal.Entities;
 using DefenseGame.Internal.Repositories;
+using GameKit.Common.Results;
+using Void = GameKit.Common.Results.Void;
 
 namespace DefenseGame.Infrastructure.Internal.Repositories.InMemory
 {
@@ -12,19 +14,26 @@ namespace DefenseGame.Infrastructure.Internal.Repositories.InMemory
     {
         private readonly Units _units = new();
 
-        public void AddUnit(Ulid sessionId, Unit unit)
+        public FastResult<Void> AddUnit(Ulid sessionId, Unit unit)
         {
-            if (unit == null)
+            if (unit == null!)
             {
-                throw new ArgumentNullException(nameof(unit), "Unit cannot be null.");
+                return FastResult.Fail(
+                    $"{nameof(Unit)}.NullReference",
+                    "Unit cannot be null."
+                );
             }
 
             if (unit.Id == Ulid.Empty)
             {
-                throw new ArgumentException("Unit ID cannot be empty.", nameof(unit));
+                return FastResult.Fail(
+                    $"{nameof(Unit)}.InvalidId",
+                    "Unit ID cannot be empty."
+                );
             }
 
             _units.AddUnit(sessionId, unit);
+            return FastResult.Ok;
         }
 
         private class Units : Dictionary<Ulid, List<Unit>>

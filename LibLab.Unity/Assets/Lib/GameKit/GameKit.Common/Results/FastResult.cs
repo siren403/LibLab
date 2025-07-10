@@ -32,9 +32,20 @@ namespace GameKit.Common.Results
 
         public ReadOnlySpan<Error> GetErrors()
         {
-            return IsError
-                ? new ReadOnlySpan<Error>(new[] { _error1 })
-                : ReadOnlySpan<Error>.Empty;
+            if (!IsError)
+            {
+                return Array.Empty<Error>();
+            }
+
+            if (_additionalErrors is null || _additionalErrors.Count == 0)
+            {
+                return new[] { _error1 }.AsSpan();
+            }
+
+            var errors = new Error[_additionalErrors.Count + 1];
+            errors[0] = _error1;
+            _additionalErrors.CopyTo(errors, 1);
+            return errors.AsSpan();
         }
 
         private FastResult(T value)

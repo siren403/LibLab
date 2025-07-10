@@ -11,6 +11,7 @@ using MergeGame.Core.Application.Commands.Board;
 using MergeGame.Core.Application.Data;
 using MergeGame.Core.Extensions;
 using MergeGame.Core.ValueObjects;
+using UnityEngine;
 using Void = GameKit.Common.Results.Void;
 
 namespace MergeGame.Api.Game
@@ -57,7 +58,28 @@ namespace MergeGame.Api.Game
 
             if (mergeResult.IsError(out FastResult<MoveBlockResponse> mergeFail))
             {
-                return mergeFail;
+                /*
+                 * 머지 실패 시 To 근처 빈 셀로 이동.
+                 * From이 제일 가까우면 실패 처리해서 제자리로 반환 되도록 처리.
+                 */
+                // return mergeFail;
+                var moveResult = await _mediator.ExecuteMoveBlockToNearestEmptyCell(
+                    new MoveBlockToNearestEmptyCellCommand()
+                    {
+                        SessionId = sessionId,
+                        FromPosition = new Position(request.FromPosition.x, request.FromPosition.y),
+                        ToPosition = new Position(request.ToPosition.x, request.ToPosition.y)
+                    }, ct);
+
+                if (moveResult.IsError(out FastResult<MoveBlockResponse> moveFail))
+                {
+                    return moveFail;
+                }
+
+                return FastResult<MoveBlockResponse>.Ok(new MovedResponse(new Vector2Int(
+                    moveResult.Value.X,
+                    moveResult.Value.Y
+                )));
             }
 
             var toMovables = await _mediator.ExecuteNeighborCellsToMovable(

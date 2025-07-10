@@ -9,6 +9,8 @@ using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.Internal.ValueObjects;
 using MergeGame.Core.ValueObjects;
+using ZLinq;
+using ZLinq.Linq;
 
 namespace MergeGame.Core.Internal.Entities
 {
@@ -55,9 +57,9 @@ namespace MergeGame.Core.Internal.Entities
             return Cells[x, y];
         }
 
-        public IEnumerable<BoardCell> GetCells()
+        public ValueEnumerable<FromNonGenericEnumerable<BoardCell>, BoardCell> GetCells()
         {
-            return Cells.Cast<BoardCell>();
+            return Cells.AsValueEnumerable<BoardCell>();
         }
 
         public FastResult<MergeBlockData> MergeBlock(Position from, Position to, IMergeRuleRepository repository)
@@ -121,6 +123,11 @@ namespace MergeGame.Core.Internal.Entities
                 : FastResult<MoveBlockData>.Fail($"Cannot place block at {to}. State: {toCell.State}");
         }
 
+        /// <summary>
+        /// 주변 1칸의 Cell들을 가져옵니다.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public IEnumerable<BoardCell> GetNeighborCells(Position position)
         {
             int x = position.X;
@@ -140,6 +147,20 @@ namespace MergeGame.Core.Internal.Entities
                     }
                 }
             }
+        }
+
+        public FastResult<BoardCell> FindNearestEmptyCell(Position from, Position to)
+        {
+            var nearestEmptyCell = GetCells()
+                .Where(c => !c.HasBlock)
+                .Append(GetCell(from))
+                .OrderBy(c => Position.DistanceSq(c.Position, to))
+                .FirstOrDefault();
+
+            return nearestEmptyCell != null
+                ? FastResult<BoardCell>.Ok(nearestEmptyCell)
+                : FastResult<BoardCell>.Fail("Board.FindNearestEmptyCell",
+                    $"No empty cell found near position {to}.");
         }
 
         public override string ToString()

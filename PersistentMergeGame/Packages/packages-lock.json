@@ -109,6 +109,13 @@
       "dependencies": {},
       "hash": "7c0f199fe0d3fc528024488ccd671e6c7b27745b"
     },
+    "com.cysharp.zlinq": {
+      "version": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "124885e3b63d0baca332ee59f688d57f569a304f"
+    },
     "com.cysharp.zlogger": {
       "version": "https://github.com/Cysharp/ZLogger.git?path=src/ZLogger.Unity/Assets/ZLogger.Unity#2.5.10",
       "depth": 0,

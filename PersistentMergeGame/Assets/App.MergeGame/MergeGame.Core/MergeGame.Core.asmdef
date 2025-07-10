@@ -9,7 +9,8 @@
         "MergeGame.Contracts",
         "GameKit.Common",
         "GameKit.GameSessions.Core",
-        "GameKit.GameSessions.VContainer"
+        "GameKit.GameSessions.VContainer",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -18,7 +19,8 @@
     "precompiledReferences": [
         "Microsoft.Extensions.Logging.Abstractions.dll",
         "Ulid.dll",
-        "ZLogger.dll"
+        "ZLogger.dll",
+        "ZLinq.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

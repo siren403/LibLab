@@ -8,26 +8,29 @@ namespace GameKit.Common.Results
 {
     public static class FastResultExtensions
     {
-        public static FastResult<TCast> Pass<T, TCast>(this FastResult<T> result)
-        {
-            if (!result.IsError)
-            {
-                Debug.LogWarning("Cannot convert a successful result to a failure result.");
-            }
-
-            return result.Cast<TCast>();
-        }
-
         public static bool IsError<T, TCast>(this FastResult<T> result, out FastResult<TCast> fail)
         {
             if (result.IsError)
             {
-                fail = result.Pass<T, TCast>();
+                fail = result.Cast<TCast>();
                 return true;
             }
 
             fail = default;
             return false;
         }
+
+        // public static bool IsError<TCast>(this FastResult<TCast> result, FastResult<TCast> append,
+        //     out FastResult<TCast> fail)
+        // {
+        //     if (result.IsError)
+        //     {
+        //         fail = result.Cast(append);
+        //         return true;
+        //     }
+        //
+        //     fail = default;
+        //     return false;
+        // }
     }
 }

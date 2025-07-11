@@ -6,5 +6,5 @@ using DefenseGame.Core.ValueObjects;
 
 namespace DefenseGame.Core.Internal.Entities
 {
-    internal record Card(EntityId Id, string Name, CardType Type);
+    internal record Skill(EntityId Id, EntityId UnitId, string Name, SkillType Type);
 }

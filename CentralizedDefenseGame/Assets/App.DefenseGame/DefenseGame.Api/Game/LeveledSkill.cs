@@ -1,11 +1,9 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
-namespace DefenseGame.Contracts.Enums
+using System;
+
+namespace DefenseGame.Api.Game
 {
-    public enum CardType
-    {
-        SpawnUnit,
-        AddSkill,
-    }
+    public record LeveledSkill(Ulid Id, string Name, string UnitName);
 }

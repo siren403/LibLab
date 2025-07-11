@@ -9,7 +9,8 @@
         "VExtensions.Mediator.Abstractions",
         "UniTask",
         "GameKit.Common",
-        "DefenseGame.Contracts"
+        "DefenseGame.Contracts",
+        "VitalRouter"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

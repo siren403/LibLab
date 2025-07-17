@@ -44,6 +44,7 @@ namespace MergeGame.Core.Extensions
             >();
             builder.RegisterCommand<MoveBlockCommand, MoveBlockHandler, FastResult<Void>>();
             builder.RegisterCommand<MoveBlockToNearestEmptyCellCommand, MoveBlockToNearestEmptyCellHandler, FastResult<Position>>();
+            builder.RegisterCommand<MoveBlockFromDirectionCommand, MoveBlockFromDirectionHandler, FastResult<Position>>();
             builder.RegisterCommand<CheckEmptyCellCommand, CheckEmptyCellHandler, FastResult<bool>>();
 
             #endregion
@@ -116,6 +117,12 @@ namespace MergeGame.Core.Extensions
             MoveBlockToNearestEmptyCellCommand command, CancellationToken ct = default)
         {
             return mediator.ExecuteAsync<MoveBlockToNearestEmptyCellCommand, FastResult<Position>>(command, ct);
+        }
+
+        public static UniTask<FastResult<Position>> ExecuteMoveBlockFromDirection(this IMediator mediator,
+            MoveBlockFromDirectionCommand command, CancellationToken ct = default)
+        {
+            return mediator.ExecuteAsync<MoveBlockFromDirectionCommand, FastResult<Position>>(command, ct);
         }
 
         #endregion

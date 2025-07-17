@@ -9,6 +9,7 @@ using MergeGame.Core.Enums;
 using MergeGame.Core.Internal.Repositories;
 using MergeGame.Core.Internal.ValueObjects;
 using MergeGame.Core.ValueObjects;
+using Unity.Mathematics;
 using ZLinq;
 using ZLinq.Linq;
 
@@ -161,6 +162,34 @@ namespace MergeGame.Core.Internal.Entities
                 ? FastResult<BoardCell>.Ok(nearestEmptyCell)
                 : FastResult<BoardCell>.Fail("Board.FindNearestEmptyCell",
                     $"No empty cell found near position {to}.");
+        }
+
+        /// <summary>
+        /// 방향 기반으로 보드 경계 위치를 계산한 후 가장 가까운 빈 셀을 찾습니다.
+        /// </summary>
+        /// <param name="from">시작 위치</param>
+        /// <param name="direction">방향 벡터</param>
+        /// <returns>방향 끝에서 가장 가까운 빈 셀</returns>
+        public FastResult<BoardCell> FindNearestEmptyCellFromDirection(Position from, Direction direction)
+        {
+            if (!direction.IsValid)
+            {
+                // 방향이 유효하지 않으면 원래 위치 반환
+                return FastResult<BoardCell>.Ok(GetCell(from));
+            }
+
+            // 방향 * 보드 사이즈로 충분히 멀리 이동
+            var targetX = from.X + direction.X * Width;
+            var targetY = from.Y + direction.Y * Height;
+
+            // 보드 경계로 클램핑하여 경계 위치 계산
+            var boundaryPosition = new Position(
+                math.clamp((int)math.round(targetX), 0, Width - 1),
+                math.clamp((int)math.round(targetY), 0, Height - 1)
+            );
+
+            // 기존 FindNearestEmptyCell 로직 재사용
+            return FindNearestEmptyCell(from, boundaryPosition);
         }
 
         public override string ToString()

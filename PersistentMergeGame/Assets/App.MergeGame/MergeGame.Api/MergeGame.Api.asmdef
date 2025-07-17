@@ -12,7 +12,8 @@
         "MergeGame.Contracts",
         "R3.Unity",
         "Unity.InputSystem",
-        "GameKit.Common"
+        "GameKit.Common",
+        "Unity.Mathematics"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

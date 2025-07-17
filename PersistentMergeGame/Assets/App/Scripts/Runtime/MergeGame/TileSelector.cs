@@ -25,6 +25,7 @@ public readonly struct TileDraggingCommand : ICommand
 public readonly struct TileReleasedCommand : ICommand
 {
     public GameObject? Target { get; init; }
+    public Vector3 WorldPosition { get; init; }
 
     public bool HasTarget => !ReferenceEquals(Target, null);
 
@@ -89,8 +90,8 @@ public class TileSelector : IInitializable, IDisposable
                 new ContactFilter2D { useLayerMask = true, layerMask = tileMask },
                 hits);
             TileReleasedCommand cmd = hitCount > 0
-                ? new TileReleasedCommand { Target = hits.First().transform.gameObject }
-                : new TileReleasedCommand();
+                ? new TileReleasedCommand { Target = hits.First().transform.gameObject, WorldPosition = result.WorldPosition }
+                : new TileReleasedCommand { WorldPosition = result.WorldPosition };
             _router.PublishAsync(cmd);
 
             hitCount = 0;

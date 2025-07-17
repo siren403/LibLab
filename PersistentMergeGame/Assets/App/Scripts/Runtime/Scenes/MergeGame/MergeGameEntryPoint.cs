@@ -83,7 +83,10 @@ namespace App.Scenes.MergeGame
             }).AddTo(ref _disposable);
 
             _ = _router.PublishAsync(
-                new SpawnTilesCommand() { Width = width, Height = height },
+                new SpawnTilesCommand()
+                {
+                    Width = width, Height = height
+                },
                 ct);
 
             #endregion
@@ -99,6 +102,7 @@ namespace App.Scenes.MergeGame
             }
 
             Vector2Int? selectedCell = null;
+            Vector2? dragStartWorldPosition = null;
 
             _router.SubscribeAwait<TileSelectedCommand>(async (cmd, ctx) =>
             {
@@ -139,9 +143,19 @@ namespace App.Scenes.MergeGame
             _router.Subscribe<TileDraggingCommand>((cmd, ctx) =>
             {
                 if (!selectedCell.HasValue) return;
+
+                // 드래그 시작 위치 저장
+                if (!dragStartWorldPosition.HasValue)
+                {
+                    dragStartWorldPosition = cmd.WorldPosition;
+                }
+
                 _focusFrame.Hide();
                 _router.PublishAsync(
-                    new DragBlockCommand() { CellPosition = selectedCell.Value, WorldPosition = cmd.WorldPosition },
+                    new DragBlockCommand()
+                    {
+                        CellPosition = selectedCell.Value, WorldPosition = cmd.WorldPosition
+                    },
                     ctx.CancellationToken);
             }).AddTo(ref _disposable);
 
@@ -155,7 +169,39 @@ namespace App.Scenes.MergeGame
 
                 if (!cmd.TryGetTarget(out var go))
                 {
-                    Fail(selectedCell.Value);
+                    // 타일 검출이 안되었을 때 - 보드 바깥으로 드래그한 경우
+                    if (!dragStartWorldPosition.HasValue)
+                    {
+                        Fail(selectedCell.Value);
+                        return;
+                    }
+                    var moveResult = await _controller.MoveBlockFromDirection(
+                        sessionId,
+                        selectedCell.Value,
+                        dragStartWorldPosition.Value,
+                        cmd.WorldPosition,
+                        ctx.CancellationToken);
+
+                    if (moveResult.IsError)
+                    {
+                        Fail(selectedCell.Value);
+                        return;
+                    }
+                    var movedResponse = moveResult.Value;
+                    _logger.ZLogInformation($"Block moved from direction to: {movedResponse.ToCell}");
+
+                    // MoveBlockCommand를 Publish하여 UI 업데이트
+                    _ = _router.PublishAsync(
+                        new MoveBlockCommand()
+                        {
+                            FromCell = selectedCell.Value, ToCell = movedResponse.ToCell
+                        },
+                        ctx.CancellationToken);
+
+                    // 성공적으로 이동했으므로 상태 초기화
+                    selectedCell = null;
+                    dragStartWorldPosition = null;
+                    _focusFrame.Hide();
                     return;
                 }
 
@@ -206,7 +252,10 @@ namespace App.Scenes.MergeGame
                 {
                     case MovedResponse (var movedCell):
                         _ = _router.PublishAsync(
-                            new MoveBlockCommand() { FromCell = tileSelectedCell, ToCell = movedCell },
+                            new MoveBlockCommand()
+                            {
+                                FromCell = tileSelectedCell, ToCell = movedCell
+                            },
                             ctx.CancellationToken);
                         break;
                     case MergedResponse(var fromCell, var mergedCell, var spawnedCell, var updatedCells):
@@ -239,16 +288,24 @@ namespace App.Scenes.MergeGame
                         break;
                 }
 
+                // 성공적으로 이동했으므로 상태 초기화
+                selectedCell = null;
+                dragStartWorldPosition = null;
+                _focusFrame.Hide();
                 return;
 
                 void Fail(Vector2Int returnPosition)
                 {
                     _focusFrame.Restore();
 
-                    _ = _router.PublishAsync(new ReturnBlockPositionCommand() { Position = returnPosition },
+                    _ = _router.PublishAsync(new ReturnBlockPositionCommand()
+                        {
+                            Position = returnPosition
+                        },
                         ctx.CancellationToken);
 
                     selectedCell = null;
+                    dragStartWorldPosition = null; // 드래그 상태 초기화
                     _logger.ZLogTrace($"{nameof(TileReleasedCommand)}({nameof(returnPosition)}: {returnPosition})");
                 }
             }, CommandOrdering.Drop).AddTo(ref _disposable);

@@ -10,6 +10,7 @@ namespace MergeGame.Core.Internal.Extensions;
 
 internal static class GameManagerExtensions
 {
+    [Obsolete]
     public static GameSession GetSessionOrThrow(this GameManager manager, Ulid sessionId)
     {
         var result = manager.GetSession(sessionId);
@@ -22,6 +23,7 @@ internal static class GameManagerExtensions
         return result.Value;
     }
 
+    [Obsolete]
     public static Board GetBoardOrThrow(this GameManager manager, Ulid sessionId)
     {
         GameSession session = manager.GetSessionOrThrow(sessionId);

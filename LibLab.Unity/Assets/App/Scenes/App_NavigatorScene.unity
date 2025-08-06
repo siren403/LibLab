@@ -558,7 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CheckUpdateButton>k__BackingField: {fileID: 2011034464}
   <UpdateButton>k__BackingField: {fileID: 1981065829}
-  <PushButton>k__BackingField: {fileID: 1602800890}
+  <ToButton>k__BackingField: {fileID: 1602800890}
   <PopButton>k__BackingField: {fileID: 191382466}
   <LogLabel>k__BackingField: {fileID: 302967370}
   <ScreenFadeFeature>k__BackingField: {fileID: 4154229598385444319, guid: 535e2e3ec2cc3c04dad145d3478374e8, type: 2}
@@ -755,7 +755,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Push
+  m_text: To
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -940,7 +940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1811959676800627338, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
-      value: 1
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6880585742480648526, guid: 9c361954c2c3a426aba5c1abe8b35ac6, type: 3}
       propertyPath: m_Name
@@ -1120,7 +1120,7 @@ GameObject:
   - component: {fileID: 1602800891}
   - component: {fileID: 1602800890}
   m_Layer: 5
-  m_Name: PushButton
+  m_Name: ToButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

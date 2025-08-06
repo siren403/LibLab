@@ -2,7 +2,6 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using App.Navigation;
 using App.Scenes;
 using App.Scenes.UI;
 using Cysharp.Threading.Tasks;
@@ -12,20 +11,22 @@ using R3;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VContainer.Unity;
+using VExtensions.SceneNavigation;
+using VExtensions.SceneNavigation.Extensions;
 using VitalRouter;
 
 namespace App
 {
     public class AddressableRouterEntry : IStartable, IDisposable
     {
-        private readonly SceneNavigator _navigator;
+        private readonly Navigator _navigator;
         private readonly ILogger<AddressableRouterEntry> _logger;
         private readonly AddressableComponents _components;
         private readonly Router _router;
         private DisposableBag _disposables;
 
         public AddressableRouterEntry(
-            SceneNavigator navigator,
+            Navigator navigator,
             ILogger<AddressableRouterEntry> logger,
             AddressableComponents components,
             Router router)
@@ -58,7 +59,7 @@ namespace App
                     AwaitOperation.Drop)
                 .AddTo(ref _disposables);
 
-            components.PushButton!.OnClickAsObservable()
+            components.ToButton!.OnClickAsObservable()
                 .Merge(Observable.EveryUpdate().Where(_ => Input.GetKeyDown(KeyCode.Alpha3)))
                 .SubscribeAwait(async (_, cancellationToken) =>
                 {
@@ -102,11 +103,11 @@ namespace App
         {
             if (!_navigator.IsInitialized)
             {
-                _components.LogLabel!.text = $"{nameof(SceneNavigator)} Initializing failed.";
+                _components.LogLabel!.text = $"{nameof(Navigator)} Initializing failed.";
                 return;
             }
 
-            _components.LogLabel!.text = $"{nameof(SceneNavigator)} Initialized";
+            _components.LogLabel!.text = $"{nameof(Navigator)} Initialized";
         }
 
         public void Dispose()

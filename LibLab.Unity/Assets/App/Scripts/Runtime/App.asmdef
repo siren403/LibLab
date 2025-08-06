@@ -19,7 +19,8 @@
         "Unity.RenderPipelines.Core.Runtime",
         "App.Features.LayerdBlocks",
         "SceneLauncher.VContainer",
-        "VExtensions.ZLogger"
+        "VExtensions.ZLogger",
+        "VExtensions.SceneNavigation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

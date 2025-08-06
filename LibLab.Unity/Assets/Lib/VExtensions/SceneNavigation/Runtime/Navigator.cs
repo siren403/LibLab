@@ -34,7 +34,7 @@ namespace VExtensions.SceneNavigation
         private bool _initialized;
         public bool IsInitialized => _initialized;
 
-        public string? LoadedLocation => _history.Any() ? _history.Peek() : null;
+        public string LoadedLocation { get; private set; } = string.Empty;
 
         public bool HasHistory => _history.Count > 1;
 
@@ -87,12 +87,12 @@ namespace VExtensions.SceneNavigation
                 return;
             }
 
-            if (_history.Any())
+            if (!string.IsNullOrEmpty(LoadedLocation))
             {
-                string top = _history.Peek()!;
-                if (top != _options.Root)
+                if (LoadedLocation != _options.Root)
                 {
-                    await UnloadRoute(top);
+                    await UnloadRoute(LoadedLocation);
+                    LoadedLocation = string.Empty;
                 }
                 else
                 {
@@ -101,6 +101,13 @@ namespace VExtensions.SceneNavigation
             }
 
             await LoadRoute(path);
+            LoadedLocation = path;
+        }
+
+        public async UniTask Push(string path)
+        {
+            Assert.IsTrue(_initialized);
+            await To(path);
             _history.Push(path);
         }
 
@@ -123,6 +130,7 @@ namespace VExtensions.SceneNavigation
             }
 
             await LoadRoute(peeked);
+            LoadedLocation = peeked;
         }
 
         public async UniTask Clear()
@@ -243,6 +251,7 @@ namespace VExtensions.SceneNavigation
             _loadingSceneHandles.Clear();
             _logger.ZLogInformation($"Loaded {path}");
             _ = _router.PublishAsync(new PostLoadRouteCommand() { Path = path });
+            LoadedLocation = path;
         }
 
         private void GetLoadedScenes(in HashSet<string> cache)

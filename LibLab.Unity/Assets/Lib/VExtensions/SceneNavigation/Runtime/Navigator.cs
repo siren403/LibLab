@@ -62,14 +62,15 @@ namespace VExtensions.SceneNavigation
             }
 
             _initialized = true;
+            _logger.LogInformation("Initialized");
+            _ = _router.PublishAsync(new InitializedCommand() { Keys = initialized.Result.Keys.ToArray() });
 
             if (_options.StartupRoot)
             {
                 await Startup();
             }
 
-            _logger.LogInformation("Initialized");
-            _ = _router.PublishAsync(new InitializedCommand() { Keys = initialized.Result.Keys.ToArray() });
+            _ = _router.PublishAsync(new PostStartUpCommand());
         }
 
         public async UniTask Startup()

@@ -2,10 +2,10 @@
     "name": "VExtensions.Mediator",
     "rootNamespace": "",
     "references": [
-        "GUID:d33e99d624f1c2b4582c736bc6558bfa",
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:77aea589fe3f34fa883d9f7e26eee12e",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "VExtensions.Mediator.Abstractions",
+        "VContainer",
+        "VitalRouter",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

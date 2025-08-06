@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "com.aaron.scene-launcher": "file:../../SceneLauncher/src/SceneLauncher.Unity/Assets/SceneLauncher",
+    "com.aaron.scene-launcher.vcontainer": "file:../../SceneLauncher/src/SceneLauncher.Unity/Assets/SceneLauncher.VContainer",
+    "com.aaron.scene-navigation": "file:../../SceneNavigation/src/SceneNavigation.Unity/Assets/SceneNavigation",
     "com.annulusgames.lit-motion": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion#v2.0.1",
     "com.annulusgames.lit-motion.animation": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion.Animation#v2.0.1",
     "com.cysharp.csprojmodifier": "https://github.com/Cysharp/CsprojModifier.git?path=src/CsprojModifier/Assets/CsprojModifier#1.3.0",

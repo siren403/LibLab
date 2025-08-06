@@ -1,0 +1,6 @@
+[submodule "SceneLauncher"]
+	path = SceneLauncher
+	url = https://github.com/siren403/SceneLauncher.git
+[submodule "SceneNavigation"]
+	path = SceneNavigation
+	url = https://github.com/siren403/SceneNavigation.git

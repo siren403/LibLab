@@ -1,5 +1,34 @@
 {
   "dependencies": {
+    "com.aaron.scene-launcher": {
+      "version": "file:../../SceneLauncher/src/SceneLauncher.Unity/Assets/SceneLauncher",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.cysharp.unitask": "2.5.10"
+      }
+    },
+    "com.aaron.scene-launcher.vcontainer": {
+      "version": "file:../../SceneLauncher/src/SceneLauncher.Unity/Assets/SceneLauncher.VContainer",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.aaron.scene-launcher": "1.0.0",
+        "jp.hadashikick.vcontainer": "1.17.0",
+        "com.cysharp.unitask": "2.5.10"
+      }
+    },
+    "com.aaron.scene-navigation": {
+      "version": "file:../../SceneNavigation/src/SceneNavigation.Unity/Assets/SceneNavigation",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.addressables": "2.6.0",
+        "jp.hadashikick.vcontainer": "1.17.0",
+        "com.cysharp.unitask": "2.5.10",
+        "jp.hadashikick.vitalrouter": "1.7.0"
+      }
+    },
     "com.annulusgames.lit-motion": {
       "version": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion#v2.0.1",
       "depth": 0,
@@ -200,8 +229,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.addressables": {
-      "version": "2.4.2",
-      "depth": 0,
+      "version": "2.6.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.profiling.core": "1.0.2",
@@ -210,7 +239,7 @@
         "com.unity.modules.jsonserialize": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.scriptablebuildpipeline": "2.3.1",
+        "com.unity.scriptablebuildpipeline": "2.4.0",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -408,8 +437,8 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "2.3.1",
-      "depth": 1,
+      "version": "2.4.0",
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.4.5",

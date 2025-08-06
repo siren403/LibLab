@@ -11,8 +11,8 @@ using R3;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using VContainer.Unity;
-using VExtensions.SceneNavigation;
-using VExtensions.SceneNavigation.Extensions;
+using SceneNavigation;
+using SceneNavigation.Extensions;
 using VitalRouter;
 
 namespace App

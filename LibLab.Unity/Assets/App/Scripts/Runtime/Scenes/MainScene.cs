@@ -4,7 +4,7 @@
 using Microsoft.Extensions.Logging;
 using VContainer;
 using VContainer.Unity;
-using VExtensions.SceneNavigation.Extensions;
+using SceneNavigation.Extensions;
 using VExtensions.ZLogger;
 using VitalRouter.VContainer;
 using ZLogger;
@@ -31,7 +31,7 @@ namespace App.Scenes
             builder.RegisterVitalRouter((routing) => { });
             builder.RegisterNavigator((nav) =>
             {
-                nav.StartupRootOnlyMainScene();
+                nav.StartupRootOnlyMainScene("/intro");
             });
 
 

@@ -20,7 +20,7 @@
         "App.Features.LayerdBlocks",
         "SceneLauncher.VContainer",
         "VExtensions.ZLogger",
-        "VExtensions.SceneNavigation"
+        "SceneNavigation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

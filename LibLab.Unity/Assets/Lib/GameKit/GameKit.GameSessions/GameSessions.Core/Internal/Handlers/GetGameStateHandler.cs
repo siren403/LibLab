@@ -5,7 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using GameKit.Common.Results;
 using GameKit.GameSessions.Core.Commands;
-using VExtensions.Mediator.Abstractions;
+using VitalMediator.Abstractions;
 
 namespace GameKit.GameSessions.Core.Internal.Handlers
 {

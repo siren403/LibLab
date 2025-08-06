@@ -3,7 +3,7 @@
 
 using System;
 using GameKit.Common.Results;
-using VExtensions.Mediator.Abstractions;
+using VitalMediator.Abstractions;
 
 namespace GameKit.GameSessions.Core.Commands
 {

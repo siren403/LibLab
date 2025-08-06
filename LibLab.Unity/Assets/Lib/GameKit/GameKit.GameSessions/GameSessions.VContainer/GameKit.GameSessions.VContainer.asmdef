@@ -4,9 +4,9 @@
     "references": [
         "GameKit.GameSessions.Core",
         "VContainer",
-        "VExtensions.Mediator",
+        "VitalMediator",
         "GameKit.Common",
-        "VExtensions.Mediator.Abstractions",
+        "VitalMediator.Abstractions",
         "VitalRouter",
         "UniTask"
     ],

@@ -1,8 +1,0 @@
-{
-    "name": "com.aaron.vextensions.mediator",
-    "version": "1.0.0",
-    "displayName": "VExtensions Mediator",
-    "description": "A simple mediator pattern implementation for Unity, allowing for decoupled communication between components.",
-    "unity": "6000.0",
-    "license": "MIT"
-}

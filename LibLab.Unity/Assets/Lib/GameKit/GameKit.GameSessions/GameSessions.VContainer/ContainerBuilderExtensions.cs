@@ -9,8 +9,8 @@ using GameKit.GameSessions.Core.Commands;
 using GameKit.GameSessions.Core.Internal;
 using GameKit.GameSessions.Core.Internal.Handlers;
 using VContainer;
-using VExtensions.Mediator;
-using VExtensions.Mediator.Abstractions;
+using VitalMediator;
+using VitalMediator.Abstractions;
 
 namespace GameKit.GameSessions.VContainer
 {

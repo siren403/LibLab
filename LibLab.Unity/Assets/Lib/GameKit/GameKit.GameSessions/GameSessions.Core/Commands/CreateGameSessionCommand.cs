@@ -2,7 +2,7 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using GameKit.Common.Results;
-using VExtensions.Mediator.Abstractions;
+using VitalMediator.Abstractions;
 
 namespace GameKit.GameSessions.Core.Commands
 {

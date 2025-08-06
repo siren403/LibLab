@@ -3,9 +3,9 @@
     "rootNamespace": "",
     "references": [
         "GameKit.Common",
-        "VExtensions.Mediator.Abstractions",
         "UniTask",
-        "VitalRouter"
+        "VitalRouter",
+        "VitalMediator.Abstractions"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

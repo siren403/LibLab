@@ -4,3 +4,6 @@
 [submodule "SceneNavigation"]
 	path = SceneNavigation
 	url = https://github.com/siren403/SceneNavigation.git
+[submodule "VitalMediator"]
+	path = VitalMediator
+	url = https://github.com/siren403/VitalMediator.git

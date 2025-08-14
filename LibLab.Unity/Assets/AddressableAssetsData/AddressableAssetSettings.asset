@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: be9dcd6e2c7e24a25aaa9a6270479763
   m_currentHash:
     serializedVersion: 2
-    Hash: 9bcb27878e5c753234cc78f469d22194
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
@@ -51,9 +51,9 @@ MonoBehaviour:
   m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 4479dbc4773b5431ea7722d4006e992e
+    m_Id: 5d3547eb8413746c0b86caa8d5079b40
   m_RemoteCatalogLoadPath:
-    m_Id: 79e04bdcb209541b58367cfb5112fe98
+    m_Id: fbdb9b6da241b4598a983991164831c6
   m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
@@ -68,6 +68,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a08a7fec4c7ae42c6bdf3426b032354c, type: 2}
   - {fileID: 11400000, guid: a3b23843bcad64a42927cb909e2ccaff, type: 2}
   - {fileID: 11400000, guid: 831dd2e12953745e984d057650d7284c, type: 2}
+  - {fileID: 11400000, guid: 05dcdaf01096d694797311e272a71b74, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -115,6 +116,10 @@ MonoBehaviour:
     - /
     - /intro
     - /startup
+    - table
+    - inventory
+    - unit
+    - weapon
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 68fb1f55bcdd040718ea9b8e8c2eed7b, type: 2}

@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.aaron.game-kit.common": {
+      "version": "file:../../GameKit/src/GameKit.Unity/Assets/GameKit/GameKit.Common",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.aaron.scene-launcher": {
       "version": "file:../../SceneLauncher/src/SceneLauncher.Unity/Assets/SceneLauncher",
       "depth": 0,
@@ -29,14 +35,20 @@
         "jp.hadashikick.vitalrouter": "1.7.0"
       }
     },
+    "com.aaron.screen-navigation": {
+      "version": "file:../../ScreenNavigation/src/ScreenNavigation.Unity/Assets/ScreenNavigation",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.aaron.vitalmediator": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/VitalMediator/src/VitalMediator.Unity/Assets/VitalMediator",
+      "version": "file:../../VitalMediator/src/VitalMediator.Unity/Assets/VitalMediator",
       "depth": 0,
       "source": "local",
       "dependencies": {}
     },
     "com.aaron.vitalmediator.abstractions": {
-      "version": "file:C:/Users/rat_work/workspace/unity/LibLab/VitalMediator/src/VitalMediator.Unity/Assets/VitalMediator.Abstractions",
+      "version": "file:../../VitalMediator/src/VitalMediator.Unity/Assets/VitalMediator.Abstractions",
       "depth": 0,
       "source": "local",
       "dependencies": {}
@@ -132,6 +144,15 @@
       "source": "git",
       "dependencies": {},
       "hash": "8373710fb0ae4bb453737f773b930401d8500c31"
+    },
+    "com.lunawolfstudios.scriptablesheets": {
+      "version": "file:com.lunawolfstudios.scriptablesheets",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.test-framework": "1.1.33"
+      }
     },
     "com.oyacamp.zoboui": {
       "version": "https://github.com/oyacamp/zoboui.git",

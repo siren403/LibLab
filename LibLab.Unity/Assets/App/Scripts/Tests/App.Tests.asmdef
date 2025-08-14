@@ -1,0 +1,41 @@
+{
+    "name": "App.Tests",
+    "rootNamespace": "",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "LunaWolfStudios.ScriptableSheets.Samples.RPG",
+        "ZLinq.Unity",
+        "ZLinq.Unity.UnityCollectoins",
+        "Unity.Collections",
+        "Unity.Addressables",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.ResourceManager",
+        "Unity.Localization"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "ZLinq.dll",
+        "MasterMemory.Annotations.dll",
+        "MessagePack.Annotations.dll",
+        "MasterMemory.dll",
+        "MessagePack.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.cysharp.zlogger",
+            "expression": "",
+            "define": "USE_ZLOGGER"
+        }
+    ],
+    "noEngineReferences": false
+}

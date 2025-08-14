@@ -8,5 +8,12 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../GameKit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../SceneLauncher" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../SceneNavigation" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ScreenNavigation" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ScreenNavigation/src/GameKit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ScreenNavigation/src/GameKit/src/VitalMediator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../VitalMediator" vcs="Git" />
   </component>
 </project>

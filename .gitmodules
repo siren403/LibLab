@@ -7,3 +7,9 @@
 [submodule "VitalMediator"]
 	path = VitalMediator
 	url = https://github.com/siren403/VitalMediator.git
+[submodule "ScreenNavigation"]
+	path = ScreenNavigation
+	url = git@github.com:siren403/ScreenNavigation.git
+[submodule "GameKit"]
+	path = GameKit
+	url = https://github.com/siren403/GameKit.git

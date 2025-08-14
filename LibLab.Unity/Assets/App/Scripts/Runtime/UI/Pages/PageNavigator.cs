@@ -22,6 +22,7 @@ namespace App.UI.Pages
         public PageNavigator(ILogger<PageNavigator> logger)
         {
             _logger = logger;
+            _logger.LogDebug("");
         }
 
         public void Add(string id, IPage page)
